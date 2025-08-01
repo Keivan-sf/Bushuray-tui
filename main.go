@@ -5,6 +5,7 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 type ListItem struct {
@@ -14,7 +15,12 @@ type ListItem struct {
 type List struct {
 	Items  []ListItem
 	cursor int
+	width  int
+	height int
 }
+
+var selected_style = lipgloss.NewStyle().Background(lipgloss.Color("#ea76cb"))
+var under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#8839ef"))
 
 func (l List) Update(msg tea.Msg) (List, tea.Cmd) {
 	switch msg := msg.(type) {
@@ -39,17 +45,20 @@ func (l List) Update(msg tea.Msg) (List, tea.Cmd) {
 func (l List) View() string {
 	s := ""
 	for i, item := range l.Items {
-		cursor := " "
+		item_str := fmt.Sprintf("%d - %s", i, item.Name)
 		if i == l.cursor {
-			cursor = "X"
+			s += under_cursor_style.Width(l.width).Render(item_str) + "\n"
+		} else {
+			s += item_str + "\n"
 		}
-		s += fmt.Sprintf("%s %d - %s\n", cursor, i, item.Name)
 	}
 	return s
 }
 
 type Model struct {
 	ConfigList List
+	width      int
+	height     int
 }
 
 func (m Model) Init() tea.Cmd {
@@ -63,6 +72,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		case "ctrl+c", "q":
 			return m, tea.Quit
 		}
+
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		m.ConfigList.width = msg.Width
+		m.ConfigList.height = msg.Height
 	}
 
 	var cmd tea.Cmd
