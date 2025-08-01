@@ -22,14 +22,17 @@ type Model struct {
 	Primary int
 }
 
-// var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
-var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
+var protocol_w = 8
+var test_result_w = 15
 
-// var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#5c5f77")).Foreground(lipgloss.Color("#9ca0b0")).Width(8).Align(lipgloss.Center)
-var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#40a02b")).Foreground(lipgloss.Color("#FFF")).Width(8).Align(lipgloss.Center)
+var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
+var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#40a02b")).Foreground(lipgloss.Color("#FFF")).Width(protocol_w).Align(lipgloss.Center)
+
 var under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#1e2030"))
-var protocol_under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#24273a")).Foreground(lipgloss.Color("#9ca0b0")).Width(8).Align(lipgloss.Center)
-var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).Width(8).Align(lipgloss.Center)
+var protocol_under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#24273a")).Foreground(lipgloss.Color("#9ca0b0")).Width(protocol_w).Align(lipgloss.Center)
+
+var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).Width(protocol_w).Align(lipgloss.Center)
+var item_style = lipgloss.NewStyle()
 
 func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
@@ -60,21 +63,22 @@ func (l Model) View() string {
 	s := ""
 	start := l.offset
 	end := len(l.Items)
+	w := l.Width - protocol_w - test_result_w
 	for i := start; i < end; i++ {
 		item := l.Items[i]
 		item_str := fmt.Sprintf(" %s", item.Name)
 		if i == l.Primary {
 			protocol := protocol_primary_style.Render(item.Protocol)
 			s += protocol
-			s += primary_style.Width(l.Width-7).Render(item_str) + "\n"
+			s += primary_style.Width(w).MaxWidth(w).Render(item_str) + styleTestPrimary(item.TestResult) + "\n"
 		} else if i == l.cursor {
 			protocol := protocol_under_cursor_style.Render(item.Protocol)
 			s += protocol
-			s += under_cursor_style.Width(l.Width-7).Render(item_str) + "\n"
+			s += under_cursor_style.Width(w).MaxWidth(w).Render(item_str) + styleTestUnderCursor(item.TestResult) + "\n"
 		} else {
 			protocol := protocol_style.Render(item.Protocol)
 			s += protocol
-			s += item_str + "\n"
+			s += item_style.Width(w).MaxWidth(w).Render(item_str) + styleTestNormal(item.TestResult) + "\n"
 		}
 	}
 	s = lipgloss.NewStyle().Height(l.Height).MaxHeight(l.Height).Render(s)
