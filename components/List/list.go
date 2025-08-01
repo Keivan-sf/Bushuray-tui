@@ -19,6 +19,7 @@ type Model struct {
 	cursor int
 	Width  int
 	Height int
+	offset int
 }
 
 var selected_style = lipgloss.NewStyle().Background(lipgloss.Color("#ea76cb"))
@@ -34,21 +35,27 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if l.cursor > 0 {
 				l.cursor--
 			}
-			return l, nil
 		case "down", "j":
 			if l.cursor < len(l.Items)-1 {
 				l.cursor++
 			}
-			return l, nil
 		}
 
+	}
+	if l.cursor < l.offset {
+		l.offset = l.cursor
+	} else if l.cursor >= l.offset+l.Height {
+		l.offset = l.cursor - l.Height + 1
 	}
 	return l, nil
 }
 
 func (l Model) View() string {
 	s := ""
-	for i, item := range l.Items {
+	start := l.offset
+	end := len(l.Items)
+	for i := start; i < end; i++ {
+		item := l.Items[i]
 		item_str := fmt.Sprintf(" %s", item.Name)
 		if i == l.cursor {
 			vless := protocol_selected_style.Render(item.Protocol)
@@ -60,5 +67,6 @@ func (l Model) View() string {
 			s += item_str + "\n"
 		}
 	}
+	s = lipgloss.NewStyle().Height(l.Height).MaxHeight(l.Height).Render(s)
 	return s
 }

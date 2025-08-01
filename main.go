@@ -30,7 +30,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.width = msg.Width
 		m.height = msg.Height
 		m.ConfigList.Width = msg.Width
-		m.ConfigList.Height = msg.Height
+		m.ConfigList.Height = msg.Height / 2
 	}
 
 	var cmd tea.Cmd
@@ -47,10 +47,40 @@ func initModel() Model {
 		ConfigList: list.Model{Items: []list.ListItem{
 			{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS"},
 			{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW"},
-			{Name: "Friend", Protocol: "V-MESS"},
-			{Name: "How", Protocol: "TROJAN"},
-			{Name: "Are", Protocol: "TROJAN"},
-			{Name: "You", Protocol: "SOCKS5"},
+			{Name: "ids here", Protocol: "V-MESS"},
+			{Name: "join here @somerandomid", Protocol: "TROJAN"},
+			{Name: "50gb config", Protocol: "TROJAN"},
+			{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
+			{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS"},
+			{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW"},
+			{Name: "ids here", Protocol: "V-MESS"},
+			{Name: "join here @somerandomid", Protocol: "TROJAN"},
+			{Name: "50gb config", Protocol: "TROJAN"},
+			{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
+			{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS"},
+			{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW"},
+			{Name: "ids here", Protocol: "V-MESS"},
+			{Name: "join here @somerandomid", Protocol: "TROJAN"},
+			{Name: "50gb config", Protocol: "TROJAN"},
+			{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
+			{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS"},
+			{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW"},
+			{Name: "ids here", Protocol: "V-MESS"},
+			{Name: "join here @somerandomid", Protocol: "TROJAN"},
+			{Name: "50gb config", Protocol: "TROJAN"},
+			{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
+			{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS"},
+			{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW"},
+			{Name: "ids here", Protocol: "V-MESS"},
+			{Name: "join here @somerandomid", Protocol: "TROJAN"},
+			{Name: "50gb config", Protocol: "TROJAN"},
+			{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
+			{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS"},
+			{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW"},
+			{Name: "ids here", Protocol: "V-MESS"},
+			{Name: "join here @somerandomid", Protocol: "TROJAN"},
+			{Name: "50gb config", Protocol: "TROJAN"},
+			{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
 		}},
 	}
 }
