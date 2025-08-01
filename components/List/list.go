@@ -64,16 +64,16 @@ func (l Model) View() string {
 		item := l.Items[i]
 		item_str := fmt.Sprintf(" %s", item.Name)
 		if i == l.Primary {
-			vless := protocol_primary_style.Render(item.Protocol)
-			s += vless
+			protocol := protocol_primary_style.Render(item.Protocol)
+			s += protocol
 			s += primary_style.Width(l.Width-7).Render(item_str) + "\n"
 		} else if i == l.cursor {
-			vless := protocol_under_cursor_style.Render(item.Protocol)
-			s += vless
+			protocol := protocol_under_cursor_style.Render(item.Protocol)
+			s += protocol
 			s += under_cursor_style.Width(l.Width-7).Render(item_str) + "\n"
 		} else {
-			vless := protocol_style.Render(item.Protocol)
-			s += vless
+			protocol := protocol_style.Render(item.Protocol)
+			s += protocol
 			s += item_str + "\n"
 		}
 	}
