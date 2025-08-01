@@ -8,23 +8,27 @@ import (
 )
 
 type ListItem struct {
-	Name        string
-	Protocol    string
-	TestResult  int
-	IsConnected bool
+	Name       string
+	Protocol   string
+	TestResult int
 }
 
 type Model struct {
-	Items  []ListItem
-	cursor int
-	Width  int
-	Height int
-	offset int
+	Items   []ListItem
+	cursor  int
+	Width   int
+	Height  int
+	offset  int
+	Primary int
 }
 
-var selected_style = lipgloss.NewStyle().Background(lipgloss.Color("#ea76cb"))
-var under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
-var protocol_selected_style = lipgloss.NewStyle().Background(lipgloss.Color("#5c5f77")).Foreground(lipgloss.Color("#9ca0b0")).Width(8).Align(lipgloss.Center)
+// var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
+var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
+
+// var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#5c5f77")).Foreground(lipgloss.Color("#9ca0b0")).Width(8).Align(lipgloss.Center)
+var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#40a02b")).Foreground(lipgloss.Color("#FFF")).Width(8).Align(lipgloss.Center)
+var under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#1e2030"))
+var protocol_under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#24273a")).Foreground(lipgloss.Color("#9ca0b0")).Width(8).Align(lipgloss.Center)
 var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).Width(8).Align(lipgloss.Center)
 
 func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
@@ -39,6 +43,8 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if l.cursor < len(l.Items)-1 {
 				l.cursor++
 			}
+		case "enter":
+			l.Primary = l.cursor
 		}
 
 	}
@@ -57,8 +63,12 @@ func (l Model) View() string {
 	for i := start; i < end; i++ {
 		item := l.Items[i]
 		item_str := fmt.Sprintf(" %s", item.Name)
-		if i == l.cursor {
-			vless := protocol_selected_style.Render(item.Protocol)
+		if i == l.Primary {
+			vless := protocol_primary_style.Render(item.Protocol)
+			s += vless
+			s += primary_style.Width(l.Width-7).Render(item_str) + "\n"
+		} else if i == l.cursor {
+			vless := protocol_under_cursor_style.Render(item.Protocol)
 			s += vless
 			s += under_cursor_style.Width(l.Width-7).Render(item_str) + "\n"
 		} else {
