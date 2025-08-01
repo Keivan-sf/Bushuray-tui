@@ -70,15 +70,15 @@ func (l Model) View() string {
 		if i == l.Primary {
 			protocol := protocol_primary_style.Render(item.Protocol)
 			s += protocol
-			s += primary_style.Width(w).MaxWidth(w).Render(item_str) + styleTestPrimary(item.TestResult) + "\n"
+			s += primary_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestPrimary(item.TestResult) + "\n"
 		} else if i == l.cursor {
 			protocol := protocol_under_cursor_style.Render(item.Protocol)
 			s += protocol
-			s += under_cursor_style.Width(w).MaxWidth(w).Render(item_str) + styleTestUnderCursor(item.TestResult) + "\n"
+			s += under_cursor_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestUnderCursor(item.TestResult) + "\n"
 		} else {
 			protocol := protocol_style.Render(item.Protocol)
 			s += protocol
-			s += item_style.Width(w).MaxWidth(w).Render(item_str) + styleTestNormal(item.TestResult) + "\n"
+			s += item_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestNormal(item.TestResult) + "\n"
 		}
 	}
 	s = lipgloss.NewStyle().Height(l.Height).MaxHeight(l.Height).Render(s)

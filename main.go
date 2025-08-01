@@ -50,7 +50,7 @@ func initModel() Model {
 				{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS", TestResult: 100},
 				{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW", TestResult: 2490},
 				{Name: "ids here", Protocol: "V-MESS"},
-				{Name: "join here @somerandomid", Protocol: "TROJAN", TestResult: 0},
+				{Name: "join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid", Protocol: "TROJAN", TestResult: 1200},
 				{Name: "50gb config", Protocol: "TROJAN", TestResult: -1},
 				{Name: "پروکسی دایمی", Protocol: "SOCKS5", TestResult: -2},
 				{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS", TestResult: 1000},
