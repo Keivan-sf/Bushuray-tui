@@ -2,6 +2,7 @@ package tabs
 
 import (
 	"bushuray-tui/components/List"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -11,6 +12,9 @@ type TabView struct {
 	Title   string
 	Content list.Model
 }
+
+var border_color = lipgloss.Color("#7287fd")
+var title_color = lipgloss.Color("#4c4f69")
 
 func (t TabView) View() string {
 	return t.Content.View()
@@ -42,6 +46,8 @@ func renderTitle(title string) string {
 
 	tab := lipgloss.NewStyle().
 		Border(tabBorder, true).
+		Foreground(title_color).
+		BorderForeground(border_color).
 		Padding(0, 1).Render(title)
 	return tab
 }
@@ -60,6 +66,16 @@ func renderActiveTitle(title string) string {
 
 	tab := lipgloss.NewStyle().
 		Border(tabBorder, true).
+		BorderForeground(border_color).
 		Padding(0, 1).Render(title)
 	return tab
+}
+
+func renderTabLine(width int) string {
+	extra_line_str := strings.Repeat(" ", width)
+	extra_line := lipgloss.NewStyle().
+		Border(lipgloss.Border{Bottom: "─", BottomLeft: "─"}).
+		BorderForeground(border_color).
+		Render(extra_line_str)
+	return extra_line
 }

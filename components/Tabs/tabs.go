@@ -2,7 +2,6 @@ package tabs
 
 import (
 	"strconv"
-	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -34,11 +33,7 @@ func (m Model) View() string {
 	}
 	extra_line_w := m.Width - titles_len
 	if extra_line_w > 0 {
-		extra_line_str := strings.Repeat(" ", extra_line_w)
-		extra_line := lipgloss.NewStyle().
-			Border(lipgloss.Border{Bottom: "─", BottomLeft: "─"}).
-			Render(extra_line_str)
-		tab_titles = append(tab_titles, extra_line)
+		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
 	}
 	tab_row := lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...)
 	return lipgloss.JoinVertical(lipgloss.Top, tab_row, active.View())
