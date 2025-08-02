@@ -85,3 +85,14 @@ var dummy_items []list.ListItem = []list.ListItem{
 	{Name: "50gb config", Protocol: "TROJAN"},
 	{Name: "پروکسی دایمی", Protocol: "SOCKS5"},
 }
+
+func dummyItemsWithPrefix(prefix string) []list.ListItem {
+	var dummywp []list.ListItem = make([]list.ListItem, len(dummy_items))
+	// copy(dummy_items, dummywp)
+	for i := range dummy_items {
+		dummywp[i].Name = prefix + "-" + dummy_items[i].Name
+		dummywp[i].Protocol = dummy_items[i].Protocol
+		dummywp[i].TestResult = dummy_items[i].TestResult
+	}
+	return dummywp
+}

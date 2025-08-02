@@ -61,9 +61,9 @@ func initModel() Model {
 					Content: list.Model{
 						Id:      zone.NewPrefix(),
 						Primary: -1,
-						Items:   dummy_items,
+						Items:   dummyItemsWithPrefix("G1"),
 					},
-					Title: "Group 0",
+					Title: "Group 1",
 				},
 			},
 		},

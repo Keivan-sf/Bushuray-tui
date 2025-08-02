@@ -12,6 +12,8 @@ type Model struct {
 	Id        string
 	Children  []TabView
 	ActiveTap int
+	Width     int
+	Height    int
 }
 
 func (m Model) View() string {
@@ -29,13 +31,33 @@ func (m Model) View() string {
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-	active := m.Children[m.ActiveTap]
-	var cmd tea.Cmd
-	m.Children[m.ActiveTap], cmd = active.Update(msg)
-	return m, cmd
+	switch msg := msg.(type) {
+	case tea.MouseMsg:
+		switch msg.Button {
+		case tea.MouseButtonLeft:
+			for i := range m.Children {
+				if zone.Get(m.Id + strconv.Itoa(i)).InBounds(msg) {
+					m.ActiveTap = i
+					return m, nil
+				}
+			}
+		}
+	}
+	var cmds []tea.Cmd
+	for i, child := range m.Children {
+		var cmd tea.Cmd
+		m.Children[i], cmd = child.Update(msg)
+		cmds = append(cmds, cmd)
+	}
+
+	return m, tea.Batch(cmds...)
 }
 
 func (m Model) SetWH(width int, height int) Model {
-	m.Children[m.ActiveTap] = m.Children[m.ActiveTap].SetWH(width, height)
+	m.Width = width
+	m.Height = height
+	for i, child := range m.Children {
+		m.Children[i] = child.SetWH(width, height)
+	}
 	return m
 }
