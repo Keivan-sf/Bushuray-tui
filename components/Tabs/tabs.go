@@ -32,6 +32,23 @@ func (m Model) View() string {
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "tab", "ctrl+pgdown":
+			if m.ActiveTap < len(m.Children)-1 {
+				m.ActiveTap++
+			} else {
+				m.ActiveTap = 0
+			}
+			return m, nil
+		case "shift+tab", "ctrl+pgup":
+			if m.ActiveTap > 0 {
+				m.ActiveTap--
+			} else {
+				m.ActiveTap = len(m.Children) - 1
+			}
+			return m, nil
+		}
 	case tea.MouseMsg:
 		switch msg.Button {
 		case tea.MouseButtonLeft:

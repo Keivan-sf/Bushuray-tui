@@ -65,6 +65,22 @@ func initModel() Model {
 					},
 					Title: "Group 1",
 				},
+				{
+					Content: list.Model{
+						Id:      zone.NewPrefix(),
+						Primary: -1,
+						Items:   dummyItemsWithPrefix("G2"),
+					},
+					Title: "Group 2",
+				},
+				{
+					Content: list.Model{
+						Id:      zone.NewPrefix(),
+						Primary: -1,
+						Items:   dummyItemsWithPrefix("G3"),
+					},
+					Title: "Group 3",
+				},
 			},
 		},
 	}
