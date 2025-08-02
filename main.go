@@ -57,6 +57,14 @@ func initModel() Model {
 					},
 					Title: "Default group",
 				},
+				{
+					Content: list.Model{
+						Id:      zone.NewPrefix(),
+						Primary: -1,
+						Items:   dummy_items,
+					},
+					Title: "Group 0",
+				},
 			},
 		},
 	}

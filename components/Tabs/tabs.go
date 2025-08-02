@@ -1,9 +1,11 @@
 package tabs
 
 import (
-	"log"
+	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+	zone "github.com/lrstanley/bubblezone"
 )
 
 type Model struct {
@@ -14,11 +16,19 @@ type Model struct {
 
 func (m Model) View() string {
 	active := m.Children[m.ActiveTap]
-	return active.View()
+	var tab_titles []string
+	for i, child := range m.Children {
+		if i == m.ActiveTap {
+			tab_titles = append(tab_titles, zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.Title)))
+		} else {
+			tab_titles = append(tab_titles, zone.Mark(m.Id+strconv.Itoa(i), renderTitle(child.Title)))
+		}
+	}
+	tab_row := lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...)
+	return lipgloss.JoinVertical(lipgloss.Top, tab_row, active.View())
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
-	log.Println("got update on tabs")
 	active := m.Children[m.ActiveTap]
 	var cmd tea.Cmd
 	m.Children[m.ActiveTap], cmd = active.Update(msg)
