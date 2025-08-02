@@ -63,11 +63,17 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				}
 			}
 		case tea.MouseButtonWheelDown:
+			if !zone.Get(l.Id).InBounds(msg) {
+				break
+			}
 			if l.offset < len(l.Items)-l.Height {
 				l.offset++
 			}
 			adjustCursorForOffset(&l)
 		case tea.MouseButtonWheelUp:
+			if !zone.Get(l.Id).InBounds(msg) {
+				break
+			}
 			if l.offset > 0 {
 				l.offset--
 			}
