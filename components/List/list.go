@@ -2,6 +2,7 @@ package list
 
 import (
 	"fmt"
+	"log"
 	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -38,6 +39,7 @@ var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).W
 var item_style = lipgloss.NewStyle()
 
 func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+	log.Println("got update on list")
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {

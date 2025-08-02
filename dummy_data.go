@@ -9,6 +9,7 @@ var dummy_items []list.ListItem = []list.ListItem{
 	{Name: "join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid, join here @somerandomid", Protocol: "TROJAN", TestResult: 1200},
 	{Name: "50gb config", Protocol: "TROJAN", TestResult: -1},
 	{Name: "پروکسی دایمی", Protocol: "SOCKS5", TestResult: -2},
+	{Name: "پروکسی دایمی", Protocol: "SOCKS5", TestResult: 1000},
 	{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS", TestResult: 1000},
 	{Name: "[🇨🇦]t.me/ConfigsHub", Protocol: "SHADOW", TestResult: 490},
 	{Name: "ids here", Protocol: "V-MESS", TestResult: 875},

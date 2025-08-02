@@ -2,6 +2,7 @@ package main
 
 import (
 	"bushuray-tui/components/List"
+	tabs "bushuray-tui/components/Tabs"
 	"fmt"
 	"os"
 
@@ -10,9 +11,9 @@ import (
 )
 
 type Model struct {
-	ConfigList list.Model
-	width      int
-	height     int
+	width  int
+	height int
+	tabs   tabs.Model
 }
 
 func (m Model) Init() tea.Cmd {
@@ -30,25 +31,33 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
-		m.ConfigList.Width = msg.Width
-		m.ConfigList.Height = msg.Height / 2
+		m.tabs = m.tabs.SetWH(msg.Width, msg.Height/2)
+		return m, nil
 	}
 
 	var cmd tea.Cmd
-	m.ConfigList, cmd = m.ConfigList.Update(msg)
+	m.tabs, cmd = m.tabs.Update(msg)
 	return m, cmd
 }
 
 func (m Model) View() string {
-	return zone.Scan(m.ConfigList.View())
+	return zone.Scan(m.tabs.View())
 }
 
 func initModel() Model {
 	return Model{
-		ConfigList: list.Model{
-			Id:      zone.NewPrefix(),
-			Primary: -1,
-			Items:   dummy_items,
+		tabs: tabs.Model{
+			Id: zone.NewPrefix(),
+			Children: []tabs.TabView{
+				{
+					Content: list.Model{
+						Id:      zone.NewPrefix(),
+						Primary: -1,
+						Items:   dummy_items,
+					},
+					Title: "Default group",
+				},
+			},
 		},
 	}
 }
