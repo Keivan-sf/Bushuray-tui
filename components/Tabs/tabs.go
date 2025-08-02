@@ -63,6 +63,10 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			return m, nil
 		}
+
+		var cmd tea.Cmd
+		m.Children[m.ActiveTap], cmd = m.Children[m.ActiveTap].Update(msg)
+		return m, cmd
 	case tea.MouseMsg:
 		switch msg.Button {
 		case tea.MouseButtonLeft:
@@ -73,15 +77,20 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				}
 			}
 		}
-	}
-	var cmds []tea.Cmd
-	for i, child := range m.Children {
-		var cmd tea.Cmd
-		m.Children[i], cmd = child.Update(msg)
-		cmds = append(cmds, cmd)
-	}
 
-	return m, tea.Batch(cmds...)
+		var cmd tea.Cmd
+		m.Children[m.ActiveTap], cmd = m.Children[m.ActiveTap].Update(msg)
+		return m, cmd
+	}
+	// var cmds []tea.Cmd
+	// for i, child := range m.Children {
+	// 	var cmd tea.Cmd
+	// 	m.Children[i], cmd = child.Update(msg)
+	// 	cmds = append(cmds, cmd)
+	// }
+	//
+	// return m, tea.Batch(cmds...)
+	return m, nil
 }
 
 func (m Model) SetWH(width int, height int) Model {
