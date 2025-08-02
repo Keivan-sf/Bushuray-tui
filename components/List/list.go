@@ -2,9 +2,11 @@ package list
 
 import (
 	"fmt"
+	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
+	zone "github.com/lrstanley/bubblezone"
 )
 
 type ListItem struct {
@@ -14,6 +16,7 @@ type ListItem struct {
 }
 
 type Model struct {
+	Id      string
 	Items   []ListItem
 	cursor  int
 	Width   int
@@ -49,8 +52,18 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "enter":
 			l.Primary = l.cursor
 		}
+	case tea.MouseMsg:
+		if msg.Action != tea.MouseActionRelease || msg.Button != tea.MouseButtonLeft {
+			break
+		}
 
+		for i := range l.Items {
+			if zone.Get(l.Id + strconv.Itoa(i)).InBounds(msg) {
+				l.cursor = i
+			}
+		}
 	}
+
 	if l.cursor < l.offset {
 		l.offset = l.cursor
 	} else if l.cursor >= l.offset+l.Height {
@@ -60,27 +73,29 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 }
 
 func (l Model) View() string {
-	s := ""
+	var s []string
 	start := l.offset
 	end := len(l.Items)
 	w := l.Width - protocol_w - test_result_w
 	for i := start; i < end; i++ {
+		row := ""
 		item := l.Items[i]
 		item_str := fmt.Sprintf(" %s", item.Name)
 		if i == l.Primary {
 			protocol := protocol_primary_style.Render(item.Protocol)
-			s += protocol
-			s += primary_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestPrimary(item.TestResult) + "\n"
+			row += protocol
+			row += primary_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestPrimary(item.TestResult)
 		} else if i == l.cursor {
 			protocol := protocol_under_cursor_style.Render(item.Protocol)
-			s += protocol
-			s += under_cursor_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestUnderCursor(item.TestResult) + "\n"
+			row += protocol
+			row += under_cursor_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestUnderCursor(item.TestResult)
 		} else {
 			protocol := protocol_style.Render(item.Protocol)
-			s += protocol
-			s += item_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestNormal(item.TestResult) + "\n"
+			row += protocol
+			row += item_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestNormal(item.TestResult)
 		}
+		s = append(s, zone.Mark(l.Id+strconv.Itoa(i), row))
 	}
-	s = lipgloss.NewStyle().Height(l.Height).MaxHeight(l.Height).Render(s)
-	return s
+	list_view := zone.Mark(l.Id, lipgloss.NewStyle().Height(l.Height).MaxHeight(l.Height).Render(lipgloss.JoinVertical(lipgloss.Top, s...)))
+	return list_view
 }

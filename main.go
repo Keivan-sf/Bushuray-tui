@@ -6,6 +6,7 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
+	zone "github.com/lrstanley/bubblezone"
 )
 
 type Model struct {
@@ -39,12 +40,13 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
-	return m.ConfigList.View()
+	return zone.Scan(m.ConfigList.View())
 }
 
 func initModel() Model {
 	return Model{
 		ConfigList: list.Model{
+			Id:      zone.NewPrefix(),
 			Primary: -1,
 			Items: []list.ListItem{
 				{Name: "🚀 @SmoothVPN - D", Protocol: "V-LESS", TestResult: 100},
@@ -92,7 +94,14 @@ func initModel() Model {
 }
 
 func main() {
-	p := tea.NewProgram(initModel(), tea.WithAltScreen())
+	f, err := tea.LogToFile("debug.log", "debug")
+	if err != nil {
+		fmt.Println("error with log to file", err)
+	}
+	defer f.Close()
+
+	zone.NewGlobal()
+	p := tea.NewProgram(initModel(), tea.WithAltScreen(), tea.WithMouseCellMotion())
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error %v\n", err)
