@@ -2,6 +2,7 @@ package tabs
 
 import (
 	"strconv"
+	"strings"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -19,12 +20,25 @@ type Model struct {
 func (m Model) View() string {
 	active := m.Children[m.ActiveTap]
 	var tab_titles []string
+	titles_len := 0
 	for i, child := range m.Children {
 		if i == m.ActiveTap {
-			tab_titles = append(tab_titles, zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.Title)))
+			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.Title))
+			titles_len += lipgloss.Width(title_box)
+			tab_titles = append(tab_titles, title_box)
 		} else {
-			tab_titles = append(tab_titles, zone.Mark(m.Id+strconv.Itoa(i), renderTitle(child.Title)))
+			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderTitle(child.Title))
+			titles_len += lipgloss.Width(title_box)
+			tab_titles = append(tab_titles, title_box)
 		}
+	}
+	extra_line_w := m.Width - titles_len
+	if extra_line_w > 0 {
+		extra_line_str := strings.Repeat(" ", extra_line_w)
+		extra_line := lipgloss.NewStyle().
+			Border(lipgloss.Border{Bottom: "─", BottomLeft: "─"}).
+			Render(extra_line_str)
+		tab_titles = append(tab_titles, extra_line)
 	}
 	tab_row := lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...)
 	return lipgloss.JoinVertical(lipgloss.Top, tab_row, active.View())
