@@ -44,3 +44,18 @@ func styleTestNormal(ping int) string {
 		return lipgloss.NewStyle().Foreground(lipgloss.Color("#df8e1d")).Width(width).MaxWidth(width).Render("")
 	}
 }
+
+func adjustOffsetForCursor(l *Model) {
+	if l.cursor < l.offset {
+		l.offset = l.cursor
+	} else if l.cursor >= l.offset+l.Height {
+		l.offset = l.cursor - l.Height + 1
+	}
+}
+func adjustCursorForOffset(l *Model) {
+	if l.offset > l.cursor {
+		l.cursor = l.offset
+	} else if l.offset+l.Height-1 < l.cursor {
+		l.cursor = l.offset + l.Height - 1
+	}
+}

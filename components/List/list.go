@@ -45,30 +45,36 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if l.cursor > 0 {
 				l.cursor--
 			}
+			adjustOffsetForCursor(&l)
 		case "down", "j":
 			if l.cursor < len(l.Items)-1 {
 				l.cursor++
 			}
+			adjustOffsetForCursor(&l)
 		case "enter":
 			l.Primary = l.cursor
 		}
 	case tea.MouseMsg:
-		if msg.Action != tea.MouseActionRelease || msg.Button != tea.MouseButtonLeft {
-			break
-		}
-
-		for i := range l.Items {
-			if zone.Get(l.Id + strconv.Itoa(i)).InBounds(msg) {
-				l.cursor = i
+		switch msg.Button {
+		case tea.MouseButtonLeft:
+			for i := range l.Items {
+				if zone.Get(l.Id + strconv.Itoa(i)).InBounds(msg) {
+					l.cursor = i
+				}
 			}
+		case tea.MouseButtonWheelDown:
+			if l.offset < len(l.Items)-l.Height {
+				l.offset++
+			}
+			adjustCursorForOffset(&l)
+		case tea.MouseButtonWheelUp:
+			if l.offset > 0 {
+				l.offset--
+			}
+			adjustCursorForOffset(&l)
 		}
 	}
 
-	if l.cursor < l.offset {
-		l.offset = l.cursor
-	} else if l.cursor >= l.offset+l.Height {
-		l.offset = l.cursor - l.Height + 1
-	}
 	return l, nil
 }
 
