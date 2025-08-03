@@ -63,7 +63,7 @@ func initModel() Model {
 						Primary: -1,
 						Items:   dummyItemsWithPrefix("G1"),
 					},
-					Title: "Group 1",
+					Title: "mt Group 1",
 				},
 				{
 					Content: list.Model{
@@ -71,7 +71,7 @@ func initModel() Model {
 						Primary: -1,
 						Items:   dummyItemsWithPrefix("G2"),
 					},
-					Title: "Group 2",
+					Title: "random name",
 				},
 				{
 					Content: list.Model{
@@ -95,7 +95,7 @@ func initModel() Model {
 						Primary: -1,
 						Items:   dummyItemsWithPrefix("G3"),
 					},
-					Title: "Group 3",
+					Title: "A Group 3-",
 				},
 				{
 					Content: list.Model{
@@ -103,7 +103,7 @@ func initModel() Model {
 						Primary: -1,
 						Items:   dummyItemsWithPrefix("G3"),
 					},
-					Title: "Group 3",
+					Title: "BBB Group 2",
 				},
 			},
 		},

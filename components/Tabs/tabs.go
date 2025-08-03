@@ -22,7 +22,7 @@ func (m Model) View() string {
 	active := m.Children[m.ActiveTap]
 	var tab_titles []string
 	titles_len := 0
-	for i := m.viewStart; i <= m.viewEnd; i++ {
+	for i := m.viewStart; i < len(m.Children); i++ {
 		child := m.Children[i]
 		if i == m.ActiveTap {
 			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.Title))
