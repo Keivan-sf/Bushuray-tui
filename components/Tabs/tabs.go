@@ -14,13 +14,16 @@ type Model struct {
 	ActiveTap int
 	Width     int
 	Height    int
+	viewStart int
+	viewEnd   int
 }
 
 func (m Model) View() string {
 	active := m.Children[m.ActiveTap]
 	var tab_titles []string
 	titles_len := 0
-	for i, child := range m.Children {
+	for i := m.viewStart; i <= m.viewEnd; i++ {
+		child := m.Children[i]
 		if i == m.ActiveTap {
 			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.Title))
 			titles_len += lipgloss.Width(title_box)
@@ -31,6 +34,7 @@ func (m Model) View() string {
 			tab_titles = append(tab_titles, title_box)
 		}
 	}
+
 	extra_line_w := m.Width - titles_len
 	if extra_line_w > 0 {
 		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
@@ -49,6 +53,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			} else {
 				m.ActiveTap = 0
 			}
+			m.adjustView()
 			return m, nil
 		case "shift+tab", "ctrl+pgup":
 			if m.ActiveTap > 0 {
@@ -56,6 +61,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			} else {
 				m.ActiveTap = len(m.Children) - 1
 			}
+			m.adjustView()
 			return m, nil
 		}
 
@@ -94,5 +100,6 @@ func (m Model) SetWH(width int, height int) Model {
 	for i, child := range m.Children {
 		m.Children[i] = child.SetWH(width, height)
 	}
+	m.adjustToDimentions()
 	return m
 }
