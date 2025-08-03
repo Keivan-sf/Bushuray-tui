@@ -85,7 +85,7 @@ func initModel() Model {
 					Content: list.Model{
 						Id:      zone.NewPrefix(),
 						Primary: -1,
-						Items:   dummyItemsWithPrefix("G3"),
+						Items:   dummyItemsWithPrefix("g4long"),
 					},
 					Title: "Group 4 very long name",
 				},
@@ -93,7 +93,7 @@ func initModel() Model {
 					Content: list.Model{
 						Id:      zone.NewPrefix(),
 						Primary: -1,
-						Items:   dummyItemsWithPrefix("G3"),
+						Items:   dummyItemsWithPrefix("A-"),
 					},
 					Title: "A Group 3-",
 				},
@@ -101,7 +101,7 @@ func initModel() Model {
 					Content: list.Model{
 						Id:      zone.NewPrefix(),
 						Primary: -1,
-						Items:   dummyItemsWithPrefix("G3"),
+						Items:   dummyItemsWithPrefix("BBB"),
 					},
 					Title: "BBB Group 2",
 				},

@@ -39,7 +39,7 @@ func (m Model) View() string {
 	if extra_line_w > 0 {
 		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
 	}
-	tab_row := lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...)
+	tab_row := zone.Mark(m.Id+"tabline", lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...))
 	return lipgloss.JoinVertical(lipgloss.Top, tab_row, active.View())
 }
 
@@ -81,6 +81,22 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		return m, cmd
 	case tea.MouseMsg:
 		switch msg.Button {
+		case tea.MouseButtonWheelDown:
+			if !zone.Get(m.Id + "tabline").InBounds(msg) {
+				break
+			}
+			if m.ActiveTap < len(m.Children)-1 {
+				m.ActiveTap++
+			}
+			m.adjustView()
+		case tea.MouseButtonWheelUp:
+			if !zone.Get(m.Id + "tabline").InBounds(msg) {
+				break
+			}
+			if m.ActiveTap > 0 {
+				m.ActiveTap--
+			}
+			m.adjustView()
 		case tea.MouseButtonLeft:
 			for i := range m.Children {
 				if zone.Get(m.Id + strconv.Itoa(i)).InBounds(msg) {
