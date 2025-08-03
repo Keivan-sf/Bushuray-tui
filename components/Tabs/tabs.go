@@ -66,7 +66,18 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		}
 
 		var cmd tea.Cmd
+		last_primary := m.Children[m.ActiveTap].Content.Primary
 		m.Children[m.ActiveTap], cmd = m.Children[m.ActiveTap].Update(msg)
+		if last_primary != m.Children[m.ActiveTap].Content.Primary {
+			// log.Panicf("%d: primary changed from %d to %d", m.ActiveTap,m.)
+			for i, _ := range m.Children {
+				if i == m.ActiveTap {
+					continue
+				}
+				m.Children[i].Content.Primary = -1
+			}
+		}
+
 		return m, cmd
 	case tea.MouseMsg:
 		switch msg.Button {
