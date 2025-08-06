@@ -3,6 +3,7 @@ package addgroup
 import (
 	// "fmt"
 	cmds "bushuray-tui/commands"
+	"bushuray-tui/utils"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -138,8 +139,11 @@ func (m Model) View() string {
 	if m.focusIndex == len(m.inputs) {
 		button = &focusedButton
 	}
+
 	views = append(views, "")
 	views = append(views, *button)
+	views = append(views, "")
+	views = append(views, utils.GenHelp([]string{"esc"}, []string{"cancel"}))
 	container := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Top, views...))
 	return container
 
