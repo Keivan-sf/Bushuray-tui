@@ -1,6 +1,7 @@
 package tabs
 
 import (
+	cmds "bushuray-tui/commands"
 	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -63,6 +64,8 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			m.adjustView()
 			return m, nil
+		case "A":
+			return m , cmds.EnterAddGroupView
 		}
 
 		var cmd tea.Cmd
@@ -70,7 +73,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		m.Children[m.ActiveTap], cmd = m.Children[m.ActiveTap].Update(msg)
 		if last_primary != m.Children[m.ActiveTap].Content.Primary {
 			// log.Panicf("%d: primary changed from %d to %d", m.ActiveTap,m.)
-			for i, _ := range m.Children {
+			for i := range m.Children {
 				if i == m.ActiveTap {
 					continue
 				}
