@@ -73,7 +73,7 @@ func (m Model) View() string {
 
 func initModel() Model {
 	return Model{
-		active_section: "add-group",
+		active_section: "tabs",
 		add_group:      addgroup.InitialModel(),
 		tabs: tabs.Model{
 			Id: zone.NewPrefix(),
