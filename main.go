@@ -1,6 +1,7 @@
 package main
 
 import (
+	addgroup "bushuray-tui/components/AddGroup"
 	"bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
 	"fmt"
@@ -11,9 +12,11 @@ import (
 )
 
 type Model struct {
-	width  int
-	height int
-	tabs   tabs.Model
+	width          int
+	height         int
+	tabs           tabs.Model
+	add_group      addgroup.Model
+	active_section string
 }
 
 func (m Model) Init() tea.Cmd {
@@ -22,17 +25,24 @@ func (m Model) Init() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case tea.WindowSizeMsg:
+		m.width = msg.Width
+		m.height = msg.Height
+		m.tabs = m.tabs.SetWH(msg.Width, msg.Height/2)
+		m.add_group = m.add_group.SetWH(msg.Width, msg.Height)
+		return m, nil
+	}
+	if m.active_section == "add-group" {
+		var cmd tea.Cmd
+		m.add_group, cmd = m.add_group.Update(msg)
+		return m, cmd
+	}
+	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c", "q":
 			return m, tea.Quit
 		}
-
-	case tea.WindowSizeMsg:
-		m.width = msg.Width
-		m.height = msg.Height
-		m.tabs = m.tabs.SetWH(msg.Width, msg.Height/2)
-		return m, nil
 	}
 
 	var cmd tea.Cmd
@@ -41,11 +51,16 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
+	if m.active_section == "add-group" {
+		return m.add_group.View()
+	}
 	return zone.Scan(m.tabs.View())
 }
 
 func initModel() Model {
 	return Model{
+		active_section: "add-group",
+		add_group:      addgroup.InitialModel(),
 		tabs: tabs.Model{
 			Id: zone.NewPrefix(),
 			Children: []tabs.TabView{
