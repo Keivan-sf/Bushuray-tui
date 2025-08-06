@@ -4,6 +4,7 @@ import (
 	addgroup "bushuray-tui/components/AddGroup"
 	"bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
+	sharedtypes "bushuray-tui/shared_types"
 	"fmt"
 	"os"
 
@@ -25,29 +26,42 @@ func (m Model) Init() tea.Cmd {
 
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "ctrl+c", "q":
+			return m, tea.Quit
+		}
+
 	case tea.WindowSizeMsg:
 		m.width = msg.Width
 		m.height = msg.Height
 		m.tabs = m.tabs.SetWH(msg.Width, msg.Height/2)
 		m.add_group = m.add_group.SetWH(msg.Width, msg.Height)
 		return m, nil
+
+	case sharedtypes.AddGroupExit:
+		m.active_section = "tabs"
+		return m, nil
+
+	case sharedtypes.AddGroupEnter:
+		m.active_section = "add-group"
+		return m, nil
 	}
+
 	if m.active_section == "add-group" {
 		var cmd tea.Cmd
 		m.add_group, cmd = m.add_group.Update(msg)
 		return m, cmd
 	}
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c", "q":
-			return m, tea.Quit
-		}
+
+	if m.active_section == "tabs" {
+		var cmd tea.Cmd
+		m.tabs, cmd = m.tabs.Update(msg)
+		return m, cmd
 	}
 
-	var cmd tea.Cmd
-	m.tabs, cmd = m.tabs.Update(msg)
-	return m, cmd
+	return m, nil
 }
 
 func (m Model) View() string {

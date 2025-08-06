@@ -2,7 +2,7 @@ package addgroup
 
 import (
 	// "fmt"
-	"log"
+	cmds "bushuray-tui/commands"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -67,19 +67,20 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "ctrl+c", "esc":
-			return m, tea.Quit
+		case "esc":
+			return m, cmds.ExitAddGroupView
 
 		case "tab", "shift+tab", "enter", "up", "down":
 			s := msg.String()
 
-			if s == "enter" && m.focusIndex == len(m.inputs) {
-				log.Println(m.inputs[0].Value(), m.inputs[1].Value())
-				return m, tea.Quit
-			}
+			commands := make([]tea.Cmd, len(m.inputs))
 
-			// Cycle indexes
-			if s == "up" || s == "shift+tab" {
+			if s == "enter" && m.focusIndex == len(m.inputs) {
+				commands = append(commands, cmds.SubmitGroup(m.inputs[0].Value(), m.inputs[1].Value()))
+				m.focusIndex = 0
+				m.inputs[0].Reset()
+				m.inputs[1].Reset()
+			} else if s == "up" || s == "shift+tab" {
 				m.focusIndex--
 			} else {
 				m.focusIndex++
@@ -91,11 +92,10 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				m.focusIndex = len(m.inputs)
 			}
 
-			cmds := make([]tea.Cmd, len(m.inputs))
 			for i := 0; i <= len(m.inputs)-1; i++ {
 				if i == m.focusIndex {
 					// Set focused state
-					cmds[i] = m.inputs[i].Focus()
+					commands[i] = m.inputs[i].Focus()
 					m.inputs[i].PromptStyle = focusedStyle
 					m.inputs[i].TextStyle = focusedStyle
 					continue
@@ -106,7 +106,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				m.inputs[i].TextStyle = noStyle
 			}
 
-			return m, tea.Batch(cmds...)
+			return m, tea.Batch(commands...)
 		}
 	}
 
