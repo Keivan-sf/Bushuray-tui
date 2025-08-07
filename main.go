@@ -5,6 +5,7 @@ import (
 	"bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
 	tunview "bushuray-tui/components/Tun"
+	connection "bushuray-tui/lib/Connection"
 	sharedtypes "bushuray-tui/shared_types"
 	"fmt"
 	"os"
@@ -170,9 +171,24 @@ func main() {
 		fmt.Println("error with log to file", err)
 	}
 	defer f.Close()
+	C := connection.ConnectionHandler{}
+	C.Init("127.0.0.1", 4897)
+	err = C.GetConnection()
+	if err != nil {
+		fmt.Println("error connecting", err)
+		return
+	} else {
+		fmt.Println("connection established")
+	}
 
 	zone.NewGlobal()
 	p := tea.NewProgram(initModel(), tea.WithAltScreen(), tea.WithMouseCellMotion())
+
+	err = C.HandleConnection(p)
+	if err != nil {
+		fmt.Println("error calling handler", err)
+		return
+	}
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error %v\n", err)
