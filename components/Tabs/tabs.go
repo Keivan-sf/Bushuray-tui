@@ -10,13 +10,17 @@ import (
 )
 
 type Model struct {
-	Id        string
-	Children  []TabView
-	ActiveTap int
-	Width     int
-	Height    int
-	viewStart int
-	viewEnd   int
+	Id           string
+	Children     []TabView
+	ActiveTap    int
+	Width        int
+	Height       int
+	viewStart    int
+	viewEnd      int
+	IsConnected  bool
+	IsTunEnabled bool
+	SocksPort    int
+	HttpPort     int
 }
 
 func (m Model) View() string {
@@ -41,7 +45,7 @@ func (m Model) View() string {
 		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
 	}
 	tab_row := zone.Mark(m.Id+"tabline", lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...))
-	return lipgloss.JoinVertical(lipgloss.Top, tab_row, active.View())
+	return lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View(), m.renderStatusBar())
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
@@ -64,9 +68,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			m.adjustView()
 			return m, nil
-		case "A":
-			return m , cmds.EnterAddGroupView
-		case "V":
+		case "a":
+			return m, cmds.EnterAddGroupView
+		case "v":
 			return m, cmds.EnterTunView
 		}
 
@@ -103,9 +107,13 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			m.adjustView()
 		case tea.MouseButtonLeft:
+			if msg.Action != tea.MouseActionRelease {
+				break
+			}
 			for i := range m.Children {
 				if zone.Get(m.Id + strconv.Itoa(i)).InBounds(msg) {
 					m.ActiveTap = i
+					m.adjustView()
 					return m, nil
 				}
 			}
@@ -130,7 +138,7 @@ func (m Model) SetWH(width int, height int) Model {
 	m.Width = width
 	m.Height = height
 	for i, child := range m.Children {
-		m.Children[i] = child.SetWH(width, height)
+		m.Children[i] = child.SetWH(width, height-11)
 	}
 	m.adjustToDimentions()
 	return m

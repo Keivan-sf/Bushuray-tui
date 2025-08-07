@@ -1,5 +1,17 @@
 package tabs
 
+import (
+	"bushuray-tui/utils"
+
+	"github.com/charmbracelet/lipgloss"
+)
+
+func (m Model) renderHelp() string {
+	var help_text = utils.GenHelp([]string{"enter", "p", "v", "a", "t", "T"}, []string{"connect", "paste config", "tun mode", "add group", "test", "test all"})
+	help := lipgloss.NewStyle().Width(m.Width).Height(2).MaxHeight(2).MaxWidth(m.Width).Align(lipgloss.Center).Render(help_text)
+	return help
+}
+
 func (m *Model) adjustToDimentions() {
 	m.viewStart = m.ActiveTap
 	m.viewEnd = m.calculateEnd(m.viewStart)
