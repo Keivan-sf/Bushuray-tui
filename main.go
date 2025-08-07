@@ -50,10 +50,16 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case sharedtypes.AddGroupEnter:
 		m.active_section = "add-group"
 		return m, nil
+
+	case sharedtypes.TunViewEnter:
+		m.active_section = "tunview"
+		return m, nil
 	}
 
 	if m.active_section == "tunview" {
-		return m, nil
+		var cmd tea.Cmd
+		m.tun, cmd = m.tun.Update(msg)
+		return m, cmd
 	}
 
 	if m.active_section == "add-group" {
@@ -83,7 +89,7 @@ func (m Model) View() string {
 
 func initModel() Model {
 	return Model{
-		active_section: "tunview",
+		active_section: "tabs",
 		tun:            tunview.InitialModel(),
 		add_group:      addgroup.InitialModel(),
 		tabs: tabs.Model{
