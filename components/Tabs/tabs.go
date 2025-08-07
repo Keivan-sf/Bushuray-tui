@@ -134,7 +134,7 @@ func (m Model) SetWH(width int, height int) Model {
 	m.Width = width
 	m.Height = height
 	for i, child := range m.Children {
-		m.Children[i] = child.SetWH(width, height)
+		m.Children[i] = child.SetWH(width, height-11)
 	}
 	m.adjustToDimentions()
 	return m
