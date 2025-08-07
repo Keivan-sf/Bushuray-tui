@@ -1,6 +1,11 @@
 package tunview
 
-import tea "github.com/charmbracelet/bubbletea"
+import (
+	"bushuray-tui/utils"
+
+	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
+)
 
 type Model struct {
 	Width  int
@@ -12,7 +17,12 @@ func InitialModel() Model {
 }
 
 func (m Model) View() string {
-	return "hiiii"
+	dialog := lipgloss.NewStyle().Width(m.Width).MarginTop(2).Padding(0, 2).MaxWidth(m.Width).Align(lipgloss.Center).Render("Core is not running as root, do you want to kill it so you can start again with `sudo bushuray` ?")
+
+	help := lipgloss.NewStyle().Width(m.Width).MarginTop(2).MaxWidth(m.Width).Align(lipgloss.Center).Render(utils.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"}))
+
+	content := lipgloss.JoinVertical(lipgloss.Top, dialog, help)
+	return content
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {

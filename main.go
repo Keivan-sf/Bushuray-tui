@@ -40,6 +40,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 		m.tabs = m.tabs.SetWH(msg.Width, msg.Height/2)
 		m.add_group = m.add_group.SetWH(msg.Width, msg.Height)
+		m.tun = m.tun.SetWH(msg.Width, msg.Height)
 		return m, nil
 
 	case sharedtypes.AddGroupExit:
