@@ -65,9 +65,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			m.adjustView()
 			return m, nil
-		case "A":
+		case "a":
 			return m, cmds.EnterAddGroupView
-		case "V":
+		case "v":
 			return m, cmds.EnterTunView
 		}
 
