@@ -104,9 +104,13 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			m.adjustView()
 		case tea.MouseButtonLeft:
+			if msg.Action != tea.MouseActionRelease {
+				break
+			}
 			for i := range m.Children {
 				if zone.Get(m.Id + strconv.Itoa(i)).InBounds(msg) {
 					m.ActiveTap = i
+					m.adjustView()
 					return m, nil
 				}
 			}
