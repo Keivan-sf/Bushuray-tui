@@ -4,6 +4,7 @@ import (
 	addgroup "bushuray-tui/components/AddGroup"
 	"bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
+	tunview "bushuray-tui/components/Tun"
 	sharedtypes "bushuray-tui/shared_types"
 	"fmt"
 	"os"
@@ -17,6 +18,7 @@ type Model struct {
 	height         int
 	tabs           tabs.Model
 	add_group      addgroup.Model
+	tun            tunview.Model
 	active_section string
 }
 
@@ -29,7 +31,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case tea.KeyMsg:
 		switch msg.String() {
-		case "ctrl+c", "q":
+		case "ctrl+c":
 			return m, tea.Quit
 		}
 
@@ -38,6 +40,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.height = msg.Height
 		m.tabs = m.tabs.SetWH(msg.Width, msg.Height/2)
 		m.add_group = m.add_group.SetWH(msg.Width, msg.Height)
+		m.tun = m.tun.SetWH(msg.Width, msg.Height)
 		return m, nil
 
 	case sharedtypes.AddGroupExit:
@@ -47,6 +50,20 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case sharedtypes.AddGroupEnter:
 		m.active_section = "add-group"
 		return m, nil
+
+	case sharedtypes.TunViewEnter:
+		m.active_section = "tunview"
+		return m, nil
+
+	case sharedtypes.TunViewExit:
+		m.active_section = "tabs"
+		return m, nil
+	}
+
+	if m.active_section == "tunview" {
+		var cmd tea.Cmd
+		m.tun, cmd = m.tun.Update(msg)
+		return m, cmd
 	}
 
 	if m.active_section == "add-group" {
@@ -68,12 +85,16 @@ func (m Model) View() string {
 	if m.active_section == "add-group" {
 		return m.add_group.View()
 	}
+	if m.active_section == "tunview" {
+		return m.tun.View()
+	}
 	return zone.Scan(m.tabs.View())
 }
 
 func initModel() Model {
 	return Model{
 		active_section: "tabs",
+		tun:            tunview.InitialModel(),
 		add_group:      addgroup.InitialModel(),
 		tabs: tabs.Model{
 			Id: zone.NewPrefix(),
