@@ -97,7 +97,11 @@ func initModel() Model {
 		tun:            tunview.InitialModel(),
 		add_group:      addgroup.InitialModel(),
 		tabs: tabs.Model{
-			Id: zone.NewPrefix(),
+			Id:           zone.NewPrefix(),
+			IsTunEnabled: false,
+			IsConnected:  true,
+			SocksPort:    3090,
+			HttpPort:     3091,
 			Children: []tabs.TabView{
 				{
 					Content: list.Model{

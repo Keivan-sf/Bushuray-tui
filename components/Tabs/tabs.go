@@ -10,13 +10,17 @@ import (
 )
 
 type Model struct {
-	Id        string
-	Children  []TabView
-	ActiveTap int
-	Width     int
-	Height    int
-	viewStart int
-	viewEnd   int
+	Id           string
+	Children     []TabView
+	ActiveTap    int
+	Width        int
+	Height       int
+	viewStart    int
+	viewEnd      int
+	IsConnected  bool
+	IsTunEnabled bool
+	SocksPort    int
+	HttpPort     int
 }
 
 func (m Model) View() string {
@@ -41,7 +45,7 @@ func (m Model) View() string {
 		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
 	}
 	tab_row := zone.Mark(m.Id+"tabline", lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...))
-	return lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View())
+	return lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View(), m.renderStatusBar())
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
