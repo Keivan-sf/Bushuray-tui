@@ -2,7 +2,7 @@ package tabs
 
 import "bushuray-tui/utils"
 
-var help_text = utils.GenHelp([]string{"enter", "v", "a", "t", "T"}, []string{"Connect", "TUN mode", "Add group", "test", "test all"})
+var help_text = utils.GenHelp([]string{"enter", "p", "v", "a", "t", "T"}, []string{"connect", "paste config", "tun mode", "add group", "test", "test all"})
 
 func (m *Model) adjustToDimentions() {
 	m.viewStart = m.ActiveTap
