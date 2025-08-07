@@ -9,3 +9,11 @@ import (
 func EnterTunView() tea.Msg {
 	return t.TunViewEnter{}
 }
+
+func KillCore() tea.Msg {
+	return t.KillCore{}
+}
+
+func ExitTunView() tea.Msg {
+	return t.TunViewExit{}
+}

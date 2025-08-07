@@ -54,6 +54,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case sharedtypes.TunViewEnter:
 		m.active_section = "tunview"
 		return m, nil
+
+	case sharedtypes.TunViewExit:
+		m.active_section = "tabs"
+		return m, nil
 	}
 
 	if m.active_section == "tunview" {

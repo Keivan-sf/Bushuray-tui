@@ -1,6 +1,7 @@
 package tunview
 
 import (
+	cmds "bushuray-tui/commands"
 	"bushuray-tui/utils"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -26,6 +27,15 @@ func (m Model) View() string {
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "enter":
+			return m, tea.Batch(cmds.KillCore, tea.Quit)
+		case "esc":
+			return m, cmds.ExitTunView
+		}
+	}
 	return m, nil
 }
 
