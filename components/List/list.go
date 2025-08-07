@@ -28,10 +28,11 @@ type Model struct {
 var protocol_w = 8
 var test_result_w = 15
 
-var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#4c4f69"))
-var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#40a02b")).Foreground(lipgloss.Color("#FFF")).Width(protocol_w).Align(lipgloss.Center)
+var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#1e2030"))
 
-var under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#1e2030"))
+var protocol_primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#8839ef")).Foreground(lipgloss.Color("#FFF")).Width(protocol_w).Align(lipgloss.Center)
+
+var under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#11111b"))
 var protocol_under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color("#24273a")).Foreground(lipgloss.Color("#9ca0b0")).Width(protocol_w).Align(lipgloss.Center)
 
 var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).Width(protocol_w).Align(lipgloss.Center)
