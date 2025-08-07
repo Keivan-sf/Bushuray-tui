@@ -6,6 +6,7 @@ import (
 	tabs "bushuray-tui/components/Tabs"
 	tunview "bushuray-tui/components/Tun"
 	connection "bushuray-tui/lib/Connection"
+	servercmds "bushuray-tui/lib/ServerCommands"
 	sharedtypes "bushuray-tui/shared_types"
 	"fmt"
 	"os"
@@ -184,11 +185,11 @@ func main() {
 	zone.NewGlobal()
 	p := tea.NewProgram(initModel(), tea.WithAltScreen(), tea.WithMouseCellMotion())
 
-	err = C.HandleConnection(p)
-	if err != nil {
-		fmt.Println("error calling handler", err)
-		return
-	}
+	go C.HandleConnection(p)
+	servercmds.Init(&C)
+	servercmds.GetApplicationState()
+	select {}
+	return
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error %v\n", err)

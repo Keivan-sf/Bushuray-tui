@@ -90,30 +90,26 @@ func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 	}
 }
 
-func (ch *ConnectionHandler) Send(message string) error {
-	if ch.conn == nil {
-		return fmt.Errorf("no active connection")
-	}
-
-	_, err := ch.conn.Write([]byte(message))
-	if err != nil {
-		return fmt.Errorf("failed to send message: %w", err)
-	}
-
-	return nil
-}
-
-func (ch *ConnectionHandler) send(obj any) error {
-	if ch.conn == nil {
-		return fmt.Errorf("no active connection")
-	}
+func (ch *ConnectionHandler) Send(msg []byte) error {
 	ch.writeMu.Lock()
 	defer ch.writeMu.Unlock()
-	data, _ := json.Marshal(obj)
+
+	if ch.conn == nil {
+		return fmt.Errorf("no active connection")
+	}
+
 	length := make([]byte, 4)
-	binary.BigEndian.PutUint32(length, uint32(len(data)))
-	ch.conn.Write(length)
-	ch.conn.Write(data)
+	binary.BigEndian.PutUint32(length, uint32(len(msg)))
+
+	_, err := ch.conn.Write(length)
+	if err != nil {
+		log.Fatalf("Error sending length %d %v\n", length, err)
+	}
+	_, err = ch.conn.Write(msg)
+	if err != nil {
+		log.Fatalf("Error sending %s %v\n", msg, err)
+	}
+
 	return nil
 }
 
