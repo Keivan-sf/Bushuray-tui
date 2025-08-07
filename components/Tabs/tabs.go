@@ -41,8 +41,7 @@ func (m Model) View() string {
 		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
 	}
 	tab_row := zone.Mark(m.Id+"tabline", lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...))
-	help := lipgloss.NewStyle().Width(m.Width).MarginTop(2).Align(lipgloss.Center).Render(help_text)
-	return lipgloss.JoinVertical(lipgloss.Top, tab_row, active.View(), help)
+	return lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View())
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
