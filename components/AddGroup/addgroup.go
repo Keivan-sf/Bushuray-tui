@@ -19,20 +19,6 @@ type Model struct {
 	cursorMode cursor.Mode
 }
 
-var (
-	focusedStyle        = lipgloss.NewStyle().Foreground(lipgloss.Color("#7287fd"))
-	blurredStyle        = lipgloss.NewStyle().Foreground(lipgloss.Color("#8caaee"))
-	cursorStyle         = focusedStyle
-	noStyle             = lipgloss.NewStyle()
-	grayStyle           = lipgloss.NewStyle().Foreground(lipgloss.Color("#585b70"))
-	helpStyle           = blurredStyle
-	cursorModeHelpStyle = lipgloss.NewStyle().Foreground(lipgloss.Color("244"))
-
-	focusedButton = focusedStyle.Render("[ Submit ]")
-	// blurredButton = fmt.Sprintf("[ %s ]", blurredStyle.Render("Submit"))
-	blurredButton = grayStyle.Render("[ Submit ]")
-)
-
 func InitialModel() Model {
 	m := Model{
 		inputs: make([]textinput.Model, 2),
@@ -69,7 +55,11 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "esc":
-			return m, cmds.ExitAddGroupView
+			commands := make([]tea.Cmd, len(m.inputs))
+			commands = append(commands, cmds.ExitAddGroupView)
+			m.reset()
+			commands = append(commands, m.adjustToNewFocus(commands)...)
+			return m, tea.Batch(commands...)
 
 		case "tab", "shift+tab", "enter", "up", "down":
 			s := msg.String()
@@ -78,12 +68,10 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 
 			if s == "enter" && m.focusIndex == len(m.inputs) {
 				commands = append(commands, cmds.SubmitGroup(m.inputs[0].Value(), m.inputs[1].Value()))
-				m.focusIndex = 0
-				m.inputs[0].Reset()
-				m.inputs[1].Reset()
+				m.reset()
 			} else if s == "up" || s == "shift+tab" {
 				m.focusIndex--
-			} else {
+			} else if s == "down" || s == "tab" {
 				m.focusIndex++
 			}
 
@@ -93,25 +81,11 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				m.focusIndex = len(m.inputs)
 			}
 
-			for i := 0; i <= len(m.inputs)-1; i++ {
-				if i == m.focusIndex {
-					// Set focused state
-					commands[i] = m.inputs[i].Focus()
-					m.inputs[i].PromptStyle = focusedStyle
-					m.inputs[i].TextStyle = focusedStyle
-					continue
-				}
-				// Remove focused state
-				m.inputs[i].Blur()
-				m.inputs[i].PromptStyle = noStyle
-				m.inputs[i].TextStyle = noStyle
-			}
-
+			commands = append(commands, m.adjustToNewFocus(commands)...)
 			return m, tea.Batch(commands...)
 		}
 	}
 
-	// Handle character input and blinking
 	cmd := m.updateInputs(msg)
 
 	return m, cmd
@@ -120,8 +94,6 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 func (m *Model) updateInputs(msg tea.Msg) tea.Cmd {
 	cmds := make([]tea.Cmd, len(m.inputs))
 
-	// Only text inputs with Focus() set will respond, so it's safe to simply
-	// update all of them here without any further logic.
 	for i := range m.inputs {
 		m.inputs[i], cmds[i] = m.inputs[i].Update(msg)
 	}
