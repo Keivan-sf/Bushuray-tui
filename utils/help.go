@@ -2,16 +2,16 @@ package utils
 
 import "github.com/charmbracelet/lipgloss"
 
-func GenHelp(keys []string, helps []string) string {
-	separtor := " • "
-	// keyStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#7287fd"))
-	keyStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#7c7f93"))
+var secondary_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69"))
+var primary_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#ffffff"))
 
-	helpStyle := lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69"))
+func GenHelp(keys []string, helps []string) string {
+	separtor := secondary_style.Render(" • ")
+
 	s := ""
 	for i := range keys {
-		s += keyStyle.Render(keys[i])
-		s += " " + helpStyle.Render(helps[i])
+		s += primary_style.Render(keys[i])
+		s += " " + secondary_style.Render(helps[i])
 		if i+1 != len(keys) {
 			s += separtor
 		}
