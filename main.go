@@ -1,194 +1,16 @@
 package main
 
 import (
-	addgroup "bushuray-tui/components/AddGroup"
-	helpview "bushuray-tui/components/Help"
-	"bushuray-tui/components/List"
-	tabs "bushuray-tui/components/Tabs"
-	tunview "bushuray-tui/components/Tun"
+	mainmodel "bushuray-tui/components/MainModel"
 	connection "bushuray-tui/lib/Connection"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	servernotifs "bushuray-tui/lib/ServerNotifs"
-	sharedtypes "bushuray-tui/shared_types"
 	"fmt"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
 	zone "github.com/lrstanley/bubblezone"
 )
-
-type Model struct {
-	Width          int
-	Height         int
-	tabs           tabs.Model
-	add_group      addgroup.Model
-	tun            tunview.Model
-	help           helpview.Model
-	active_section string
-}
-
-func (m Model) Init() tea.Cmd {
-	return nil
-}
-
-func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-
-	case sharedtypes.ServerNotification:
-		return HandleServerNotifs(msg, m)
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c":
-			return m, tea.Quit
-		}
-
-	case tea.WindowSizeMsg:
-		m.Width = msg.Width
-		m.Height = msg.Height
-		m.tabs = m.tabs.SetWH(msg.Width, msg.Height)
-		m.add_group = m.add_group.SetWH(msg.Width, msg.Height)
-		m.tun = m.tun.SetWH(msg.Width, msg.Height)
-		m.help = m.help.SetWH(msg.Width, msg.Height)
-		return m, nil
-
-	case sharedtypes.AddGroupExit:
-		m.active_section = "tabs"
-		return m, nil
-
-	case sharedtypes.AddGroupEnter:
-		m.active_section = "add-group"
-		return m, nil
-
-	case sharedtypes.TunViewEnter:
-		m.active_section = "tunview"
-		return m, nil
-
-	case sharedtypes.TunViewExit:
-		m.active_section = "tabs"
-		return m, nil
-
-	case sharedtypes.HelpViewEnter:
-		m.active_section = "helpview"
-		return m, nil
-
-	case sharedtypes.HelpViewExit:
-		m.active_section = "tabs"
-		return m, nil
-	}
-
-	if m.active_section == "tunview" {
-		var cmd tea.Cmd
-		m.tun, cmd = m.tun.Update(msg)
-		return m, cmd
-	}
-
-	if m.active_section == "add-group" {
-		var cmd tea.Cmd
-		m.add_group, cmd = m.add_group.Update(msg)
-		return m, cmd
-	}
-
-	if m.active_section == "helpview" {
-		var cmd tea.Cmd
-		m.help, cmd = m.help.Update(msg)
-		return m, cmd
-	}
-
-	if m.active_section == "tabs" {
-		var cmd tea.Cmd
-		m.tabs, cmd = m.tabs.Update(msg)
-		return m, cmd
-	}
-
-	return m, nil
-}
-
-func (m Model) View() string {
-	if m.active_section == "helpview" {
-		return m.help.View()
-	}
-	if m.active_section == "add-group" {
-		return m.add_group.View()
-	}
-	if m.active_section == "tunview" {
-		return m.tun.View()
-	}
-	return zone.Scan(m.tabs.View())
-}
-
-func initModel() Model {
-	return Model{
-		active_section: "tabs",
-		tun:            tunview.InitialModel(),
-		add_group:      addgroup.InitialModel(),
-		help:           helpview.InitialModel(),
-		tabs: tabs.Model{
-			Id:           zone.NewPrefix(),
-			IsTunEnabled: false,
-			IsConnected:  true,
-			SocksPort:    3090,
-			HttpPort:     3091,
-			Children: []tabs.TabView{
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummy_items,
-					},
-					Title: "Default group",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("G1"),
-					},
-					Title: "mt Group 1",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("G2"),
-					},
-					Title: "random name",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("G3"),
-					},
-					Title: "Group 3",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("g4long"),
-					},
-					Title: "Group 4 very long name",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("A-"),
-					},
-					Title: "A Group 3-",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("BBB"),
-					},
-					Title: "BBB Group 2",
-				},
-			},
-		},
-	}
-}
 
 func main() {
 	f, err := tea.LogToFile("debug.log", "debug")
@@ -207,7 +29,7 @@ func main() {
 	}
 
 	zone.NewGlobal()
-	p := tea.NewProgram(initModel(), tea.WithAltScreen(), tea.WithMouseCellMotion())
+	p := tea.NewProgram(mainmodel.InitModel(), tea.WithAltScreen(), tea.WithMouseCellMotion())
 
 	go C.HandleConnection(p)
 	servercmds.Init(&C)
