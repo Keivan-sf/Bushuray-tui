@@ -74,6 +74,8 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			return m, cmds.EnterAddGroupView
 		case "v":
 			return m, cmds.EnterTunView
+		case "ctrl+c", "q", "esc":
+			return m, tea.Quit
 		}
 
 		var cmd tea.Cmd
