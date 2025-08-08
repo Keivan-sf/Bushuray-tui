@@ -2,6 +2,8 @@ package connection
 
 import (
 	"bufio"
+	servernotifs "bushuray-tui/lib/ServerNotifs"
+	sharedtypes "bushuray-tui/shared_types"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -14,11 +16,6 @@ import (
 
 	tea "github.com/charmbracelet/bubbletea"
 )
-
-type TcpMessage struct {
-	Msg  string          `json:"msg"`
-	Data json.RawMessage `json:"data"`
-}
 
 type ConnectionHandler struct {
 	host    string
@@ -81,12 +78,14 @@ func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 
 		log.Println(string(payload))
 
-		var raw_tcp_message TcpMessage
+		var raw_tcp_message sharedtypes.TcpMessage
 
 		if err := json.Unmarshal(payload, &raw_tcp_message); err != nil {
 			log.Printf("Invalid JSON: %v", err)
 			return err
 		}
+
+		servernotifs.HandleNotification(raw_tcp_message)
 	}
 }
 

@@ -18,7 +18,11 @@ func Init(connection *connection.ConnectionHandler) {
 }
 
 func GetApplicationState() {
-	cmd := CreateJsonCommand("get-application-state", sharedtypes.GetApplicationStateData{})
+	sendCmd("get-application-state", sharedtypes.GetApplicationStateData{})
+}
+
+func sendCmd(msg string, obj any) {
+	cmd := CreateJsonCommand(msg, obj)
 	err := sc.connection.Send(cmd)
 	if err != nil {
 		log.Fatalf("failed to send command %v\n", string(cmd))

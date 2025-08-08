@@ -188,8 +188,6 @@ func main() {
 	go C.HandleConnection(p)
 	servercmds.Init(&C)
 	servercmds.GetApplicationState()
-	select {}
-	return
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error %v\n", err)
