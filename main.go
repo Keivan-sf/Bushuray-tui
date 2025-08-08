@@ -2,6 +2,7 @@ package main
 
 import (
 	addgroup "bushuray-tui/components/AddGroup"
+	helpview "bushuray-tui/components/Help"
 	"bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
 	tunview "bushuray-tui/components/Tun"
@@ -21,6 +22,7 @@ type Model struct {
 	tabs           tabs.Model
 	add_group      addgroup.Model
 	tun            tunview.Model
+	help           helpview.Model
 	active_section string
 }
 
@@ -84,6 +86,9 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 }
 
 func (m Model) View() string {
+	if m.active_section == "helpview" {
+		return m.help.View()
+	}
 	if m.active_section == "add-group" {
 		return m.add_group.View()
 	}
@@ -95,9 +100,10 @@ func (m Model) View() string {
 
 func initModel() Model {
 	return Model{
-		active_section: "tabs",
+		active_section: "helpview",
 		tun:            tunview.InitialModel(),
 		add_group:      addgroup.InitialModel(),
+		help:           helpview.InitialModel(),
 		tabs: tabs.Model{
 			Id:           zone.NewPrefix(),
 			IsTunEnabled: false,
