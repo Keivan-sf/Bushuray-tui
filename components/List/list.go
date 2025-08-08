@@ -1,6 +1,7 @@
 package list
 
 import (
+	servercmds "bushuray-tui/lib/ServerCommands"
 	"bushuray-tui/utils"
 	"fmt"
 	"strconv"
@@ -20,6 +21,7 @@ type ListItem struct {
 
 type Model struct {
 	Id      string
+	GroupId int
 	Items   []ListItem
 	cursor  int
 	Width   int
@@ -57,6 +59,7 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			adjustOffsetForCursor(&l)
 		case "enter":
 			l.Primary = l.cursor
+			servercmds.Connect(l.GroupId, l.Items[l.Primary].ProfileId)
 		}
 	case tea.MouseMsg:
 		switch msg.Button {

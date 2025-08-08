@@ -9,7 +9,6 @@ import (
 )
 
 type TabView struct {
-	GroupId int 
 	Title   string
 	Content list.Model
 }
