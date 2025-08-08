@@ -39,6 +39,7 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 	return m, nil
 }
 
+
 func convertProtocolForDisplay(name string) string {
 	switch name {
 	case "vless":

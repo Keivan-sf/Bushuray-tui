@@ -19,3 +19,7 @@ func Init(p *tea.Program) {
 func ApplicationStateNotif(state sharedtypes.ApplicationState) {
 	sn.p.Send(state)
 }
+
+func ProfileUpdatedNotif(data sharedtypes.ProfileUpdated) {
+	sn.p.Send(data)
+}

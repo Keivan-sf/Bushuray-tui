@@ -19,6 +19,11 @@ type ApplicationState struct {
 
 func (a ApplicationState) IsNotification() {}
 
+type ProfileUpdated struct {
+	Profile Profile `json:"profile"`
+}
+func (a ProfileUpdated) IsNotification() {}
+
 type GroupWithProfiles struct {
 	Group    Group     `json:"group"`
 	Profiles []Profile `json:"profiles"`
