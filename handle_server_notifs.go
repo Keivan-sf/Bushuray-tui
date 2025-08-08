@@ -18,6 +18,7 @@ func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model,
 		for _, group := range msg.Groups {
 			var tabview tabs.TabView
 			tabview.Content = list.Model{}
+			tabview.Content.Primary = -1
 			tabview.Content.Items = []list.ListItem{}
 			tabview.Content.Id = zone.NewPrefix()
 			tabview.GroupId = group.Group.Id
