@@ -63,6 +63,14 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case sharedtypes.TunViewExit:
 		m.active_section = "tabs"
 		return m, nil
+
+	case sharedtypes.HelpViewEnter:
+		m.active_section = "helpview"
+		return m, nil
+
+	case sharedtypes.HelpViewExit:
+		m.active_section = "tabs"
+		return m, nil
 	}
 
 	if m.active_section == "tunview" {
@@ -74,6 +82,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if m.active_section == "add-group" {
 		var cmd tea.Cmd
 		m.add_group, cmd = m.add_group.Update(msg)
+		return m, cmd
+	}
+
+	if m.active_section == "helpview" {
+		var cmd tea.Cmd
+		m.help, cmd = m.help.Update(msg)
 		return m, cmd
 	}
 
@@ -101,7 +115,7 @@ func (m Model) View() string {
 
 func initModel() Model {
 	return Model{
-		active_section: "helpview",
+		active_section: "tabs",
 		tun:            tunview.InitialModel(),
 		add_group:      addgroup.InitialModel(),
 		help:           helpview.InitialModel(),

@@ -1,6 +1,8 @@
 package helpview
 
 import (
+	cmds "bushuray-tui/commands"
+
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
 )
@@ -44,6 +46,13 @@ func (m Model) View() string {
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
+	switch msg := msg.(type) {
+	case tea.KeyMsg:
+		switch msg.String() {
+		case "esc", "q", "?":
+			return m, cmds.ExitHelpView
+		}
+	}
 	return m, nil
 }
 
