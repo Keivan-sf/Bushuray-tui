@@ -66,8 +66,12 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			l.Items[l.cursor].TestResult = -2
 			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
 		case "enter":
-			l.Primary = l.cursor
-			servercmds.Connect(l.GroupId, l.Items[l.Primary].ProfileId)
+			if l.Primary == l.cursor {
+				servercmds.Disconnect()
+			} else {
+				l.Primary = l.cursor
+				servercmds.Connect(l.GroupId, l.Items[l.Primary].ProfileId)
+			}
 		}
 	case tea.MouseMsg:
 		switch msg.Button {
