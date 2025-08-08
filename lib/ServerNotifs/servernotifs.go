@@ -16,4 +16,6 @@ func Init(p *tea.Program) {
 	sn.p = p
 }
 
-func ApplicationStateNotif(state sharedtypes.ApplicationState) {}
+func ApplicationStateNotif(state sharedtypes.ApplicationState) {
+	sn.p.Send(state)
+}

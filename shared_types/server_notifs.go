@@ -7,10 +7,16 @@ type TcpMessage struct {
 	Data json.RawMessage `json:"data"`
 }
 
+type ServerNotification interface {
+	IsNotification()
+}
+
 type ApplicationState struct {
 	Groups           []GroupWithProfiles `json:"groups"`
 	ConnectionStatus ProxyStatus         `json:"connection-status"`
 }
+
+func (a ApplicationState) IsNotification() {}
 
 type GroupWithProfiles struct {
 	Group    Group     `json:"group"`

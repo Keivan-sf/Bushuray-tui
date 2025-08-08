@@ -14,6 +14,6 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			log.Printf("Invalid body for application-state %v", err)
 			return
 		}
-		log.Println("parsed appliacation state:", data)
+		ApplicationStateNotif(data)
 	}
 }

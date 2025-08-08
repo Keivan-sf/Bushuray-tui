@@ -8,6 +8,7 @@ import (
 	tunview "bushuray-tui/components/Tun"
 	connection "bushuray-tui/lib/Connection"
 	servercmds "bushuray-tui/lib/ServerCommands"
+	servernotifs "bushuray-tui/lib/ServerNotifs"
 	sharedtypes "bushuray-tui/shared_types"
 	"fmt"
 	"os"
@@ -33,6 +34,8 @@ func (m Model) Init() tea.Cmd {
 func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 
+	case sharedtypes.ServerNotification:
+		return HandleServerNotifs(msg, m)
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "ctrl+c":
@@ -209,6 +212,7 @@ func main() {
 	go C.HandleConnection(p)
 	servercmds.Init(&C)
 	servercmds.GetApplicationState()
+	servernotifs.Init(p)
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error %v\n", err)
