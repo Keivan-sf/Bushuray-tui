@@ -58,10 +58,12 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			adjustOffsetForCursor(&l)
 		case "T":
-			for _, item := range l.Items {
+			for i, item := range l.Items {
+				l.Items[i].TestResult = -2
 				servercmds.Test(l.GroupId, item.ProfileId)
 			}
 		case "t":
+			l.Items[l.cursor].TestResult = -2
 			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
 		case "enter":
 			l.Primary = l.cursor
