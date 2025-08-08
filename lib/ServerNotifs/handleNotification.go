@@ -22,5 +22,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		ProfileUpdatedNotif(data)
+	case "status-changed":
+		var data sharedtypes.ProxyStatus
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for status-changed %v", err)
+			return
+		}
+		StatusChangedNotif(data)
 	}
 }

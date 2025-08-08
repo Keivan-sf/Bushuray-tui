@@ -2,7 +2,6 @@ package mainmodel
 
 import (
 	sharedtypes "bushuray-tui/shared_types"
-	"log"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -12,8 +11,22 @@ func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model,
 	case sharedtypes.ApplicationState:
 		return applyApplicationState(msg, m)
 	case sharedtypes.ProfileUpdated:
-		log.Println("reached notif handler")
 		return applyProfileUpdated(msg, m)
+	case sharedtypes.ProxyStatus:
+		return applyStatusChanged(msg, m)
 	}
 	return m, nil
+}
+
+func findProfile(gid int, id int, m Model) (tabid int, index int) {
+	for i, g := range m.Tabs.Children {
+		if g.Content.GroupId == gid {
+			for j, p := range g.Content.Items {
+				if p.ProfileId == id {
+					return i, j
+				}
+			}
+		}
+	}
+	return -1, -1
 }

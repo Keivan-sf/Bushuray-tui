@@ -22,7 +22,8 @@ func (a ApplicationState) IsNotification() {}
 type ProfileUpdated struct {
 	Profile Profile `json:"profile"`
 }
-func (a ProfileUpdated) IsNotification() {}
+
+func (p ProfileUpdated) IsNotification() {}
 
 type GroupWithProfiles struct {
 	Group    Group     `json:"group"`
@@ -33,6 +34,8 @@ type ProxyStatus struct {
 	Connection string  `json:"connection"`
 	Profile    Profile `json:"profile"`
 }
+
+func (p ProxyStatus) IsNotification() {}
 
 type Profile struct {
 	Id         int    `json:"id"`
