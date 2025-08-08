@@ -9,8 +9,9 @@ import (
 )
 
 type TabView struct {
-	Title              string
-	Content            list.Model
+	GroupId int 
+	Title   string
+	Content list.Model
 }
 
 var border_color = lipgloss.Color("#7287fd")

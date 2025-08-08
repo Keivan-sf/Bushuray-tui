@@ -1,6 +1,7 @@
 package list
 
 import (
+	"bushuray-tui/utils"
 	"fmt"
 	"strconv"
 
@@ -10,9 +11,11 @@ import (
 )
 
 type ListItem struct {
+	ProfileId  int
 	Name       string
 	Protocol   string
 	TestResult int
+	Uri        string
 }
 
 type Model struct {
@@ -93,7 +96,7 @@ func (l Model) View() string {
 	for i := start; i < end; i++ {
 		row := ""
 		item := l.Items[i]
-		item_str := fmt.Sprintf(" %s", item.Name)
+		item_str := fmt.Sprintf(" %s", utils.SanitizeString(item.Name))
 		if i == l.Primary {
 			protocol := protocol_primary_style.Render(item.Protocol)
 			row += protocol

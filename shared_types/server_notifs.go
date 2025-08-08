@@ -14,6 +14,7 @@ type ServerNotification interface {
 type ApplicationState struct {
 	Groups           []GroupWithProfiles `json:"groups"`
 	ConnectionStatus ProxyStatus         `json:"connection-status"`
+	TunStatus        bool                `json:"tun-status"`
 }
 
 func (a ApplicationState) IsNotification() {}
