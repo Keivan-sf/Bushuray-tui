@@ -17,14 +17,6 @@ func Init(connection *connection.ConnectionHandler) {
 	sc.connection = connection
 }
 
-func GetApplicationState() {
-	sendCmd("get-application-state", sharedtypes.GetApplicationStateData{})
-}
-
-func Connect(group_id int, profile_id int) {
-	sendCmd("connect", sharedtypes.ConnectData{Profile: sharedtypes.ProfileID{Id: profile_id, GroupId: group_id}})
-}
-
 func sendCmd(msg string, obj any) {
 	cmd := CreateJsonCommand(msg, obj)
 	err := sc.connection.Send(cmd)

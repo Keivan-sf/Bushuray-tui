@@ -57,6 +57,8 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				l.cursor++
 			}
 			adjustOffsetForCursor(&l)
+		case "t":
+			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
 		case "enter":
 			l.Primary = l.cursor
 			servercmds.Connect(l.GroupId, l.Items[l.Primary].ProfileId)

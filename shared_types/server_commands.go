@@ -6,6 +6,10 @@ type ConnectData struct {
 	Profile ProfileID `json:"profile"`
 }
 
+type TestProfileData struct {
+	Profile ProfileID `json:"profile"`
+}
+
 type ProfileID struct {
 	Id      int `json:"id"`
 	GroupId int `json:"group_id"`
