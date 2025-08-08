@@ -10,6 +10,13 @@ import (
 )
 
 func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model, tea.Cmd) {
+	connected_profile_id := -1
+	connected_profile_gid := -1
+	if msg.ConnectionStatus.Connection == "connected" {
+		connected_profile_id = msg.ConnectionStatus.Profile.Id
+		connected_profile_gid = msg.ConnectionStatus.Profile.GroupId
+	}
+
 	m.Tabs.IsConnected = msg.ConnectionStatus.Connection == "connected"
 	m.Tabs.IsTunEnabled = msg.TunStatus
 	var views []tabs.TabView
@@ -21,7 +28,10 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 		tabview.Content.Id = zone.NewPrefix()
 		tabview.Content.GroupId = group.Group.Id
 		tabview.Title = group.Group.Name
-		for _, profile := range group.Profiles {
+		for i, profile := range group.Profiles {
+			if connected_profile_gid == profile.GroupId && connected_profile_id == profile.Id {
+				tabview.Content.Primary = i
+			}
 			child := list.ListItem{
 				Name:       profile.Name,
 				ProfileId:  profile.Id,
@@ -38,7 +48,6 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 
 	return m, nil
 }
-
 
 func convertProtocolForDisplay(name string) string {
 	switch name {
