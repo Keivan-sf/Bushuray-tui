@@ -69,7 +69,7 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			l.paste()
 		case "y":
 			l.copyProfileUnderCursor()
-		case "d":
+		case "delete", "d":
 			l.deleteProfileUnderCursor()
 		case "enter":
 			if l.Primary == l.cursor {
