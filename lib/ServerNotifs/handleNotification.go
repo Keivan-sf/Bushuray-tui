@@ -43,5 +43,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		ProfilesDeletedNotif(data)
+	case "group-added":
+		var data sharedtypes.GroupAdded
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for group-added %v", err)
+			return
+		}
+		GroupAddedNotif(data)
 	}
 }

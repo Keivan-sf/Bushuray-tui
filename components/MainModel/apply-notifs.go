@@ -18,6 +18,8 @@ func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model,
 		return applyProfilesAdded(msg, m)
 	case sharedtypes.ProfilesDeleted:
 		return applyProfilesDeleted(msg, m)
+	case sharedtypes.GroupAdded:
+		return applyGroupAdded(msg, m)
 	}
 	return m, nil
 }
