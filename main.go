@@ -6,21 +6,29 @@ import (
 	servercmds "bushuray-tui/lib/ServerCommands"
 	servernotifs "bushuray-tui/lib/ServerNotifs"
 	"fmt"
+	"log"
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
 	zone "github.com/lrstanley/bubblezone"
 )
+import lumberjack "gopkg.in/natefinch/lumberjack.v2"
 
 func main() {
-	f, err := tea.LogToFile("debug.log", "debug")
-	if err != nil {
-		fmt.Println("error with log to file", err)
-	}
-	defer f.Close()
+	log.SetOutput(&lumberjack.Logger{
+		Filename:   "debug.log",
+		MaxSize:    20,
+		MaxBackups: 1,
+		MaxAge:     0,
+		Compress:   false,
+	})
+	log.SetPrefix("debug: ")
+	log.SetFlags(log.LstdFlags | log.Lmsgprefix)
+
 	C := connection.ConnectionHandler{}
 	C.Init("127.0.0.1", 4897)
-	err = C.GetConnection()
+
+	err := C.GetConnection()
 	if err != nil {
 		fmt.Println("error connecting", err)
 		return
