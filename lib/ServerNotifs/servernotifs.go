@@ -47,3 +47,7 @@ func GroupDeletedNotif(data sharedtypes.GroupDeleted) {
 func SubscriptionUpdatedNotif(data sharedtypes.SubscriptionUpdated) {
 	sn.p.Send(data)
 }
+
+func IsRootAnswerNotif(data sharedtypes.IsRootAnswer) {
+	sn.p.Send(data)
+}

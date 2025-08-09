@@ -74,7 +74,8 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "a":
 			return m, cmds.EnterAddGroupView
 		case "v":
-			return m, cmds.EnterTunView
+			servercmds.IsRoot()
+			return m, nil
 		case "ctrl+c", "q", "esc":
 			return m, tea.Quit
 		case "D":
@@ -83,7 +84,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			return m, nil
 		case "U":
 			servercmds.UpdateSubscription(m.Children[m.ActiveTap].Content.GroupId)
-			return m,nil
+			return m, nil
 		}
 
 		var cmd tea.Cmd

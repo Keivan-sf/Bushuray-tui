@@ -64,5 +64,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		SubscriptionUpdatedNotif(data)
+	case "is-root-answer":
+		var data sharedtypes.IsRootAnswer
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for is-root-answer %v", err)
+			return
+		}
+		IsRootAnswerNotif(data)
 	}
 }

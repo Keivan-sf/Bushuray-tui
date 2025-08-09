@@ -39,3 +39,7 @@ func DeleteGroup(gid int) {
 func UpdateSubscription(gid int) {
 	sendCmd("update-subscription", sharedtypes.UpdateSubscriptionData{GroupId: gid})
 }
+
+func IsRoot() {
+	sendCmd("is-root", sharedtypes.IsRootData{})
+}
