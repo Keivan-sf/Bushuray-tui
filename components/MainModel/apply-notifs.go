@@ -14,6 +14,8 @@ func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model,
 		return applyProfileUpdated(msg, m)
 	case sharedtypes.ProxyStatus:
 		return applyStatusChanged(msg, m)
+	case sharedtypes.ProfilesAdded:
+		return applyProfilesAdded(msg, m)
 	}
 	return m, nil
 }
@@ -29,4 +31,13 @@ func findProfile(gid int, id int, m Model) (tabid int, index int) {
 		}
 	}
 	return -1, -1
+}
+
+func findGroupTab(gid int, m Model) (tabid int) {
+	for i, g := range m.Tabs.Children {
+		if g.Content.GroupId == gid {
+			return i
+		}
+	}
+	return -1
 }

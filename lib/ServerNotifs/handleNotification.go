@@ -29,5 +29,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		StatusChangedNotif(data)
+	case "profiles-added":
+		var data sharedtypes.ProfilesAdded
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for profiles-added %v", err)
+			return
+		}
+		ProfilesAddedNotif(data)
 	}
 }

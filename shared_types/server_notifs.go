@@ -37,6 +37,12 @@ type ProxyStatus struct {
 
 func (p ProxyStatus) IsNotification() {}
 
+type ProfilesAdded struct {
+	Profiles []Profile `json:"profiles"`
+}
+
+func (p ProfilesAdded) IsNotification() {}
+
 type Profile struct {
 	Id         int    `json:"id"`
 	GroupId    int    `json:"group_id"`

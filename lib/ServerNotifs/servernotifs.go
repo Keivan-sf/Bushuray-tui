@@ -27,3 +27,7 @@ func ProfileUpdatedNotif(data sharedtypes.ProfileUpdated) {
 func StatusChangedNotif(data sharedtypes.ProxyStatus) {
 	sn.p.Send(data)
 }
+
+func ProfilesAddedNotif(data sharedtypes.ProfilesAdded) {
+	sn.p.Send(data)
+}
