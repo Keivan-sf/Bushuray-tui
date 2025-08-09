@@ -26,6 +26,10 @@ type AddGroupData struct {
 	SubscriptionUrl string `json:"subscription_url"`
 }
 
+type DeleteGroupData struct {
+	Id int `json:"id"`
+}
+
 type ProfileID struct {
 	Id      int `json:"id"`
 	GroupId int `json:"group_id"`

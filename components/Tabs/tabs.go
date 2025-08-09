@@ -2,6 +2,7 @@ package tabs
 
 import (
 	cmds "bushuray-tui/commands"
+	servercmds "bushuray-tui/lib/ServerCommands"
 	"strconv"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -76,6 +77,10 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			return m, cmds.EnterTunView
 		case "ctrl+c", "q", "esc":
 			return m, tea.Quit
+		case "D":
+			servercmds.DeleteGroup(m.Children[m.ActiveTap].Content.GroupId)
+			m.DeleteTab(m.ActiveTap)
+			return m, nil
 		}
 
 		var cmd tea.Cmd
