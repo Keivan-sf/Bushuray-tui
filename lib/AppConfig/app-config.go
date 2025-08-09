@@ -14,6 +14,7 @@ type AppConfig struct {
 	HttpPort      int       `json:"http-port"`
 	CoreTCPPort   int       `json:"core-tcp-port"`
 	TestPortRange PortRange `json:"test-port-range"`
+	NoBackground  bool      `json:"no-background,omitzero"`
 }
 
 type PortRange struct {
@@ -32,6 +33,7 @@ func defaultConfig() AppConfig {
 			Start: 3095,
 			End:   30120,
 		},
+		NoBackground: false,
 	}
 }
 
