@@ -1,6 +1,7 @@
 package list
 
 import (
+	"bushuray-tui/global"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	"bushuray-tui/utils"
 	"fmt"
@@ -127,9 +128,9 @@ func (l Model) View() string {
 			row += protocol
 			row += under_cursor_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestUnderCursor(item.TestResult)
 		} else {
-			protocol := protocol_style.Render(item.Protocol)
+			protocol := protocol_style.Background(global.GetBgColor()).Render(item.Protocol)
 			row += protocol
-			row += item_style.Width(w).MaxWidth(w).MaxHeight(1).Render(item_str) + styleTestNormal(item.TestResult)
+			row += item_style.Width(w).MaxWidth(w).MaxHeight(1).Background(global.GetBgColor()).Render(item_str) + styleTestNormal(item.TestResult)
 		}
 		s = append(s, zone.Mark(l.Id+strconv.Itoa(i), row))
 	}

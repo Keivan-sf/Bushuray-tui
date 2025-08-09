@@ -1,6 +1,7 @@
 package list
 
 import (
+	"bushuray-tui/global"
 	"strconv"
 
 	"github.com/charmbracelet/lipgloss"
@@ -35,13 +36,13 @@ func styleTestUnderCursor(ping int) string {
 func styleTestNormal(ping int) string {
 	width := test_result_w
 	if ping > 0 {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("#40a02b")).Width(width).MaxWidth(width).Render("OK " + strconv.Itoa(ping))
+		return lipgloss.NewStyle().Background(global.GetBgColor()).Foreground(lipgloss.Color("#40a02b")).Width(width).MaxWidth(width).Render("OK " + strconv.Itoa(ping))
 	} else if ping == -1 {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("#e64553")).Width(width).MaxWidth(width).Render("FAILED")
+		return lipgloss.NewStyle().Background(global.GetBgColor()).Foreground(lipgloss.Color("#e64553")).Width(width).MaxWidth(width).Render("FAILED")
 	} else if ping == -2 {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("#df8e1d")).Width(width).MaxWidth(width).Render("TESTING")
+		return lipgloss.NewStyle().Background(global.GetBgColor()).Foreground(lipgloss.Color("#df8e1d")).Width(width).MaxWidth(width).Render("TESTING")
 	} else {
-		return lipgloss.NewStyle().Foreground(lipgloss.Color("#df8e1d")).Width(width).MaxWidth(width).Render("")
+		return lipgloss.NewStyle().Background(global.GetBgColor()).Foreground(lipgloss.Color("#df8e1d")).Width(width).MaxWidth(width).Render("")
 	}
 }
 
