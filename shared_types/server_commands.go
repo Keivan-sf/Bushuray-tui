@@ -36,6 +36,8 @@ type UpdateSubscriptionData struct {
 
 type IsRootData struct{}
 
+type DieData struct{}
+
 type ProfileID struct {
 	Id      int `json:"id"`
 	GroupId int `json:"group_id"`

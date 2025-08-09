@@ -43,3 +43,7 @@ func UpdateSubscription(gid int) {
 func IsRoot() {
 	sendCmd("is-root", sharedtypes.IsRootData{})
 }
+
+func Die() {
+	sendCmd("die", sharedtypes.DieData{})
+}
