@@ -2,6 +2,7 @@ package helpview
 
 import (
 	cmds "bushuray-tui/commands"
+	"bushuray-tui/global"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -69,21 +70,31 @@ var primary_style = lipgloss.NewStyle()
 
 func (m Model) GenHelpKey(keys []KeyHelp) string {
 	key_max_width := 0
+	help_max_width := 0
 	for _, kh := range keys {
 		key_width := lipgloss.Width(kh.Key)
+		help_width := lipgloss.Width(kh.Help)
 		if key_width > key_max_width {
 			key_max_width = key_width
+		}
+		if help_width > help_max_width {
+			help_max_width = help_width
 		}
 	}
 
 	var rows []string
+	bg_style := lipgloss.NewStyle().Background(global.GetBgColor()).Width(m.Width).Height(1).Align(lipgloss.Center)
+	help_row_style := bg_style.Width(help_max_width + key_max_width + 2).Align(lipgloss.Left)
 	for _, kh := range keys {
-		key_str := primary_style.Width(key_max_width + 2).Render(kh.Key)
-		help_str := secondary_style.Render(kh.Help)
-		rows = append(rows, lipgloss.JoinHorizontal(lipgloss.Left, key_str, help_str))
+		key_str := primary_style.Background(global.GetBgColor()).Width(key_max_width + 2).Render(kh.Key)
+		help_str := secondary_style.Background(global.GetBgColor()).Render(kh.Help)
+		row_content := help_row_style.Render(lipgloss.JoinHorizontal(lipgloss.Left, key_str, help_str))
+		row := bg_style.Render(row_content)
+		rows = append(rows, row)
 	}
 
 	content := lipgloss.JoinVertical(lipgloss.Left, rows...)
 	container := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, content)
-	return container
+	container_with_bg := lipgloss.NewStyle().Background(global.GetBgColor()).Render(container)
+	return container_with_bg
 }
