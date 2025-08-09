@@ -22,6 +22,8 @@ func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model,
 		return applyGroupAdded(msg, m)
 	case sharedtypes.GroupDeleted:
 		return applyGroupDeleted(msg, m)
+	case sharedtypes.SubscriptionUpdated:
+		return applySubscriptionUpdated(msg, m)
 	}
 	return m, nil
 }

@@ -63,6 +63,13 @@ type GroupDeleted struct {
 
 func (g GroupDeleted) IsNotification() {}
 
+type SubscriptionUpdated struct {
+	GroupId  int       `json:"group_id"`
+	Profiles []Profile `json:"profiles"`
+}
+
+func (s SubscriptionUpdated) IsNotification() {}
+
 type Profile struct {
 	Id         int    `json:"id"`
 	GroupId    int    `json:"group_id"`

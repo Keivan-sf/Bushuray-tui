@@ -45,6 +45,11 @@ func styleTestNormal(ping int) string {
 	}
 }
 
+func (l *Model) ResetCursor() {
+	l.cursor = 0
+	l.offset = 0
+}
+
 func (l *Model) ResolveInvalidCursor() {
 	items_len := len(l.Items)
 	if items_len == 0 {

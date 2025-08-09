@@ -43,3 +43,7 @@ func GroupAddedNotif(data sharedtypes.GroupAdded) {
 func GroupDeletedNotif(data sharedtypes.GroupDeleted) {
 	sn.p.Send(data)
 }
+
+func SubscriptionUpdatedNotif(data sharedtypes.SubscriptionUpdated) {
+	sn.p.Send(data)
+}

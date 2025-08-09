@@ -57,5 +57,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		GroupDeletedNotif(data)
+	case "subscription-updated":
+		var data sharedtypes.SubscriptionUpdated
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for subscription-updated %v", err)
+			return
+		}
+		SubscriptionUpdatedNotif(data)
 	}
 }

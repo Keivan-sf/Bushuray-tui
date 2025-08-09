@@ -8,8 +8,9 @@ import (
 
 func applyGroupDeleted(msg sharedtypes.GroupDeleted, m Model) (tea.Model, tea.Cmd) {
 	tid := findGroupTab(msg.Id, m)
-	if tid != -1 {
-		m.Tabs.DeleteTab(tid)
+	if tid == -1 {
+		return m, nil
 	}
+	m.Tabs.DeleteTab(tid)
 	return m, nil
 }
