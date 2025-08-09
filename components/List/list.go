@@ -68,11 +68,9 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "ctrl+v", "p":
 			l.paste()
 		case "y":
-			l.copyUri(l.Items[l.cursor].Uri)
+			l.copyProfileUnderCursor()
 		case "d":
-			if l.cursor != l.Primary {
-				l.deleteProfile(l.GroupId, l.Items[l.cursor].ProfileId)
-			}
+			l.deleteProfileUnderCursor()
 		case "enter":
 			if l.Primary == l.cursor {
 				servercmds.Disconnect()

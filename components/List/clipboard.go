@@ -16,7 +16,11 @@ func (l Model) paste() {
 	servercmds.AddProfiles(str, l.GroupId)
 }
 
-func (l Model) copyUri(uri string) {
+func (l Model) copyProfileUnderCursor() {
+	if l.cursor >= len(l.Items) {
+		return
+	}
+	uri := l.Items[l.cursor].Uri
 	err := clipboard.WriteAll(uri)
 	if err != nil {
 		log.Println("There was an error writing to clipboard", err)
