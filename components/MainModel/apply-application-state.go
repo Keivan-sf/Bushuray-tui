@@ -37,6 +37,7 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 				ProfileId:  profile.Id,
 				Protocol:   convertProtocolForDisplay(profile.Protocol),
 				TestResult: profile.TestResult,
+				Uri:        profile.Uri,
 			}
 			tabview.Content.Items = append(tabview.Content.Items, child)
 		}
