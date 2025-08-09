@@ -21,6 +21,11 @@ type DeleteProfilesData struct {
 	Profiles []ProfileID `json:"profiles"`
 }
 
+type AddGroupData struct {
+	Name            string `json:"name"`
+	SubscriptionUrl string `json:"subscription_url"`
+}
+
 type ProfileID struct {
 	Id      int `json:"id"`
 	GroupId int `json:"group_id"`

@@ -1,16 +1,15 @@
 package cmds
 
 import (
+	servercmds "bushuray-tui/lib/ServerCommands"
 	t "bushuray-tui/shared_types"
-	"log"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-func SubmitGroup(title string, url string) tea.Cmd {
+func SubmitGroup(name string, url string) tea.Cmd {
 	return func() tea.Msg {
-		// send data to core
-		log.Println(title, url)
+		servercmds.AddGroup(name, url)
 		return t.AddGroupExit{}
 	}
 }

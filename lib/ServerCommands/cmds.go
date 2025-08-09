@@ -27,3 +27,7 @@ func AddProfiles(uris string, gid int) {
 func DeleteProfiles(profiles []sharedtypes.ProfileID) {
 	sendCmd("delete-profiles", sharedtypes.DeleteProfilesData{Profiles: profiles})
 }
+
+func AddGroup(name string, subscription_url string) {
+	sendCmd("add-group", sharedtypes.AddGroupData{Name: name, SubscriptionUrl: subscription_url})
+}
