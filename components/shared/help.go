@@ -10,15 +10,16 @@ var secondary_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69"))
 var primary_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#FFFFFF"))
 
 func GenHelp(keys []string, helps []string) string {
-	separtor := secondary_style.Render(" • ")
-
-	s := ""
+	separtor := secondary_style.Background(global.GetBgColor()).Render(" • ")
+	var elements []string
 	for i := range keys {
-		s += primary_style.Background(global.GetBgColor()).Render(keys[i])
-		s += secondary_style.Background(global.GetBgColor()).Render(" " + helps[i])
+		key := primary_style.Background(global.GetBgColor()).Render(keys[i])
+		help := secondary_style.Background(global.GetBgColor()).Render(" " + helps[i])
 		if i+1 != len(keys) {
-			s += separtor
+			elements = append(elements, key, help, separtor)
+		} else {
+			elements = append(elements, key, help)
 		}
 	}
-	return s
+	return lipgloss.JoinHorizontal(lipgloss.Left, elements...)
 }

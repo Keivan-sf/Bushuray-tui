@@ -21,9 +21,9 @@ func InitialModel() Model {
 
 var dialog_style = lipgloss.NewStyle().Padding(0, 2).Align(lipgloss.Center)
 var help_style = lipgloss.NewStyle().MarginTop(2).Align(lipgloss.Center)
-var help_test = shared.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"})
 
 func (m Model) View() string {
+	var help_test = shared.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"})
 	bg_style := lipgloss.NewStyle().Background(global.GetBgColor())
 
 	sudo_bushuray := lipgloss.NewStyle().
