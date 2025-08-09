@@ -26,7 +26,8 @@ func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model,
 		return applySubscriptionUpdated(msg, m)
 	case sharedtypes.IsRootAnswer:
 		return applyIsRootAnswer(msg, m)
-
+	case sharedtypes.TunStatus:
+		return applyTunStatusChanged(msg, m)
 	}
 	return m, nil
 }

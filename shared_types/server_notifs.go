@@ -69,6 +69,12 @@ type IsRootAnswer struct {
 
 func (i IsRootAnswer) IsNotification() {}
 
+type TunStatus struct {
+	IsEnabled bool `json:"is_enabled"`
+}
+
+func (t TunStatus) IsNotification() {}
+
 type SubscriptionUpdated struct {
 	GroupId  int       `json:"group_id"`
 	Profiles []Profile `json:"profiles"`

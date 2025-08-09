@@ -51,3 +51,7 @@ func SubscriptionUpdatedNotif(data sharedtypes.SubscriptionUpdated) {
 func IsRootAnswerNotif(data sharedtypes.IsRootAnswer) {
 	sn.p.Send(data)
 }
+
+func TunStatusChangedNotif(data sharedtypes.TunStatus) {
+	sn.p.Send(data)
+}

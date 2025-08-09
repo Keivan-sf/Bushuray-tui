@@ -71,5 +71,13 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		IsRootAnswerNotif(data)
+
+	case "tun-status-changed":
+		var data sharedtypes.TunStatus
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for tun-status-changed %v", err)
+			return
+		}
+		TunStatusChangedNotif(data)
 	}
 }
