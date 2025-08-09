@@ -43,6 +43,12 @@ type ProfilesAdded struct {
 
 func (p ProfilesAdded) IsNotification() {}
 
+type ProfilesDeleted struct {
+	DeletedProfiles []ProfileID `json:"deleted-profiles"`
+}
+
+func (p ProfilesDeleted) IsNotification() {}
+
 type Profile struct {
 	Id         int    `json:"id"`
 	GroupId    int    `json:"group_id"`

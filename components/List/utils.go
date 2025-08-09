@@ -45,6 +45,20 @@ func styleTestNormal(ping int) string {
 	}
 }
 
+func (l *Model) ResolveInvalidCursor() {
+	items_len := len(l.Items)
+	if items_len == 0 {
+		l.cursor = 0
+		adjustOffsetForCursor(l)
+	} else if l.cursor >= items_len {
+		l.cursor = items_len - 1
+		adjustOffsetForCursor(l)
+	} else if l.cursor < 0 {
+		l.cursor = 0
+		adjustOffsetForCursor(l)
+	}
+}
+
 func adjustOffsetForCursor(l *Model) {
 	if l.cursor < l.offset {
 		l.offset = l.cursor

@@ -36,5 +36,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		ProfilesAddedNotif(data)
+	case "profiles-deleted":
+		var data sharedtypes.ProfilesDeleted
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for profiles-deleted %v", err)
+			return
+		}
+		ProfilesDeletedNotif(data)
 	}
 }
