@@ -8,7 +8,7 @@ import (
 )
 
 var NoColor = lipgloss.NoColor{}
-var BgColor = lipgloss.Color("#000001")
+var BgColor = lipgloss.Color("#020308")
 
 func GetBgColor() lipgloss.TerminalColor {
 	if appconfig.GetConfig().NoBackground {
