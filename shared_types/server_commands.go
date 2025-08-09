@@ -12,6 +12,11 @@ type TestProfileData struct {
 
 type DisconnectData struct{}
 
+type AddProfilesData struct {
+	Uris    string `json:"uris"`
+	GroupId int    `json:"group_id"`
+}
+
 type ProfileID struct {
 	Id      int `json:"id"`
 	GroupId int `json:"group_id"`

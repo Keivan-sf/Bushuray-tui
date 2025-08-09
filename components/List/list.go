@@ -65,6 +65,8 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "t":
 			l.Items[l.cursor].TestResult = -2
 			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
+		case "p":
+			l.paste()
 		case "enter":
 			if l.Primary == l.cursor {
 				servercmds.Disconnect()
