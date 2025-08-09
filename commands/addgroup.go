@@ -9,7 +9,9 @@ import (
 
 func SubmitGroup(name string, url string) tea.Cmd {
 	return func() tea.Msg {
-		servercmds.AddGroup(name, url)
+		if name != "" {
+			servercmds.AddGroup(name, url)
+		}
 		return t.AddGroupExit{}
 	}
 }
