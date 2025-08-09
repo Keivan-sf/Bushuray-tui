@@ -30,6 +30,10 @@ type DeleteGroupData struct {
 	Id int `json:"id"`
 }
 
+type UpdateSubscriptionData struct {
+	GroupId int `json:"group_id"`
+}
+
 type ProfileID struct {
 	Id      int `json:"id"`
 	GroupId int `json:"group_id"`

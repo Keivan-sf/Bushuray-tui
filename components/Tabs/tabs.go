@@ -81,6 +81,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			servercmds.DeleteGroup(m.Children[m.ActiveTap].Content.GroupId)
 			m.DeleteTab(m.ActiveTap)
 			return m, nil
+		case "U":
+			servercmds.UpdateSubscription(m.Children[m.ActiveTap].Content.GroupId)
+			return m,nil
 		}
 
 		var cmd tea.Cmd

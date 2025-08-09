@@ -35,3 +35,7 @@ func AddGroup(name string, subscription_url string) {
 func DeleteGroup(gid int) {
 	sendCmd("delete-group", sharedtypes.DeleteGroupData{Id: gid})
 }
+
+func UpdateSubscription(gid int) {
+	sendCmd("update-subscription", sharedtypes.UpdateSubscriptionData{GroupId: gid})
+}
