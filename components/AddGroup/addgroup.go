@@ -36,6 +36,7 @@ func InitialModel() Model {
 		case 0:
 			t.Placeholder = "Group name"
 			t.Focus()
+			t.TextStyle = focusedStyle.Background(global.GetBgColor())
 			t.PromptStyle = focusedStyle.Background(global.GetBgColor())
 			t.Cursor.TextStyle = focusedStyle.Background(global.GetBgColor())
 			t.PlaceholderStyle = placeHolderStyle.Background(global.GetBgColor())
@@ -43,6 +44,7 @@ func InitialModel() Model {
 			t.CharLimit = 20
 			t.Cursor.Style = cursorStyle.Background(global.GetBgColor())
 		case 1:
+			t.TextStyle = focusedStyle.Background(global.GetBgColor())
 			t.Cursor.TextStyle = grayStyle.Background(global.GetBgColor())
 			t.Placeholder = "URL (optional)"
 			t.PlaceholderStyle = placeHolderStyle.Background(global.GetBgColor())
@@ -125,9 +127,9 @@ func (m Model) View() string {
 	help_text := shared.GenHelp([]string{"esc"}, []string{"cancel"})
 
 	views = append(views, "")
-	views = append(views, element_style.Render(bg_style.Width(52).Render(button)))
+	views = append(views, element_style.Render(bg_style.Width(54).Render(button)))
 	views = append(views, "")
-	views = append(views, element_style.Render(bg_style.Width(52).Render(help_text)))
+	views = append(views, element_style.Render(bg_style.Width(54).Render(help_text)))
 	vertical_container := bg_style.Render(lipgloss.JoinVertical(lipgloss.Top, views...))
 	content := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, vertical_container)
 	container := lipgloss.NewStyle().Background(global.GetBgColor()).Render(content)
