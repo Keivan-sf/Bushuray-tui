@@ -7,7 +7,7 @@ import (
 )
 
 func (m Model) renderHelp() string {
-	var help_text = utils.GenHelp([]string{"enter", "p", "v", "a", "t", "?"}, []string{"connect", "paste profile", "tun mode", "add profile", "test", "help menu"})
+	var help_text = utils.GenHelp([]string{"enter", "p", "v", "a", "t", "?"}, []string{"connect", "paste profile", "tun mode", "add group", "test", "help menu"})
 	help := lipgloss.NewStyle().Width(m.Width).Height(2).MaxHeight(2).MaxWidth(m.Width).Align(lipgloss.Center).Render(help_text)
 	return help
 }
