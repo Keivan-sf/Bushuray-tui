@@ -57,6 +57,12 @@ type GroupAdded struct {
 
 func (g GroupAdded) IsNotification() {}
 
+type GroupDeleted struct {
+	Id int `json:"id"`
+}
+
+func (g GroupDeleted) IsNotification() {}
+
 type Profile struct {
 	Id         int    `json:"id"`
 	GroupId    int    `json:"group_id"`

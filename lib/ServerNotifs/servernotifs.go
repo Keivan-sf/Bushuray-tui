@@ -39,3 +39,7 @@ func ProfilesDeletedNotif(data sharedtypes.ProfilesDeleted) {
 func GroupAddedNotif(data sharedtypes.GroupAdded) {
 	sn.p.Send(data)
 }
+
+func GroupDeletedNotif(data sharedtypes.GroupDeleted) {
+	sn.p.Send(data)
+}

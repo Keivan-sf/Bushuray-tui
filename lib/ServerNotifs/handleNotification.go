@@ -50,5 +50,12 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			return
 		}
 		GroupAddedNotif(data)
+	case "group-deleted":
+		var data sharedtypes.GroupDeleted
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for group-deleted %v", err)
+			return
+		}
+		GroupDeletedNotif(data)
 	}
 }
