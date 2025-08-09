@@ -4,6 +4,7 @@ import (
 	"bufio"
 	servernotifs "bushuray-tui/lib/ServerNotifs"
 	sharedtypes "bushuray-tui/shared_types"
+	"bushuray-tui/utils"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -47,8 +48,7 @@ func (ch *ConnectionHandler) GetConnection() error {
 func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 	defer func() {
 		p.Quit()
-		log.Println("connection to core closed")
-		fmt.Println("connection to core closed")
+		utils.LogEverywhere("connection to core closed")
 		os.Exit(0)
 	}()
 	if ch.conn == nil {
