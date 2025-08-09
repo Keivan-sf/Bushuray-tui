@@ -65,9 +65,9 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "t":
 			l.Items[l.cursor].TestResult = -2
 			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
-		case "p":
+		case "ctrl+v", "p":
 			l.paste()
-		case "c":
+		case "y":
 			l.copyUri(l.Items[l.cursor].Uri)
 		case "enter":
 			if l.Primary == l.cursor {
