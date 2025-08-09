@@ -3,8 +3,8 @@ package addgroup
 import (
 	// "fmt"
 	cmds "bushuray-tui/commands"
+	"bushuray-tui/components/shared"
 	servercmds "bushuray-tui/lib/ServerCommands"
-	"bushuray-tui/utils"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -117,7 +117,7 @@ func (m Model) View() string {
 	views = append(views, "")
 	views = append(views, *button)
 	views = append(views, "")
-	views = append(views, utils.GenHelp([]string{"esc"}, []string{"cancel"}))
+	views = append(views, shared.GenHelp([]string{"esc"}, []string{"cancel"}))
 	container := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Top, views...))
 	return container
 

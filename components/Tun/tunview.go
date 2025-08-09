@@ -2,8 +2,8 @@ package tunview
 
 import (
 	cmds "bushuray-tui/commands"
+	"bushuray-tui/components/shared"
 	servercmds "bushuray-tui/lib/ServerCommands"
-	"bushuray-tui/utils"
 	"fmt"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -23,7 +23,7 @@ var sudo_bushuray = lipgloss.NewStyle().Foreground(lipgloss.Color("#ca9ee6")).Re
 var dialog_text = fmt.Sprintf("Core is not running as root, do you want to kill it so you can start again with %s ?", sudo_bushuray)
 var dialog_style = lipgloss.NewStyle().Padding(0, 2).Align(lipgloss.Center)
 var help_style = lipgloss.NewStyle().MarginTop(2).Align(lipgloss.Center)
-var help_test = utils.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"})
+var help_test = shared.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"})
 
 func (m Model) View() string {
 	dialog := dialog_style.Width(m.Width).MaxWidth(m.Width).Render(dialog_text)
