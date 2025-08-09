@@ -41,7 +41,7 @@ func defaultConfig() AppConfig {
 
 func GetConfig() AppConfig {
 	if !is_config_loaded {
-		log.Fatalf("attemped to access config before loading")
+		panic("attempted to access config before loading")
 	}
 	return application_configuration
 }

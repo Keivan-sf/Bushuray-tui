@@ -19,8 +19,8 @@ func InitialModel() Model {
 	return Model{}
 }
 
-var dialog_style = lipgloss.NewStyle().Padding(0, 2).Align(lipgloss.Center).Background(global.GetBgColor())
-var help_style = lipgloss.NewStyle().MarginTop(2).Align(lipgloss.Center).Background(global.GetBgColor())
+var dialog_style = lipgloss.NewStyle().Padding(0, 2).Align(lipgloss.Center)
+var help_style = lipgloss.NewStyle().MarginTop(2).Align(lipgloss.Center)
 var help_test = shared.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"})
 
 func (m Model) View() string {
