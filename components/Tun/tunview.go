@@ -3,6 +3,7 @@ package tunview
 import (
 	cmds "bushuray-tui/commands"
 	"bushuray-tui/components/shared"
+	"bushuray-tui/global"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	"fmt"
 
@@ -19,18 +20,19 @@ func InitialModel() Model {
 	return Model{}
 }
 
-var sudo_bushuray = lipgloss.NewStyle().Foreground(lipgloss.Color("#ca9ee6")).Render("sudo bushuray")
-var dialog_text = fmt.Sprintf("Core is not running as root, do you want to kill it so you can start again with %s ?", sudo_bushuray)
-var dialog_style = lipgloss.NewStyle().Padding(0, 2).Align(lipgloss.Center)
-var help_style = lipgloss.NewStyle().MarginTop(2).Align(lipgloss.Center)
+var dialog_style = lipgloss.NewStyle().Padding(0, 2).Align(lipgloss.Center).Background(global.GetBgColor())
+var help_style = lipgloss.NewStyle().MarginTop(2).Align(lipgloss.Center).Background(global.GetBgColor())
 var help_test = shared.GenHelp([]string{"enter", "esc"}, []string{"YES", "NO"})
 
 func (m Model) View() string {
-	dialog := dialog_style.Width(m.Width).MaxWidth(m.Width).Render(dialog_text)
-	help := help_style.Width(m.Width).MaxWidth(m.Width).Render(help_test)
+	var sudo_bushuray = lipgloss.NewStyle().Foreground(lipgloss.Color("#ca9ee6")).Background(global.GetBgColor()).Render("sudo bushuray")
+	var dialog_text = fmt.Sprintf("Core is not running as root, do you want to kill it so you can start again with %s ?", sudo_bushuray)
+	dialog := dialog_style.Width(m.Width).MaxWidth(m.Width).Background(global.GetBgColor()).Render(dialog_text)
+	help := help_style.Width(m.Width).MaxWidth(m.Width).Background(global.GetBgColor()).Render(help_test)
 	content := lipgloss.JoinVertical(lipgloss.Top, dialog, help)
 	container := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, content)
-	return container
+	container_with_bg := lipgloss.NewStyle().Background(global.GetBgColor()).Render(container)
+	return container_with_bg
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
