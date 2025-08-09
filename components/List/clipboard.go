@@ -22,5 +22,4 @@ func (l Model) copyUri(uri string) {
 		log.Println("There was an error writing to clipboard", err)
 		return
 	}
-	log.Println("wrote to clipboard:", uri)
 }
