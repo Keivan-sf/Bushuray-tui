@@ -3,6 +3,7 @@ package addgroup
 import (
 	// "fmt"
 	cmds "bushuray-tui/commands"
+	servercmds "bushuray-tui/lib/ServerCommands"
 	"bushuray-tui/utils"
 
 	"github.com/charmbracelet/bubbles/cursor"
@@ -66,8 +67,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 
 			commands := make([]tea.Cmd, len(m.inputs))
 
-			if s == "enter" && m.focusIndex == len(m.inputs) {
-				commands = append(commands, cmds.SubmitGroup(m.inputs[0].Value(), m.inputs[1].Value()))
+			if s == "enter" && m.focusIndex == len(m.inputs) && m.inputs[0].Value() != "" {
+				servercmds.AddGroup(m.inputs[0].Value(), m.inputs[1].Value())
+				commands = append(commands, cmds.ExitAddGroupView)
 				m.reset()
 			} else if s == "up" || s == "shift+tab" {
 				m.focusIndex--

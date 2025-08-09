@@ -1,6 +1,8 @@
 package list
 
 import (
+	servercmds "bushuray-tui/lib/ServerCommands"
+	"bushuray-tui/utils"
 	"fmt"
 	"strconv"
 
@@ -10,13 +12,16 @@ import (
 )
 
 type ListItem struct {
+	ProfileId  int
 	Name       string
 	Protocol   string
 	TestResult int
+	Uri        string
 }
 
 type Model struct {
 	Id      string
+	GroupId int
 	Items   []ListItem
 	cursor  int
 	Width   int
@@ -52,8 +57,27 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 				l.cursor++
 			}
 			adjustOffsetForCursor(&l)
+		case "T":
+			for i, item := range l.Items {
+				l.Items[i].TestResult = -2
+				servercmds.Test(l.GroupId, item.ProfileId)
+			}
+		case "t":
+			l.Items[l.cursor].TestResult = -2
+			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
+		case "ctrl+v", "p":
+			l.paste()
+		case "y":
+			l.copyProfileUnderCursor()
+		case "delete", "d":
+			l.deleteProfileUnderCursor()
 		case "enter":
-			l.Primary = l.cursor
+			if l.Primary == l.cursor {
+				servercmds.Disconnect()
+			} else {
+				l.Primary = l.cursor
+				servercmds.Connect(l.GroupId, l.Items[l.Primary].ProfileId)
+			}
 		}
 	case tea.MouseMsg:
 		switch msg.Button {
@@ -93,7 +117,7 @@ func (l Model) View() string {
 	for i := start; i < end; i++ {
 		row := ""
 		item := l.Items[i]
-		item_str := fmt.Sprintf(" %s", item.Name)
+		item_str := fmt.Sprintf(" %s", utils.SanitizeString(item.Name))
 		if i == l.Primary {
 			protocol := protocol_primary_style.Render(item.Protocol)
 			row += protocol

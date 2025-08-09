@@ -2,6 +2,7 @@ package tunview
 
 import (
 	cmds "bushuray-tui/commands"
+	servercmds "bushuray-tui/lib/ServerCommands"
 	"bushuray-tui/utils"
 	"fmt"
 
@@ -37,7 +38,8 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	case tea.KeyMsg:
 		switch msg.String() {
 		case "enter":
-			return m, tea.Batch(cmds.KillCore, tea.Quit)
+			servercmds.Die()
+			return m, tea.Quit
 		case "esc":
 			return m, cmds.ExitTunView
 		}

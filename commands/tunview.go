@@ -1,13 +1,15 @@
 package cmds
 
 import (
+	servercmds "bushuray-tui/lib/ServerCommands"
 	t "bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
 
 func EnterTunView() tea.Msg {
-	return t.TunViewEnter{}
+	servercmds.IsRoot()
+	return nil
 }
 
 func KillCore() tea.Msg {

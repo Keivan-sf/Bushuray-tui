@@ -1,4 +1,4 @@
-package main
+package mainmodel
 
 import list "bushuray-tui/components/List"
 
