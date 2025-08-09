@@ -3,8 +3,9 @@ package addgroup
 import (
 	// "fmt"
 	cmds "bushuray-tui/commands"
+	"bushuray-tui/components/shared"
+	"bushuray-tui/global"
 	servercmds "bushuray-tui/lib/ServerCommands"
-	"bushuray-tui/utils"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/textinput"
@@ -28,21 +29,28 @@ func InitialModel() Model {
 	var t textinput.Model
 	for i := range m.inputs {
 		t = textinput.New()
-		t.Cursor.Style = cursorStyle
+		t.Cursor.Style = cursorStyle.Background(global.GetBgColor())
 		t.CharLimit = 32
 
 		switch i {
 		case 0:
 			t.Placeholder = "Group name"
 			t.Focus()
-			t.PromptStyle = focusedStyle
-			t.TextStyle = focusedStyle
+			t.TextStyle = focusedStyle.Background(global.GetBgColor())
+			t.PromptStyle = focusedStyle.Background(global.GetBgColor())
+			t.Cursor.TextStyle = focusedStyle.Background(global.GetBgColor())
+			t.PlaceholderStyle = placeHolderStyle.Background(global.GetBgColor())
 			t.Width = 50
 			t.CharLimit = 20
+			t.Cursor.Style = cursorStyle.Background(global.GetBgColor())
 		case 1:
+			t.TextStyle = focusedStyle.Background(global.GetBgColor())
+			t.Cursor.TextStyle = grayStyle.Background(global.GetBgColor())
 			t.Placeholder = "URL (optional)"
+			t.PlaceholderStyle = placeHolderStyle.Background(global.GetBgColor())
 			t.Width = 50
 			t.CharLimit = 2000
+			t.Cursor.Style = cursorStyle.Background(global.GetBgColor())
 		}
 
 		m.inputs[i] = t
@@ -104,21 +112,27 @@ func (m *Model) updateInputs(msg tea.Msg) tea.Cmd {
 }
 
 func (m Model) View() string {
+	bg_style := lipgloss.NewStyle().Background(global.GetBgColor())
+	element_style := bg_style.Width(m.Width).Height(1).Align(lipgloss.Center)
 	var views []string
 	for i := range m.inputs {
-		views = append(views, m.inputs[i].View())
+		views = append(views, element_style.Render(m.inputs[i].View()))
 	}
 
-	button := &blurredButton
+	button := blurredButton()
 	if m.focusIndex == len(m.inputs) {
-		button = &focusedButton
+		button = focusedButton()
 	}
 
+	help_text := shared.GenHelp([]string{"esc"}, []string{"cancel"})
+
 	views = append(views, "")
-	views = append(views, *button)
+	views = append(views, element_style.Render(bg_style.Width(54).Render(button)))
 	views = append(views, "")
-	views = append(views, utils.GenHelp([]string{"esc"}, []string{"cancel"}))
-	container := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, lipgloss.JoinVertical(lipgloss.Top, views...))
+	views = append(views, element_style.Render(bg_style.Width(54).Render(help_text)))
+	vertical_container := bg_style.Render(lipgloss.JoinVertical(lipgloss.Top, views...))
+	content := lipgloss.Place(m.Width, m.Height, lipgloss.Center, lipgloss.Center, vertical_container)
+	container := lipgloss.NewStyle().Background(global.GetBgColor()).Render(content)
 	return container
 
 }

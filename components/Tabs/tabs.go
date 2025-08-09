@@ -2,6 +2,7 @@ package tabs
 
 import (
 	cmds "bushuray-tui/commands"
+	"bushuray-tui/global"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	"strconv"
 
@@ -45,8 +46,11 @@ func (m Model) View() string {
 	if extra_line_w > 0 {
 		tab_titles = append(tab_titles, renderTabLine(extra_line_w))
 	}
+
 	tab_row := zone.Mark(m.Id+"tabline", lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...))
-	return lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View(), m.renderStatusBar())
+	content := lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View(), m.renderStatusBar())
+	containter := lipgloss.NewStyle().Background(global.GetBgColor()).Render(content)
+	return containter
 }
 
 func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {

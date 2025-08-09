@@ -14,12 +14,15 @@ type AppConfig struct {
 	HttpPort      int       `json:"http-port"`
 	CoreTCPPort   int       `json:"core-tcp-port"`
 	TestPortRange PortRange `json:"test-port-range"`
+	NoBackground  bool      `json:"no-background,omitzero"`
 }
 
 type PortRange struct {
 	Start int `json:"start"`
 	End   int `json:"end"`
 }
+
+var is_config_loaded bool = false
 
 var application_configuration AppConfig = defaultConfig()
 
@@ -32,10 +35,14 @@ func defaultConfig() AppConfig {
 			Start: 3095,
 			End:   30120,
 		},
+		NoBackground: false,
 	}
 }
 
 func GetConfig() AppConfig {
+	if !is_config_loaded {
+		panic("attempted to access config before loading")
+	}
 	return application_configuration
 }
 
@@ -45,6 +52,7 @@ func LoadConfig() {
 		log.Println("failed to read config file:", err, "using default config")
 	}
 	application_configuration = config
+	is_config_loaded = true
 }
 
 func readConfig() (AppConfig, error) {
