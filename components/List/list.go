@@ -67,6 +67,8 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
 		case "p":
 			l.paste()
+		case "c":
+			l.copyUri(l.Items[l.cursor].Uri)
 		case "enter":
 			if l.Primary == l.cursor {
 				servercmds.Disconnect()

@@ -16,7 +16,7 @@ func applyProfilesAdded(msg sharedtypes.ProfilesAdded, m Model) (tea.Model, tea.
 		m.Tabs.Children[tid].Content.Items = append(m.Tabs.Children[tid].Content.Items, list.ListItem{
 			ProfileId:  profile.Id,
 			Name:       profile.Name,
-			Protocol:   profile.Protocol,
+			Protocol:   convertProtocolForDisplay(profile.Protocol),
 			TestResult: profile.TestResult,
 			Uri:        profile.Uri,
 		})
