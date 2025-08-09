@@ -22,11 +22,12 @@ func InitialModel() Model {
 	return Model{
 		keys: []KeyHelp{
 			{Key: "enter", Help: "connect"},
-			{Key: "p", Help: "paste profile(s)"},
+			{Key: "p/ctrl+v", Help: "paste profile(s)"},
 			{Key: "v", Help: "toggle tun mode"},
 			{Key: "a", Help: "add a new group"},
 			{Key: "t", Help: "test profile"},
 			{Key: "T", Help: "test group profiles"},
+			{Key: "U", Help: "update subscription"},
 			{Key: "del/d", Help: "delete profile"},
 			{Key: "D", Help: "delete group"},
 			{Key: "k/↑", Help: "move up"},
