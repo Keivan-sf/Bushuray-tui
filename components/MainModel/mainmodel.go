@@ -128,57 +128,9 @@ func InitModel() Model {
 					Content: list.Model{
 						Id:      zone.NewPrefix(),
 						Primary: -1,
-						Items:   dummy_items,
+						Items:   []list.ListItem{},
 					},
 					Title: "Default group",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("G1"),
-					},
-					Title: "mt Group 1",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("G2"),
-					},
-					Title: "random name",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("G3"),
-					},
-					Title: "Group 3",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("g4long"),
-					},
-					Title: "Group 4 very long name",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("A-"),
-					},
-					Title: "A Group 3-",
-				},
-				{
-					Content: list.Model{
-						Id:      zone.NewPrefix(),
-						Primary: -1,
-						Items:   dummyItemsWithPrefix("BBB"),
-					},
-					Title: "BBB Group 2",
 				},
 			},
 		},
