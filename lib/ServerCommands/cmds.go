@@ -44,6 +44,14 @@ func IsRoot() {
 	sendCmd("is-root", sharedtypes.IsRootData{})
 }
 
+func EnableTun() {
+	sendCmd("enable-tun", sharedtypes.EnableTunData{})
+}
+
+func DisableTun() {
+	sendCmd("disable-tun", sharedtypes.DisableTunData{})
+}
+
 func Die() {
 	sendCmd("die", sharedtypes.DieData{})
 }

@@ -10,7 +10,6 @@ import (
 func EnterTunView() tea.Msg {
 	servercmds.IsRoot()
 	return nil
-	return t.TunViewEnter{}
 }
 
 func KillCore() tea.Msg {
