@@ -5,14 +5,17 @@ import (
 	connection "bushuray-tui/lib/Connection"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	servernotifs "bushuray-tui/lib/ServerNotifs"
+	"bushuray-tui/utils"
 	"fmt"
 	"log"
 	"os"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	zone "github.com/lrstanley/bubblezone"
+
+	lumberjack "gopkg.in/natefinch/lumberjack.v2"
 )
-import lumberjack "gopkg.in/natefinch/lumberjack.v2"
 
 func main() {
 	log.SetOutput(&lumberjack.Logger{
@@ -30,8 +33,18 @@ func main() {
 
 	err := C.GetConnection()
 	if err != nil {
-		fmt.Println("error connecting", err)
-		return
+		fmt.Println("core was not found at", 4897, "trying to spawn")
+		err := utils.SpawnBushurayCore()
+		if err != nil {
+			fmt.Println("failed to spawn core:", err)
+			return
+		}
+		time.Sleep(1000 * time.Millisecond)
+		err = C.GetConnection()
+		if err != nil {
+			fmt.Println("failed to connect to core:", err)
+			return
+		}
 	} else {
 		fmt.Println("connection established")
 	}
