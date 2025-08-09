@@ -23,3 +23,7 @@ func Test(group_id int, profile_id int) {
 func AddProfiles(uris string, gid int) {
 	sendCmd("add-profiles", sharedtypes.AddProfilesData{Uris: uris, GroupId: gid})
 }
+
+func DeleteProfiles(profiles []sharedtypes.ProfileID) {
+	sendCmd("delete-profiles", sharedtypes.DeleteProfilesData{Profiles: profiles})
+}
