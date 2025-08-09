@@ -7,10 +7,6 @@ import (
 )
 
 func (m Model) renderStatusBar() string {
-	/*
-		||CONNECTED| socks5 *:3090 , http *:3091           |TUN ON ||
-		||IDLE                                             |TUN OFF||
-	*/
 	bg_width := m.Width
 	connection_status := ""
 	tun_status := ""

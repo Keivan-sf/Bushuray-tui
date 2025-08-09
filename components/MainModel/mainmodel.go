@@ -6,6 +6,7 @@ import (
 	list "bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
 	tunview "bushuray-tui/components/Tun"
+	appconfig "bushuray-tui/lib/AppConfig"
 	sharedtypes "bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
@@ -112,6 +113,7 @@ func (m Model) View() string {
 }
 
 func InitModel() Model {
+	config := appconfig.GetConfig()
 	return Model{
 		ActiveSection: "tabs",
 		Tun:           tunview.InitialModel(),
@@ -121,8 +123,8 @@ func InitModel() Model {
 			Id:           zone.NewPrefix(),
 			IsTunEnabled: false,
 			IsConnected:  true,
-			SocksPort:    3090,
-			HttpPort:     3091,
+			SocksPort:    config.SocksPort,
+			HttpPort:     config.HttpPort,
 			Children: []tabs.TabView{
 				{
 					Content: list.Model{

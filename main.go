@@ -2,6 +2,7 @@ package main
 
 import (
 	mainmodel "bushuray-tui/components/MainModel"
+	appconfig "bushuray-tui/lib/AppConfig"
 	connection "bushuray-tui/lib/Connection"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	servernotifs "bushuray-tui/lib/ServerNotifs"
@@ -28,12 +29,15 @@ func main() {
 	log.SetPrefix("debug: ")
 	log.SetFlags(log.LstdFlags | log.Lmsgprefix)
 
+	appconfig.LoadConfig()
+	port := appconfig.GetConfig().CoreTCPPort
+
 	C := connection.ConnectionHandler{}
-	C.Init("127.0.0.1", 4897)
+	C.Init("127.0.0.1", port)
 
 	err := C.GetConnection()
 	if err != nil {
-		fmt.Println("core was not found at", 4897, "trying to spawn")
+		fmt.Println("core was not found at", port, "trying to spawn")
 		err := utils.SpawnBushurayCore()
 		if err != nil {
 			fmt.Println("failed to spawn core:", err)
