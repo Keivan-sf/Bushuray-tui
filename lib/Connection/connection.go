@@ -76,7 +76,7 @@ func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 			return err
 		}
 
-		log.Println(string(payload))
+		log.Println("\n-----\n", string(payload))
 
 		var raw_tcp_message sharedtypes.TcpMessage
 
