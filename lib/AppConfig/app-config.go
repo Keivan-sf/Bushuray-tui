@@ -22,6 +22,8 @@ type PortRange struct {
 	End   int `json:"end"`
 }
 
+var is_config_loaded bool = false
+
 var application_configuration AppConfig = defaultConfig()
 
 func defaultConfig() AppConfig {
@@ -38,6 +40,9 @@ func defaultConfig() AppConfig {
 }
 
 func GetConfig() AppConfig {
+	if !is_config_loaded {
+		log.Fatalf("attemped to access config before loading")
+	}
 	return application_configuration
 }
 
@@ -47,6 +52,7 @@ func LoadConfig() {
 		log.Println("failed to read config file:", err, "using default config")
 	}
 	application_configuration = config
+	is_config_loaded = true
 }
 
 func readConfig() (AppConfig, error) {
