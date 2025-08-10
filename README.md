@@ -27,4 +27,10 @@ Bushuray will create its configuration file in `~/.config/bushuray/config.json` 
 - `no-background`: Whether or not tui should have a background. Use this if you want your own terminal background or you have a transparent terminal
 
 ### Tun mode
-Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10)
+To use tun mode, simply connect to a client then press `v`. Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10).
+### Debugging
+If something is not working as expected, you can examine `debug.log` and `core-debug.log`. For example:
+```
+tail -f core-debug.log
+```
+
