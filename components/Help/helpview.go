@@ -24,6 +24,7 @@ func InitialModel() Model {
 		keys: []KeyHelp{
 			{Key: "enter", Help: "connect"},
 			{Key: "p/ctrl+v", Help: "paste profile(s)"},
+			{Key: "y", Help: "copy profile"},
 			{Key: "v", Help: "toggle tun mode"},
 			{Key: "a", Help: "add a new group"},
 			{Key: "t", Help: "test profile"},
