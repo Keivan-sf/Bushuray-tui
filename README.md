@@ -1,7 +1,7 @@
 <img width="1297" height="778" alt="image" src="https://github.com/user-attachments/assets/721fcb9b-08f0-475b-a164-48ed681710fa" />
 
 ## Bushuray-tui
-Bushuray-tui is a keyboard-driven Xray client built for your terminal. It uses [Bushuray-core](https://github.com/Keivan-sf/Bushuray-core) as its back-end.
+Bushuray-tui is a keyboard-driven Xray client built for your terminal. It uses [Bushuray-core](https://github.com/Keivan-sf/Bushuray-core) as its back-end nad It's written in go with [bubbletea](https://github.com/charmbracelet/bubbletea)
 ### How to use
 Download and extract the latest version from releases section then run
 ```
