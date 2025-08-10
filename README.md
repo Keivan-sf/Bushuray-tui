@@ -28,6 +28,7 @@ Bushuray will create its configuration file in `~/.config/bushuray/config.json` 
 
 ### Tun mode
 To use tun mode, simply connect to a client then press `v`. Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10).
+- If you are experiencing DNS issues, try setting 8.8.8.8 as your primary DNS. This issue is being tracked [here](https://github.com/Keivan-sf/Bushuray-core/issues/11) 
 ### Debugging
 If something is not working as expected, you can examine `debug.log` and `core-debug.log`. For example:
 ```
