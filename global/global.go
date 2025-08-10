@@ -2,7 +2,6 @@ package global
 
 import (
 	appconfig "bushuray-tui/lib/AppConfig"
-	"log"
 
 	"github.com/charmbracelet/lipgloss"
 )
@@ -12,7 +11,6 @@ var BgColor = lipgloss.Color("#020308")
 
 func GetBgColor() lipgloss.TerminalColor {
 	if appconfig.GetConfig().NoBackground {
-		log.Println("giving no color")
 		return NoColor
 	} else {
 		return BgColor

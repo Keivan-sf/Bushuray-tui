@@ -80,14 +80,14 @@ func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 			return err
 		}
 
-		log.Println("\n-----\n", string(payload))
-
 		var raw_tcp_message sharedtypes.TcpMessage
 
 		if err := json.Unmarshal(payload, &raw_tcp_message); err != nil {
-			log.Printf("Invalid JSON: %v", err)
+			log.Printf("Invalid JSON: %v %v", string(payload), err)
 			return err
 		}
+
+		log.Println("[server]", raw_tcp_message.Msg)
 
 		servernotifs.HandleNotification(raw_tcp_message)
 	}
