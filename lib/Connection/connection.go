@@ -4,14 +4,12 @@ import (
 	"bufio"
 	servernotifs "bushuray-tui/lib/ServerNotifs"
 	sharedtypes "bushuray-tui/shared_types"
-	"bushuray-tui/utils"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
 	"io"
 	"log"
 	"net"
-	"os"
 	"strconv"
 	"sync"
 	"time"
@@ -48,9 +46,8 @@ func (ch *ConnectionHandler) GetConnection() error {
 func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 	defer func() {
 		p.Quit()
-		utils.LogEverywhere("connection to core closed")
-		os.Exit(0)
 	}()
+
 	if ch.conn == nil {
 		return fmt.Errorf("no active connection - call GetConnection() first")
 	}
