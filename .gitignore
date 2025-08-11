@@ -1,2 +1,3 @@
 bushuray-core
-debug*.log
+*debug*.log
+result
