@@ -8,6 +8,13 @@ import (
 
 func HandleNotification(msg sharedtypes.TcpMessage) {
 	switch msg.Msg {
+	case "warn":
+		var data sharedtypes.Warning
+		if err := json.Unmarshal(msg.Data, &data); err != nil {
+			log.Printf("Invalid body for warning %v", err)
+			return
+		}
+		WarningNotif(data)
 	case "application-state":
 		var data sharedtypes.ApplicationState
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
