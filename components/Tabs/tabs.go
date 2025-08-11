@@ -12,17 +12,17 @@ import (
 )
 
 type Model struct {
-	Id           string
-	Children     []TabView
-	ActiveTap    int
-	Width        int
-	Height       int
-	viewStart    int
-	viewEnd      int
-	IsConnected  bool
-	IsTunEnabled bool
-	SocksPort    int
-	HttpPort     int
+	Id          string
+	Children    []TabView
+	ActiveTap   int
+	Width       int
+	Height      int
+	viewStart   int
+	viewEnd     int
+	IsConnected bool
+	TunStatus   string
+	SocksPort   int
+	HttpPort    int
 }
 
 func (m Model) View() string {
@@ -78,7 +78,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "a":
 			return m, cmds.EnterAddGroupView
 		case "v":
-			if m.IsTunEnabled {
+			if m.TunStatus == "connected" {
 				servercmds.DisableTun()
 			} else {
 				servercmds.IsRoot()

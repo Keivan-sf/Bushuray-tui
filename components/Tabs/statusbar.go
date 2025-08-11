@@ -19,9 +19,12 @@ func (m Model) renderStatusBar() string {
 		connection_status = lipgloss.NewStyle().Background(lipgloss.Color("#1e1e2e")).Foreground(lipgloss.Color("#ffffff")).Width(15).Align(lipgloss.Center).Render("NOT CONNECTED")
 	}
 
-	if m.IsTunEnabled {
+	if m.TunStatus == "connected" {
 		bg_width -= 8
 		tun_status = lipgloss.NewStyle().Background(lipgloss.Color("#8839ef")).Foreground(lipgloss.Color("#ffffff")).Width(8).Align(lipgloss.Center).Render("TUN ON")
+	} else if m.TunStatus == "waiting" {
+		bg_width -= 9
+		tun_status = lipgloss.NewStyle().Background(lipgloss.Color("#1e1e2e")).Foreground(lipgloss.Color("#ffffff")).Width(9).Align(lipgloss.Center).Render("WAITING")
 	} else {
 		bg_width -= 9
 		tun_status = lipgloss.NewStyle().Background(lipgloss.Color("#1e1e2e")).Foreground(lipgloss.Color("#ffffff")).Width(9).Align(lipgloss.Center).Render("TUN OFF")
