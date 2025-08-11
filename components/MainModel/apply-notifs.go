@@ -8,6 +8,8 @@ import (
 
 func HandleServerNotifs(msg sharedtypes.ServerNotification, m Model) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
+	case sharedtypes.Warning:
+		return applyWarning(msg, m)
 	case sharedtypes.ApplicationState:
 		return applyApplicationState(msg, m)
 	case sharedtypes.ProfileUpdated:

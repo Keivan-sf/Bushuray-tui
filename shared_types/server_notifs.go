@@ -82,6 +82,13 @@ type SubscriptionUpdated struct {
 
 func (s SubscriptionUpdated) IsNotification() {}
 
+type Warning struct {
+	Key     string `json:"key"`
+	Content string `json:"content"`
+}
+
+func (w Warning) IsNotification() {}
+
 type Profile struct {
 	Id         int    `json:"id"`
 	GroupId    int    `json:"group_id"`

@@ -7,6 +7,10 @@ import (
 )
 
 func applyTunStatusChanged(msg sharedtypes.TunStatus, m Model) (tea.Model, tea.Cmd) {
-	m.Tabs.IsTunEnabled = msg.IsEnabled
+	if msg.IsEnabled {
+		m.Tabs.TunStatus = "connected"
+	} else {
+		m.Tabs.TunStatus = "disconnected"
+	}
 	return m, nil
 }

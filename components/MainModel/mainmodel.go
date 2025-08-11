@@ -120,11 +120,11 @@ func InitModel() Model {
 		AddGroup:      addgroup.InitialModel(),
 		Help:          helpview.InitialModel(),
 		Tabs: tabs.Model{
-			Id:           zone.NewPrefix(),
-			IsTunEnabled: false,
-			IsConnected:  true,
-			SocksPort:    config.SocksPort,
-			HttpPort:     config.HttpPort,
+			Id:          zone.NewPrefix(),
+			TunStatus:   "disconnected",
+			IsConnected: true,
+			SocksPort:   config.SocksPort,
+			HttpPort:    config.HttpPort,
 			Children: []tabs.TabView{
 				{
 					Content: list.Model{

@@ -12,6 +12,7 @@ func applyIsRootAnswer(msg sharedtypes.IsRootAnswer, m Model) (tea.Model, tea.Cm
 		m.ActiveSection = "tunview"
 		return m, nil
 	}
+	m.Tabs.TunStatus = "waiting"
 	servercmds.EnableTun()
 	return m, nil
 }

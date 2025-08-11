@@ -88,9 +88,6 @@ func (ch *ConnectionHandler) HandleConnection(p *tea.Program) error {
 		}
 
 		log.Println("[server]", raw_tcp_message.Msg)
-		if raw_tcp_message.Msg == "warn" {
-			log.Println(string(raw_tcp_message.Data))
-		}
 
 		servernotifs.HandleNotification(raw_tcp_message)
 	}

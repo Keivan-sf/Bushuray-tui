@@ -18,7 +18,11 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 	}
 
 	m.Tabs.IsConnected = msg.ConnectionStatus.Connection == "connected"
-	m.Tabs.IsTunEnabled = msg.TunStatus
+	if msg.TunStatus {
+		m.Tabs.TunStatus = "connected"
+	} else {
+		m.Tabs.TunStatus = "disconnected"
+	}
 	var views []tabs.TabView
 	for _, group := range msg.Groups {
 		var tabview tabs.TabView
