@@ -93,6 +93,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "U":
 			servercmds.UpdateSubscription(m.Children[m.ActiveTap].Content.GroupId)
 			return m, nil
+		case "S":
+			m.sort_by_test_results()
+			return m, nil
 		}
 
 		var cmd tea.Cmd
