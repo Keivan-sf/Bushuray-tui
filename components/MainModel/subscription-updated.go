@@ -28,7 +28,9 @@ func applySubscriptionUpdated(msg sharedtypes.SubscriptionUpdated, m Model) (tea
 	}
 
 	m.Tabs.Children[tid].Content.Items = items
-	m.Tabs.Children[tid].Content.Primary = -1
+	if m.Tabs.Children[tid].Content.Primary != -1 {
+		m.Tabs.Children[tid].Content.Primary = 0
+	}
 	m.Tabs.Children[tid].Content.ResetCursor()
 	return m, nil
 }
