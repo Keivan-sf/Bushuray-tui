@@ -48,7 +48,12 @@ func styleTestNormal(ping int) string {
 
 func (l *Model) ResetCursor() {
 	l.cursor = 0
-	l.offset = 0
+	l.adjustOffsetForCursor()
+}
+
+func (l *Model) MoveCursorToLastItem() {
+	l.cursor = len(l.Items) - 1
+	l.adjustOffsetForCursor()
 }
 
 func (l *Model) JumpToPrimary() {
