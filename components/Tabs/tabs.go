@@ -99,6 +99,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "J":
 			m.JumpToConnectedProfile()
 			return m, nil
+		case "g":
+			m.JumpToBeginning()
+			return m, nil
 		}
 
 		var cmd tea.Cmd
@@ -172,4 +175,8 @@ func (m *Model) JumpToConnectedProfile() {
 			break
 		}
 	}
+}
+
+func (m *Model) JumpToBeginning() {
+	m.Children[m.ActiveTap].Content.ResetCursor()
 }
