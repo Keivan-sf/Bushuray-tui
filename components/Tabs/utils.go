@@ -18,7 +18,7 @@ func (m *Model) adjustToDimentions() {
 	m.viewEnd = m.calculateEnd(m.viewStart)
 }
 
-func (m *Model) AdjustView() {
+func (m *Model) adjustView() {
 	if m.viewStart == m.viewEnd && m.viewEnd == 0 {
 		m.viewEnd = m.calculateEnd(m.viewStart)
 		return

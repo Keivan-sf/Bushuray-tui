@@ -63,7 +63,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			} else {
 				m.ActiveTap = 0
 			}
-			m.AdjustView()
+			m.adjustView()
 			return m, nil
 		case "shift+tab", "ctrl+pgup":
 			if m.ActiveTap > 0 {
@@ -71,7 +71,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			} else {
 				m.ActiveTap = len(m.Children) - 1
 			}
-			m.AdjustView()
+			m.adjustView()
 			return m, nil
 		case "?":
 			return m, cmds.EnterHelpView
@@ -95,6 +95,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			return m, nil
 		case "S":
 			m.sort_by_test_results()
+			return m, nil
+		case "J":
+			m.JumpToConnectedProfile()
 			return m, nil
 		}
 
@@ -121,7 +124,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if m.ActiveTap < len(m.Children)-1 {
 				m.ActiveTap++
 			}
-			m.AdjustView()
+			m.adjustView()
 		case tea.MouseButtonWheelUp:
 			if !zone.Get(m.Id + "tabline").InBounds(msg) {
 				break
@@ -129,7 +132,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if m.ActiveTap > 0 {
 				m.ActiveTap--
 			}
-			m.AdjustView()
+			m.adjustView()
 		case tea.MouseButtonLeft:
 			if msg.Action != tea.MouseActionRelease {
 				break
@@ -137,7 +140,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			for i := range m.Children {
 				if zone.Get(m.Id + strconv.Itoa(i)).InBounds(msg) {
 					m.ActiveTap = i
-					m.AdjustView()
+					m.adjustView()
 					return m, nil
 				}
 			}
@@ -147,14 +150,6 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		m.Children[m.ActiveTap], cmd = m.Children[m.ActiveTap].Update(msg)
 		return m, cmd
 	}
-	// var cmds []tea.Cmd
-	// for i, child := range m.Children {
-	// 	var cmd tea.Cmd
-	// 	m.Children[i], cmd = child.Update(msg)
-	// 	cmds = append(cmds, cmd)
-	// }
-	//
-	// return m, tea.Batch(cmds...)
 	return m, nil
 }
 
@@ -166,4 +161,15 @@ func (m Model) SetWH(width int, height int) Model {
 	}
 	m.adjustToDimentions()
 	return m
+}
+
+func (m *Model) JumpToConnectedProfile() {
+	for tid, child := range m.Children {
+		if child.Content.Primary != -1 {
+			m.Children[tid].Content.JumpToPrimary()
+			m.ActiveTap = tid
+			m.adjustView()
+			break
+		}
+	}
 }
