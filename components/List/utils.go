@@ -51,28 +51,36 @@ func (l *Model) ResetCursor() {
 	l.offset = 0
 }
 
+func (l *Model) JumpToPrimary() {
+	if l.Primary == -1 {
+		return
+	}
+	l.cursor = l.Primary
+	l.adjustOffsetForCursor()
+}
+
 func (l *Model) ResolveInvalidCursor() {
 	items_len := len(l.Items)
 	if items_len == 0 {
 		l.cursor = 0
-		adjustOffsetForCursor(l)
+		l.adjustOffsetForCursor()
 	} else if l.cursor >= items_len {
 		l.cursor = items_len - 1
-		adjustOffsetForCursor(l)
+		l.adjustOffsetForCursor()
 	} else if l.cursor < 0 {
 		l.cursor = 0
-		adjustOffsetForCursor(l)
+		l.adjustOffsetForCursor()
 	}
 }
 
-func adjustOffsetForCursor(l *Model) {
+func (l *Model) adjustOffsetForCursor() {
 	if l.cursor < l.offset {
 		l.offset = l.cursor
 	} else if l.cursor >= l.offset+l.Height {
 		l.offset = l.cursor - l.Height + 1
 	}
 }
-func adjustCursorForOffset(l *Model) {
+func (l *Model) adjustCursorForOffset() {
 	if l.offset > l.cursor {
 		l.cursor = l.offset
 	} else if l.offset+l.Height-1 < l.cursor {

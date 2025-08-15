@@ -96,6 +96,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "S":
 			m.sort_by_test_results()
 			return m, nil
+		case "J":
+			m.JumpToConnectedProfile()
+			return m, nil
 		}
 
 		var cmd tea.Cmd
@@ -147,14 +150,6 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		m.Children[m.ActiveTap], cmd = m.Children[m.ActiveTap].Update(msg)
 		return m, cmd
 	}
-	// var cmds []tea.Cmd
-	// for i, child := range m.Children {
-	// 	var cmd tea.Cmd
-	// 	m.Children[i], cmd = child.Update(msg)
-	// 	cmds = append(cmds, cmd)
-	// }
-	//
-	// return m, tea.Batch(cmds...)
 	return m, nil
 }
 
@@ -166,4 +161,15 @@ func (m Model) SetWH(width int, height int) Model {
 	}
 	m.adjustToDimentions()
 	return m
+}
+
+func (m *Model) JumpToConnectedProfile() {
+	for tid, child := range m.Children {
+		if child.Content.Primary != -1 {
+			m.Children[tid].Content.JumpToPrimary()
+			m.ActiveTap = tid
+			m.adjustView()
+			break
+		}
+	}
 }

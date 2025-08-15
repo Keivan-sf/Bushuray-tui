@@ -48,9 +48,9 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 		views = append(views, tabview)
 	}
 	m.Tabs.Children = views
-	m.Tabs.ActiveTap = 0
 	m.Tabs = m.Tabs.SetWH(m.Tabs.Width, m.Tabs.Height)
 
+	m.Tabs.JumpToConnectedProfile()
 	return m, nil
 }
 

@@ -35,6 +35,7 @@ func InitialModel() Model {
 			{Key: "D", Help: "delete group"},
 			{Key: "k/↑", Help: "move up"},
 			{Key: "j/↓", Help: "move down"},
+			{Key: "J", Help: "jump to active profile"},
 			{Key: "tab", Help: "next tab"},
 			{Key: "ctrl+pgdn", Help: "next tab"},
 			{Key: "shift+tab", Help: "previous tab"},

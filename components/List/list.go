@@ -52,12 +52,12 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if l.cursor > 0 {
 				l.cursor--
 			}
-			adjustOffsetForCursor(&l)
+			l.adjustOffsetForCursor()
 		case "down", "j":
 			if l.cursor < len(l.Items)-1 {
 				l.cursor++
 			}
-			adjustOffsetForCursor(&l)
+			l.adjustOffsetForCursor()
 		case "T":
 			for i, item := range l.Items {
 				l.Items[i].TestResult = -2
@@ -95,7 +95,7 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if l.offset < len(l.Items)-l.Height {
 				l.offset++
 			}
-			adjustCursorForOffset(&l)
+			l.adjustCursorForOffset()
 		case tea.MouseButtonWheelUp:
 			if !zone.Get(l.Id).InBounds(msg) {
 				break
@@ -103,7 +103,7 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if l.offset > 0 {
 				l.offset--
 			}
-			adjustCursorForOffset(&l)
+			l.adjustCursorForOffset()
 		}
 	}
 
