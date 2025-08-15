@@ -12,6 +12,7 @@ import (
 func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model, tea.Cmd) {
 	connected_profile_id := -1
 	connected_profile_gid := -1
+	active_tab := 0
 	if msg.ConnectionStatus.Connection == "connected" {
 		connected_profile_id = msg.ConnectionStatus.Profile.Id
 		connected_profile_gid = msg.ConnectionStatus.Profile.GroupId
@@ -24,7 +25,7 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 		m.Tabs.TunStatus = "disconnected"
 	}
 	var views []tabs.TabView
-	for _, group := range msg.Groups {
+	for tid, group := range msg.Groups {
 		var tabview tabs.TabView
 		tabview.Content = list.Model{}
 		tabview.Content.Primary = -1
@@ -34,6 +35,7 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 		tabview.Title = group.Group.Name
 		for i, profile := range group.Profiles {
 			if connected_profile_gid == profile.GroupId && connected_profile_id == profile.Id {
+				active_tab = tid
 				tabview.Content.Primary = i
 			}
 			child := list.ListItem{
@@ -48,9 +50,11 @@ func applyApplicationState(msg sharedtypes.ApplicationState, m Model) (tea.Model
 		views = append(views, tabview)
 	}
 	m.Tabs.Children = views
-	m.Tabs.ActiveTap = 0
 	m.Tabs = m.Tabs.SetWH(m.Tabs.Width, m.Tabs.Height)
 
+	m.Tabs.ActiveTap = active_tab
+	m.Tabs.AdjustView()
+	m.Tabs.Children[m.Tabs.ActiveTap].Content.JumpToPrimary()
 	return m, nil
 }
 

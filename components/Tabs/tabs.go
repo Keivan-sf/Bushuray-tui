@@ -63,7 +63,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			} else {
 				m.ActiveTap = 0
 			}
-			m.adjustView()
+			m.AdjustView()
 			return m, nil
 		case "shift+tab", "ctrl+pgup":
 			if m.ActiveTap > 0 {
@@ -71,7 +71,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			} else {
 				m.ActiveTap = len(m.Children) - 1
 			}
-			m.adjustView()
+			m.AdjustView()
 			return m, nil
 		case "?":
 			return m, cmds.EnterHelpView
@@ -121,7 +121,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if m.ActiveTap < len(m.Children)-1 {
 				m.ActiveTap++
 			}
-			m.adjustView()
+			m.AdjustView()
 		case tea.MouseButtonWheelUp:
 			if !zone.Get(m.Id + "tabline").InBounds(msg) {
 				break
@@ -129,7 +129,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			if m.ActiveTap > 0 {
 				m.ActiveTap--
 			}
-			m.adjustView()
+			m.AdjustView()
 		case tea.MouseButtonLeft:
 			if msg.Action != tea.MouseActionRelease {
 				break
@@ -137,7 +137,7 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			for i := range m.Children {
 				if zone.Get(m.Id + strconv.Itoa(i)).InBounds(msg) {
 					m.ActiveTap = i
-					m.adjustView()
+					m.AdjustView()
 					return m, nil
 				}
 			}

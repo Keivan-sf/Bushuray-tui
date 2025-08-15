@@ -51,6 +51,14 @@ func (l *Model) ResetCursor() {
 	l.offset = 0
 }
 
+func (l *Model) JumpToPrimary() {
+	if l.Primary == -1 {
+		return
+	}
+	l.cursor = l.Primary
+	l.adjustOffsetForCursor()
+}
+
 func (l *Model) ResolveInvalidCursor() {
 	items_len := len(l.Items)
 	if items_len == 0 {
