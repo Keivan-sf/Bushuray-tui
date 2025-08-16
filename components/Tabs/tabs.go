@@ -77,6 +77,8 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			return m, cmds.EnterHelpView
 		case "a":
 			return m, cmds.EnterAddGroupView
+		case "r":
+			return m, cmds.EnterUpdateProfileView
 		case "v":
 			if m.TunStatus == "connected" {
 				servercmds.DisableTun()

@@ -2,6 +2,7 @@ package servercmds
 
 import (
 	sharedtypes "bushuray-tui/shared_types"
+	"log"
 )
 
 func GetApplicationState() {
@@ -54,4 +55,13 @@ func DisableTun() {
 
 func Die() {
 	sendCmd("die", sharedtypes.DieData{})
+}
+
+func UpdateProfile(group_id int, profile_id int, name string) {
+	log.Println("sending update-profile command:", group_id, profile_id, name)
+	sendCmd("update-profile",
+		sharedtypes.UpdateProfileData{
+			Profile: sharedtypes.ProfileID{GroupId: group_id, Id: profile_id},
+			Name:    name,
+		})
 }

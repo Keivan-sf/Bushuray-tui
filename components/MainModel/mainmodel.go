@@ -6,6 +6,7 @@ import (
 	list "bushuray-tui/components/List"
 	tabs "bushuray-tui/components/Tabs"
 	tunview "bushuray-tui/components/Tun"
+	updateprofile "bushuray-tui/components/UpdateProfile"
 	appconfig "bushuray-tui/lib/AppConfig"
 	sharedtypes "bushuray-tui/shared_types"
 
@@ -20,6 +21,7 @@ type Model struct {
 	AddGroup      addgroup.Model
 	Tun           tunview.Model
 	Help          helpview.Model
+	UpdateProfile updateprofile.Model
 	ActiveSection string
 }
 
@@ -45,6 +47,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.AddGroup = m.AddGroup.SetWH(msg.Width, msg.Height)
 		m.Tun = m.Tun.SetWH(msg.Width, msg.Height)
 		m.Help = m.Help.SetWH(msg.Width, msg.Height)
+		m.UpdateProfile = m.UpdateProfile.SetWH(msg.Width, msg.Height)
 		return m, nil
 
 	case sharedtypes.AddGroupExit:
@@ -70,6 +73,19 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	case sharedtypes.HelpViewExit:
 		m.ActiveSection = "tabs"
 		return m, nil
+
+	case sharedtypes.UpdateProfileEnter:
+		active_list := m.Tabs.Children[m.Tabs.ActiveTap].Content
+		item := active_list.GetItemUnderCursor()
+		m.UpdateProfile.SetProfile(updateprofile.UpdateProfileDetails{
+			Id: item.ProfileId, GroupId: active_list.GroupId, Name: item.Name,
+		})
+		m.ActiveSection = "update-profile"
+		return m, nil
+
+	case sharedtypes.UpdateProfileExit:
+		m.ActiveSection = "tabs"
+		return m, nil
 	}
 
 	if m.ActiveSection == "tunview" {
@@ -87,6 +103,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	if m.ActiveSection == "helpview" {
 		var cmd tea.Cmd
 		m.Help, cmd = m.Help.Update(msg)
+		return m, cmd
+	}
+
+	if m.ActiveSection == "update-profile" {
+		var cmd tea.Cmd
+		m.UpdateProfile, cmd = m.UpdateProfile.Update(msg)
 		return m, cmd
 	}
 
@@ -109,6 +131,9 @@ func (m Model) View() string {
 	if m.ActiveSection == "tunview" {
 		return m.Tun.View()
 	}
+	if m.ActiveSection == "update-profile" {
+		return m.UpdateProfile.View()
+	}
 	return zone.Scan(m.Tabs.View())
 }
 
@@ -119,6 +144,7 @@ func InitModel() Model {
 		Tun:           tunview.InitialModel(),
 		AddGroup:      addgroup.InitialModel(),
 		Help:          helpview.InitialModel(),
+		UpdateProfile: updateprofile.InitialModel(),
 		Tabs: tabs.Model{
 			Id:          zone.NewPrefix(),
 			TunStatus:   "disconnected",

@@ -31,6 +31,7 @@ func InitialModel() Model {
 			{Key: "T", Help: "test group profiles"},
 			{Key: "U", Help: "update subscription"},
 			{Key: "S", Help: "sort by test result"},
+			{Key: "r", Help: "rename profile"},
 			{Key: "del/d", Help: "delete profile"},
 			{Key: "D", Help: "delete group"},
 			{Key: "k/↑", Help: "move up"},
