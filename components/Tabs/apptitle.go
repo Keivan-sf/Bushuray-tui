@@ -8,7 +8,7 @@ import (
 
 func (m Model) renderAppTitle() string {
 	title := "Bushuray-tui"
-	version := "v0.1.4"
+	version := "v0.1.5"
 	title_text := lipgloss.NewStyle().Foreground(lipgloss.Color("#f5c2e7")).Background(global.GetBgColor()).Render(title)
 	separtor := lipgloss.NewStyle().Foreground(lipgloss.Color("#7287fd")).Background(global.GetBgColor()).Render(" • ")
 	version_text := lipgloss.NewStyle().Foreground(lipgloss.Color("#7287fd")).Background(global.GetBgColor()).Render(version)
