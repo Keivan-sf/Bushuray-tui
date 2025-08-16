@@ -44,6 +44,10 @@ var protocol_under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color(
 var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).Width(protocol_w).Align(lipgloss.Center)
 var item_style = lipgloss.NewStyle()
 
+func (l Model) GetItemUnderCursor() ListItem {
+	return l.Items[l.cursor]
+}
+
 func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
