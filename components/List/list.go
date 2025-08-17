@@ -122,7 +122,7 @@ func (l Model) View() string {
 	for i := start; i < end; i++ {
 		row := ""
 		item := l.Items[i]
-		item_str := fmt.Sprintf(" %s", utils.SanitizeString(item.Name))
+		item_str := fmt.Sprintf(" %s", utils.LimitStrLen(utils.SanitizeString(item.Name), w-2))
 		if i == l.Primary {
 			protocol := protocol_primary_style.Render(item.Protocol)
 			row += protocol

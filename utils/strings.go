@@ -46,3 +46,12 @@ func isAllowedCharacter(r rune) bool {
 
 	return false
 }
+
+func LimitStrLen(str string, limit int) string {
+	r := []rune(str)
+	if len(r) <= limit {
+		return str
+	}
+	r = r[:limit]
+	return string(r)
+}
