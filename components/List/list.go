@@ -2,7 +2,6 @@ package list
 
 import (
 	"bushuray-tui/global"
-	servercmds "bushuray-tui/lib/ServerCommands"
 	"bushuray-tui/utils"
 	"fmt"
 	"strconv"
@@ -63,13 +62,9 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			}
 			l.adjustOffsetForCursor()
 		case "T":
-			for i, item := range l.Items {
-				l.Items[i].TestResult = -2
-				servercmds.Test(l.GroupId, item.ProfileId)
-			}
+			l.testGroup()
 		case "t":
-			l.Items[l.cursor].TestResult = -2
-			servercmds.Test(l.GroupId, l.Items[l.cursor].ProfileId)
+			l.testProfile()
 		case "ctrl+v", "p":
 			l.paste()
 		case "y":
@@ -77,12 +72,7 @@ func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "delete", "d":
 			l.deleteProfileUnderCursor()
 		case "enter":
-			if l.Primary == l.cursor {
-				servercmds.Disconnect()
-			} else {
-				l.Primary = l.cursor
-				servercmds.Connect(l.GroupId, l.Items[l.Primary].ProfileId)
-			}
+			l.connectToProfile()
 		}
 	case tea.MouseMsg:
 		switch msg.Button {
