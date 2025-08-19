@@ -43,8 +43,11 @@ var protocol_under_cursor_style = lipgloss.NewStyle().Background(lipgloss.Color(
 var protocol_style = lipgloss.NewStyle().Foreground(lipgloss.Color("#4c4f69")).Width(protocol_w).Align(lipgloss.Center)
 var item_style = lipgloss.NewStyle()
 
-func (l Model) GetItemUnderCursor() ListItem {
-	return l.Items[l.cursor]
+func (l Model) GetItemUnderCursor() (ListItem, error) {
+	if len(l.Items) <= 0 {
+		return ListItem{}, fmt.Errorf("no items in the list")
+	}
+	return l.Items[l.cursor], nil
 }
 
 func (l Model) Update(msg tea.Msg) (Model, tea.Cmd) {
