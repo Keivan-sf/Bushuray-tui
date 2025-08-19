@@ -76,7 +76,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 	case sharedtypes.UpdateProfileEnter:
 		active_list := m.Tabs.Children[m.Tabs.ActiveTap].Content
-		item := active_list.GetItemUnderCursor()
+		item, err := active_list.GetItemUnderCursor()
+		if err != nil {
+			return m, nil
+		}
 		m.UpdateProfile.SetProfile(updateprofile.UpdateProfileDetails{
 			Id: item.ProfileId, GroupId: active_list.GroupId, Name: item.Name,
 		})
