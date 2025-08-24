@@ -1,6 +1,7 @@
 package servernotifs
 
 import (
+	np "bushuray-tui/lib/NotifPublisher"
 	sharedtypes "bushuray-tui/shared_types"
 	"encoding/json"
 	"log"
@@ -14,70 +15,70 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			log.Printf("Invalid body for warning %v", err)
 			return
 		}
-		WarningNotif(data)
+		np.WarningNotif(data)
 	case "application-state":
 		var data sharedtypes.ApplicationState
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for application-state %v", err)
 			return
 		}
-		ApplicationStateNotif(data)
+		np.ApplicationStateNotif(data)
 	case "profile-updated":
 		var data sharedtypes.ProfileUpdated
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for profile-updated %v", err)
 			return
 		}
-		ProfileUpdatedNotif(data)
+		np.ProfileUpdatedNotif(data)
 	case "status-changed":
 		var data sharedtypes.ProxyStatus
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for status-changed %v", err)
 			return
 		}
-		StatusChangedNotif(data)
+		np.StatusChangedNotif(data)
 	case "profiles-added":
 		var data sharedtypes.ProfilesAdded
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for profiles-added %v", err)
 			return
 		}
-		ProfilesAddedNotif(data)
+		np.ProfilesAddedNotif(data)
 	case "profiles-deleted":
 		var data sharedtypes.ProfilesDeleted
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for profiles-deleted %v", err)
 			return
 		}
-		ProfilesDeletedNotif(data)
+		np.ProfilesDeletedNotif(data)
 	case "group-added":
 		var data sharedtypes.GroupAdded
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for group-added %v", err)
 			return
 		}
-		GroupAddedNotif(data)
+		np.GroupAddedNotif(data)
 	case "group-deleted":
 		var data sharedtypes.GroupDeleted
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for group-deleted %v", err)
 			return
 		}
-		GroupDeletedNotif(data)
+		np.GroupDeletedNotif(data)
 	case "subscription-updated":
 		var data sharedtypes.SubscriptionUpdated
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for subscription-updated %v", err)
 			return
 		}
-		SubscriptionUpdatedNotif(data)
+		np.SubscriptionUpdatedNotif(data)
 	case "is-root-answer":
 		var data sharedtypes.IsRootAnswer
 		if err := json.Unmarshal(msg.Data, &data); err != nil {
 			log.Printf("Invalid body for is-root-answer %v", err)
 			return
 		}
-		IsRootAnswerNotif(data)
+		np.IsRootAnswerNotif(data)
 
 	case "tun-status-changed":
 		var data sharedtypes.TunStatus
@@ -85,6 +86,6 @@ func HandleNotification(msg sharedtypes.TcpMessage) {
 			log.Printf("Invalid body for tun-status-changed %v", err)
 			return
 		}
-		TunStatusChangedNotif(data)
+		np.TunStatusChangedNotif(data)
 	}
 }

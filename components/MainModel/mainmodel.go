@@ -9,6 +9,7 @@ import (
 	updateprofile "bushuray-tui/components/UpdateProfile"
 	appconfig "bushuray-tui/lib/AppConfig"
 	sharedtypes "bushuray-tui/shared_types"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	zone "github.com/lrstanley/bubblezone"
@@ -48,6 +49,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Tun = m.Tun.SetWH(msg.Width, msg.Height)
 		m.Help = m.Help.SetWH(msg.Width, msg.Height)
 		m.UpdateProfile = m.UpdateProfile.SetWH(msg.Width, msg.Height)
+		return m, nil
+
+	case sharedtypes.ClearWarnings:
+		if time.Now().Unix()-m.Tabs.LastWarningTime.Unix() >= 4 {
+			m.Tabs.Warning = ""
+		}
 		return m, nil
 
 	case sharedtypes.AddGroupExit:

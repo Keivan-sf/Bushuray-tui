@@ -1,4 +1,4 @@
-package servernotifs
+package notif_publisher
 
 import (
 	sharedtypes "bushuray-tui/shared_types"
@@ -6,56 +6,60 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
-type ServerNotifs struct {
+type NotifPublisher struct {
 	p *tea.Program
 }
 
-var sn ServerNotifs
+var np NotifPublisher
 
 func Init(p *tea.Program) {
-	sn.p = p
+	np.p = p
 }
 
 func ApplicationStateNotif(state sharedtypes.ApplicationState) {
-	sn.p.Send(state)
+	np.p.Send(state)
 }
 
 func ProfileUpdatedNotif(data sharedtypes.ProfileUpdated) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func StatusChangedNotif(data sharedtypes.ProxyStatus) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func ProfilesAddedNotif(data sharedtypes.ProfilesAdded) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func ProfilesDeletedNotif(data sharedtypes.ProfilesDeleted) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func GroupAddedNotif(data sharedtypes.GroupAdded) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func GroupDeletedNotif(data sharedtypes.GroupDeleted) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func SubscriptionUpdatedNotif(data sharedtypes.SubscriptionUpdated) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func IsRootAnswerNotif(data sharedtypes.IsRootAnswer) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func TunStatusChangedNotif(data sharedtypes.TunStatus) {
-	sn.p.Send(data)
+	np.p.Send(data)
 }
 
 func WarningNotif(data sharedtypes.Warning) {
-	sn.p.Send(data)
+	np.p.Send(data)
+}
+
+func ClearWarningsNotif(data sharedtypes.ClearWarnings) {
+	np.p.Send(data)
 }

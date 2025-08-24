@@ -4,8 +4,8 @@ import (
 	mainmodel "bushuray-tui/components/MainModel"
 	appconfig "bushuray-tui/lib/AppConfig"
 	connection "bushuray-tui/lib/Connection"
+	notif_publisher "bushuray-tui/lib/NotifPublisher"
 	servercmds "bushuray-tui/lib/ServerCommands"
-	servernotifs "bushuray-tui/lib/ServerNotifs"
 	"bushuray-tui/utils"
 	"fmt"
 	"log"
@@ -59,7 +59,7 @@ func main() {
 	go C.HandleConnection(p)
 	servercmds.Init(&C)
 	servercmds.GetApplicationState()
-	servernotifs.Init(p)
+	notif_publisher.Init(p)
 
 	if _, err := p.Run(); err != nil {
 		fmt.Printf("Error %v\n", err)

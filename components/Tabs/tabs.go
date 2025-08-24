@@ -5,6 +5,7 @@ import (
 	"bushuray-tui/global"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	"strconv"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -24,6 +25,7 @@ type Model struct {
 	SocksPort   int
 	HttpPort    int
 	Warning     string
+	LastWarningTime time.Time 
 }
 
 func (m Model) View() string {
