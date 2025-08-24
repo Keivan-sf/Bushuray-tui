@@ -5,6 +5,7 @@ import (
 	"bushuray-tui/global"
 	servercmds "bushuray-tui/lib/ServerCommands"
 	"strconv"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
@@ -23,6 +24,8 @@ type Model struct {
 	TunStatus   string
 	SocksPort   int
 	HttpPort    int
+	Warning     string
+	LastWarningTime time.Time 
 }
 
 func (m Model) View() string {
@@ -48,7 +51,7 @@ func (m Model) View() string {
 	}
 
 	tab_row := zone.Mark(m.Id+"tabline", lipgloss.JoinHorizontal(lipgloss.Top, tab_titles...))
-	content := lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View(), m.renderStatusBar())
+	content := lipgloss.JoinVertical(lipgloss.Top, m.renderAppTitle(), m.renderHelp(), tab_row, active.View(), m.renderWarnings(), m.renderStatusBar())
 	containter := lipgloss.NewStyle().Background(global.GetBgColor()).Render(content)
 	return containter
 }

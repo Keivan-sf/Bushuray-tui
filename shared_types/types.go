@@ -9,4 +9,5 @@ type TunViewExit struct{}
 type HelpViewEnter struct{}
 type HelpViewExit struct{}
 type KillCore struct{}
+type ClearWarnings struct{}
 

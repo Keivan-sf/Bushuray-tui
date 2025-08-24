@@ -32,5 +32,5 @@ func (m Model) renderStatusBar() string {
 
 	bg := lipgloss.NewStyle().Width(bg_width).Background(lipgloss.Color("#11111b")).Foreground(lipgloss.Color("#585b70")).Render(fmt.Sprintf(" SOCKS5 *:%d | HTTP *:%d", m.SocksPort, m.HttpPort))
 
-	return lipgloss.NewStyle().MarginTop(2).Render(lipgloss.JoinHorizontal(lipgloss.Top, connection_status, bg, tun_status))
+	return lipgloss.NewStyle().MarginTop(0).Render(lipgloss.JoinHorizontal(lipgloss.Top, connection_status, bg, tun_status))
 }
