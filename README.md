@@ -27,7 +27,7 @@ Bushuray will create its configuration file in `~/.config/bushuray/config.json` 
 - `no-background`: Whether or not tui should have a background. Use this if you want your own terminal background or you have a transparent terminal
 
 ### Tun mode
-To use tun mode, simply connect to a client then press `v`. Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10).
+To use tun mode, connect to a profile then press `v`. Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10).
 - If you are experiencing DNS issues, try setting 8.8.8.8 as your primary DNS. This issue is being tracked [here](https://github.com/Keivan-sf/Bushuray-core/issues/11)
 
 Thanks to [@navidmafi](https://github.com/navidmafi) for his help with tun mode issues
