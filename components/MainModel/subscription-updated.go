@@ -2,7 +2,9 @@ package mainmodel
 
 import (
 	list "bushuray-tui/components/List"
+	notif_publisher "bushuray-tui/lib/NotifPublisher"
 	sharedtypes "bushuray-tui/shared_types"
+	"time"
 
 	tea "github.com/charmbracelet/bubbletea"
 )
@@ -32,5 +34,11 @@ func applySubscriptionUpdated(msg sharedtypes.SubscriptionUpdated, m Model) (tea
 		m.Tabs.Children[tid].Content.Primary = 0
 	}
 	m.Tabs.Children[tid].Content.ResetCursor()
+	m.Tabs.Warning = "Subscription updated"
+	m.Tabs.LastWarningTime = time.Now()
+	go func() {
+		time.Sleep(time.Second * 4)
+		notif_publisher.ClearWarningsNotif(sharedtypes.ClearWarnings{})
+	}()
 	return m, nil
 }
