@@ -3,7 +3,9 @@ package tabs
 import (
 	cmds "bushuray-tui/commands"
 	"bushuray-tui/global"
+	notif_publisher "bushuray-tui/lib/NotifPublisher"
 	servercmds "bushuray-tui/lib/ServerCommands"
+	sharedtypes "bushuray-tui/shared_types"
 	"strconv"
 	"time"
 
@@ -13,19 +15,19 @@ import (
 )
 
 type Model struct {
-	Id          string
-	Children    []TabView
-	ActiveTap   int
-	Width       int
-	Height      int
-	viewStart   int
-	viewEnd     int
-	IsConnected bool
-	TunStatus   string
-	SocksPort   int
-	HttpPort    int
-	Warning     string
-	LastWarningTime time.Time 
+	Id              string
+	Children        []TabView
+	ActiveTap       int
+	Width           int
+	Height          int
+	viewStart       int
+	viewEnd         int
+	IsConnected     bool
+	TunStatus       string
+	SocksPort       int
+	HttpPort        int
+	Warning         string
+	LastWarningTime time.Time
 }
 
 func (m Model) View() string {
@@ -96,6 +98,12 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			m.DeleteTab(m.ActiveTap)
 			return m, nil
 		case "U":
+			m.Warning = "Updating subscription..."
+			m.LastWarningTime = time.Now()
+			go func() {
+				time.Sleep(time.Second * 4)
+				notif_publisher.ClearWarningsNotif(sharedtypes.ClearWarnings{})
+			}()
 			servercmds.UpdateSubscription(m.Children[m.ActiveTap].Content.GroupId)
 			return m, nil
 		case "S":
