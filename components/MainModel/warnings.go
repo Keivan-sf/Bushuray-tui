@@ -15,6 +15,7 @@ func applyWarning(msg sharedtypes.Warning, m Model) (tea.Model, tea.Cmd) {
 	}
 	if msg.Key == "update-subscription-failed" {
 		m.Tabs.Warning = msg.Content
+		m.Tabs.WarningMode = "warn"
 		m.Tabs.LastWarningTime = time.Now()
 		go func() {
 			time.Sleep(time.Second * 4)

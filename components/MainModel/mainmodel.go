@@ -55,6 +55,7 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		if time.Now().Unix()-m.Tabs.LastWarningTime.Unix() >= 4 {
 			m.Tabs.Warning = ""
 		}
+		m.Tabs.Warning = ""
 		return m, nil
 
 	case sharedtypes.AddGroupExit:
