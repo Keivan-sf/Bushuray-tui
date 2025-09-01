@@ -35,6 +35,7 @@ func applySubscriptionUpdated(msg sharedtypes.SubscriptionUpdated, m Model) (tea
 	}
 	m.Tabs.Children[tid].Content.ResetCursor()
 	m.Tabs.Warning = "Subscription updated"
+	m.Tabs.WarningMode = "success"
 	m.Tabs.LastWarningTime = time.Now()
 	go func() {
 		time.Sleep(time.Second * 4)

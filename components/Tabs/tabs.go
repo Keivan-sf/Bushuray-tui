@@ -15,18 +15,25 @@ import (
 )
 
 type Model struct {
-	Id              string
-	Children        []TabView
-	ActiveTap       int
-	Width           int
-	Height          int
-	viewStart       int
-	viewEnd         int
-	IsConnected     bool
-	TunStatus       string
-	SocksPort       int
-	HttpPort        int
-	Warning         string
+	Id          string
+	Children    []TabView
+	ActiveTap   int
+	Width       int
+	Height      int
+	viewStart   int
+	viewEnd     int
+	IsConnected bool
+	TunStatus   string
+	SocksPort   int
+	HttpPort    int
+	Warning     string
+	// Styles warning.
+	//
+	// Options:
+	//   - "success"
+	//   - "warn"   (default)
+	//   - "fatal"
+	WarningMode     string
 	LastWarningTime time.Time
 }
 
