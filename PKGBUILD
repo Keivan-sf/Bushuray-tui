@@ -33,10 +33,10 @@ prepare() {
 
 build() {
   cd "$srcdir/bushuray-tui"
-  go build -o bushuray ./...
+  go build -o bushuray .
 
   cd "$srcdir/bushuray-core/core"
-  go build -o bushuray-core ./...
+  go build -o bushuray-core .
 
   cd "$srcdir/v2parser"
   cargo build --release --locked
