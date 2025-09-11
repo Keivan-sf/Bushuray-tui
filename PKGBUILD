@@ -6,7 +6,7 @@ pkgrel=1
 arch=("x86_64")
 url="https://github.com/Keivan-sf/Bushuray-tui"
 license=("MIT") 
-depends=("xray-core" "tun2socks")
+depends=("xray" "tun2socks")
 makedepends=("go" "cargo" "git")
 source=(
   "bushuray-tui::git+https://github.com/Keivan-sf/Bushuray-tui.git"
