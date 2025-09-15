@@ -13,5 +13,5 @@ func (m Model) renderWarnings() string {
 	} else if m.WarningMode == "fatal" {
 		color = "#e64553"
 	}
-	return lipgloss.NewStyle().MarginTop(1).Height(1).Background(global.GetBgColor()).Foreground(lipgloss.Color(color)).Render(m.Warning)
+	return lipgloss.NewStyle().MarginTop(1).Height(1).Width(m.Width).Background(global.GetBgColor()).Foreground(lipgloss.Color(color)).Render(m.Warning)
 }
