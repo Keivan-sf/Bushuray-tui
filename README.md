@@ -1,9 +1,13 @@
 <img width="1297" height="778" alt="image" src="https://github.com/user-attachments/assets/721fcb9b-08f0-475b-a164-48ed681710fa" />
 
+[![AUR](https://img.shields.io/aur/version/bushuray-git)](https://aur.archlinux.org/packages/bushuray-git)
+
 ## Bushuray-tui
 Bushuray-tui is a keyboard-driven Xray client built for your terminal. It uses [Bushuray-core](https://github.com/Keivan-sf/Bushuray-core) as its back-end and It's written in Go with [bubbletea](https://github.com/charmbracelet/bubbletea)
 ### How to use
-Download and extract the latest version from releases section then run
+Bushuray is currently available on AUR under the name of `bushuray-git`
+
+For other distrobutions Download and extract the latest version from releases section then run
 ```
 ./bushuray
 ```
