@@ -47,4 +47,5 @@ package() {
   install -Dm755 "$srcdir/bushuray-tui/bushuray" "$pkgdir/usr/bin/bushuray"
   install -Dm755 "$srcdir/bushuray-core/core/bushuray-core" "$pkgdir/usr/bin/bushuray-core"
   install -Dm755 "$srcdir/v2parser/target/release/v2parser" "$pkgdir/usr/bin/v2parser"
+  install -Dm644 "$srcdir/bushuray-tui/LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 }
