@@ -7,7 +7,7 @@ Bushuray-tui is a keyboard-driven Xray client built for your terminal. It uses [
 ### How to use
 Bushuray is currently available on AUR under the name of `bushuray-git`
 
-For other distrobutions Download and extract the latest version from releases section then run
+For other distrobutions download and extract the latest version from releases section then run
 ```
 ./bushuray
 ```
