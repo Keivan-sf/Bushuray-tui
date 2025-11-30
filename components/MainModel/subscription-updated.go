@@ -1,10 +1,11 @@
 package mainmodel
 
 import (
-	list "bushuray-tui/components/List"
-	notif_publisher "bushuray-tui/lib/NotifPublisher"
-	sharedtypes "bushuray-tui/shared_types"
 	"time"
+
+	list "github.com/Keivan-sf/Bushuray-tui/components/List"
+	notif_publisher "github.com/Keivan-sf/Bushuray-tui/lib/NotifPublisher"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

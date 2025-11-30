@@ -1,10 +1,11 @@
 package servernotifs
 
 import (
-	np "bushuray-tui/lib/NotifPublisher"
-	sharedtypes "bushuray-tui/shared_types"
 	"encoding/json"
 	"log"
+
+	np "github.com/Keivan-sf/Bushuray-tui/lib/NotifPublisher"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 )
 
 func HandleNotification(msg sharedtypes.TcpMessage) {

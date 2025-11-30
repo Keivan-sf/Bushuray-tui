@@ -1,7 +1,7 @@
 package notif_publisher
 
 import (
-	sharedtypes "bushuray-tui/shared_types"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

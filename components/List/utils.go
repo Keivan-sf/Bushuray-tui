@@ -1,8 +1,9 @@
 package list
 
 import (
-	"bushuray-tui/global"
 	"strconv"
+
+	"github.com/Keivan-sf/Bushuray-tui/global"
 
 	"github.com/charmbracelet/lipgloss"
 )

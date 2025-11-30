@@ -2,8 +2,6 @@ package connection
 
 import (
 	"bufio"
-	servernotifs "bushuray-tui/lib/ServerNotifs"
-	sharedtypes "bushuray-tui/shared_types"
 	"encoding/binary"
 	"encoding/json"
 	"fmt"
@@ -13,6 +11,9 @@ import (
 	"strconv"
 	"sync"
 	"time"
+
+	servernotifs "github.com/Keivan-sf/Bushuray-tui/lib/ServerNotifs"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

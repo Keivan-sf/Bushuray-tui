@@ -1,13 +1,14 @@
 package tabs
 
 import (
-	cmds "bushuray-tui/commands"
-	"bushuray-tui/global"
-	notif_publisher "bushuray-tui/lib/NotifPublisher"
-	servercmds "bushuray-tui/lib/ServerCommands"
-	sharedtypes "bushuray-tui/shared_types"
 	"strconv"
 	"time"
+
+	cmds "github.com/Keivan-sf/Bushuray-tui/commands"
+	"github.com/Keivan-sf/Bushuray-tui/global"
+	notif_publisher "github.com/Keivan-sf/Bushuray-tui/lib/NotifPublisher"
+	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"

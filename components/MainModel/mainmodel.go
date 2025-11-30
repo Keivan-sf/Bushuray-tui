@@ -1,15 +1,16 @@
 package mainmodel
 
 import (
-	addgroup "bushuray-tui/components/AddGroup"
-	helpview "bushuray-tui/components/Help"
-	list "bushuray-tui/components/List"
-	tabs "bushuray-tui/components/Tabs"
-	tunview "bushuray-tui/components/Tun"
-	updateprofile "bushuray-tui/components/UpdateProfile"
-	appconfig "bushuray-tui/lib/AppConfig"
-	sharedtypes "bushuray-tui/shared_types"
 	"time"
+
+	addgroup "github.com/Keivan-sf/Bushuray-tui/components/AddGroup"
+	helpview "github.com/Keivan-sf/Bushuray-tui/components/Help"
+	list "github.com/Keivan-sf/Bushuray-tui/components/List"
+	tabs "github.com/Keivan-sf/Bushuray-tui/components/Tabs"
+	tunview "github.com/Keivan-sf/Bushuray-tui/components/Tun"
+	updateprofile "github.com/Keivan-sf/Bushuray-tui/components/UpdateProfile"
+	appconfig "github.com/Keivan-sf/Bushuray-tui/lib/AppConfig"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 	zone "github.com/lrstanley/bubblezone"

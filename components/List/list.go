@@ -1,10 +1,11 @@
 package list
 
 import (
-	"bushuray-tui/global"
-	"bushuray-tui/utils"
 	"fmt"
 	"strconv"
+
+	"github.com/Keivan-sf/Bushuray-tui/global"
+	"github.com/Keivan-sf/Bushuray-tui/utils"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"

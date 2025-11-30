@@ -1,9 +1,9 @@
 package mainmodel
 
 import (
-	list "bushuray-tui/components/List"
-	tabs "bushuray-tui/components/Tabs"
-	sharedtypes "bushuray-tui/shared_types"
+	list "github.com/Keivan-sf/Bushuray-tui/components/List"
+	tabs "github.com/Keivan-sf/Bushuray-tui/components/Tabs"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 	zone "github.com/lrstanley/bubblezone"

@@ -1,7 +1,7 @@
 package addgroup
 
 import (
-	"bushuray-tui/global"
+	"github.com/Keivan-sf/Bushuray-tui/global"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

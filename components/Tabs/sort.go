@@ -1,9 +1,10 @@
 package tabs
 
 import (
-	list "bushuray-tui/components/List"
 	"cmp"
 	"slices"
+
+	list "github.com/Keivan-sf/Bushuray-tui/components/List"
 )
 
 func (m *Model) sort_by_test_results() {

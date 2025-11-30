@@ -1,10 +1,11 @@
 package list
 
 import (
-	servercmds "bushuray-tui/lib/ServerCommands"
-	sharedtypes "bushuray-tui/shared_types"
-	"github.com/atotto/clipboard"
 	"log"
+
+	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
+	"github.com/atotto/clipboard"
 )
 
 func (l *Model) deleteProfileUnderCursor() {

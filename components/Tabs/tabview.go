@@ -1,9 +1,10 @@
 package tabs
 
 import (
-	"bushuray-tui/components/List"
-	"bushuray-tui/global"
 	"strings"
+
+	list "github.com/Keivan-sf/Bushuray-tui/components/List"
+	"github.com/Keivan-sf/Bushuray-tui/global"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/charmbracelet/lipgloss"
