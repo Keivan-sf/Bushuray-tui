@@ -1,12 +1,13 @@
 package appconfig
 
 import (
-	"bushuray-tui/utils"
 	"encoding/json"
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
+
+	"github.com/Keivan-sf/Bushuray-tui/utils"
 )
 
 type AppConfig struct {

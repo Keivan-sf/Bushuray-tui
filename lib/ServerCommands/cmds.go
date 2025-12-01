@@ -1,8 +1,9 @@
 package servercmds
 
 import (
-	sharedtypes "bushuray-tui/shared_types"
 	"log"
+
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 )
 
 func GetApplicationState() {

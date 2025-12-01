@@ -1,7 +1,7 @@
 package global
 
 import (
-	appconfig "bushuray-tui/lib/AppConfig"
+	appconfig "github.com/Keivan-sf/Bushuray-tui/lib/AppConfig"
 
 	"github.com/charmbracelet/lipgloss"
 )

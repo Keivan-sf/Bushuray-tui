@@ -1,10 +1,11 @@
 package servercmds
 
 import (
-	connection "bushuray-tui/lib/Connection"
-	"bushuray-tui/shared_types"
 	"encoding/json"
 	"log"
+
+	connection "github.com/Keivan-sf/Bushuray-tui/lib/Connection"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 )
 
 type ServerCmds struct {

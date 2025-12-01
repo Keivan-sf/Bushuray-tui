@@ -1,8 +1,8 @@
 package tabs
 
 import (
-	"bushuray-tui/components/shared"
-	"bushuray-tui/global"
+	"github.com/Keivan-sf/Bushuray-tui/components/shared"
+	"github.com/Keivan-sf/Bushuray-tui/global"
 
 	"github.com/charmbracelet/lipgloss"
 )

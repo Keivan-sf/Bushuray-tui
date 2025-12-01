@@ -1,7 +1,7 @@
 package tabs
 
 import (
-	"bushuray-tui/global"
+	"github.com/Keivan-sf/Bushuray-tui/global"
 
 	"github.com/charmbracelet/lipgloss"
 )

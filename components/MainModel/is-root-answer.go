@@ -1,8 +1,8 @@
 package mainmodel
 
 import (
-	servercmds "bushuray-tui/lib/ServerCommands"
-	sharedtypes "bushuray-tui/shared_types"
+	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
+	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 
 	tea "github.com/charmbracelet/bubbletea"
 )

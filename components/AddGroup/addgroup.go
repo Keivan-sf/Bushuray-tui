@@ -2,10 +2,10 @@ package addgroup
 
 import (
 	// "fmt"
-	cmds "bushuray-tui/commands"
-	"bushuray-tui/components/shared"
-	"bushuray-tui/global"
-	servercmds "bushuray-tui/lib/ServerCommands"
+	cmds "github.com/Keivan-sf/Bushuray-tui/commands"
+	"github.com/Keivan-sf/Bushuray-tui/components/shared"
+	"github.com/Keivan-sf/Bushuray-tui/global"
+	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
 
 	"github.com/charmbracelet/bubbles/cursor"
 	"github.com/charmbracelet/bubbles/textinput"
