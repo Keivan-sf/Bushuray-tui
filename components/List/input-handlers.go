@@ -3,6 +3,7 @@ package list
 import (
 	"log"
 
+	notif_publisher "github.com/Keivan-sf/Bushuray-tui/lib/NotifPublisher"
 	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
 	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
 	"github.com/atotto/clipboard"
@@ -18,7 +19,8 @@ func (l *Model) deleteProfileUnderCursor() {
 func (l *Model) paste() {
 	str, err := clipboard.ReadAll()
 	if err != nil {
-		log.Println("There was an error readin from clipboard", err)
+		log.Println("There was a problem reading from clipboard, entering paste profile view mode", err)
+		go func() { notif_publisher.EnterPasteProfileMode(sharedtypes.PasteProfileViewEnter{}) }()
 		return
 	}
 	servercmds.AddProfiles(str, l.GroupId)

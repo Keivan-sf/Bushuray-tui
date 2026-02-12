@@ -8,6 +8,7 @@ type TunViewEnter struct{}
 type TunViewExit struct{}
 type HelpViewEnter struct{}
 type HelpViewExit struct{}
+type PasteProfileViewEnter struct {}
+type PasteProfileViewExit struct {}
 type KillCore struct{}
 type ClearWarnings struct{}
-

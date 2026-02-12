@@ -6,6 +6,7 @@ import (
 	addgroup "github.com/Keivan-sf/Bushuray-tui/components/AddGroup"
 	helpview "github.com/Keivan-sf/Bushuray-tui/components/Help"
 	list "github.com/Keivan-sf/Bushuray-tui/components/List"
+	pasteprofile "github.com/Keivan-sf/Bushuray-tui/components/PasteProfile"
 	tabs "github.com/Keivan-sf/Bushuray-tui/components/Tabs"
 	tunview "github.com/Keivan-sf/Bushuray-tui/components/Tun"
 	updateprofile "github.com/Keivan-sf/Bushuray-tui/components/UpdateProfile"
@@ -24,6 +25,7 @@ type Model struct {
 	Tun           tunview.Model
 	Help          helpview.Model
 	UpdateProfile updateprofile.Model
+	PasteProfile  pasteprofile.Model
 	ActiveSection string
 }
 
@@ -47,9 +49,19 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		m.Height = msg.Height
 		m.Tabs = m.Tabs.SetWH(msg.Width, msg.Height)
 		m.AddGroup = m.AddGroup.SetWH(msg.Width, msg.Height)
+		m.PasteProfile = m.PasteProfile.SetWH(msg.Width, msg.Height)
 		m.Tun = m.Tun.SetWH(msg.Width, msg.Height)
 		m.Help = m.Help.SetWH(msg.Width, msg.Height)
 		m.UpdateProfile = m.UpdateProfile.SetWH(msg.Width, msg.Height)
+		return m, nil
+
+	case sharedtypes.PasteProfileViewEnter:
+		m.ActiveSection = "paste-profile"
+		m.PasteProfile.CurrentGroupId = m.Tabs.Children[m.Tabs.ActiveTap].Content.GroupId
+		return m, nil
+
+	case sharedtypes.PasteProfileViewExit:
+		m.ActiveSection = "tabs"
 		return m, nil
 
 	case sharedtypes.ClearWarnings:
@@ -106,6 +118,12 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, cmd
 	}
 
+	if m.ActiveSection == "paste-profile" {
+		var cmd tea.Cmd
+		m.PasteProfile, cmd = m.PasteProfile.Update(msg)
+		return m, cmd
+	}
+
 	if m.ActiveSection == "add-group" {
 		var cmd tea.Cmd
 		m.AddGroup, cmd = m.AddGroup.Update(msg)
@@ -146,6 +164,9 @@ func (m Model) View() string {
 	if m.ActiveSection == "update-profile" {
 		return m.UpdateProfile.View()
 	}
+	if m.ActiveSection == "paste-profile" {
+		return m.PasteProfile.View()
+	}
 	return zone.Scan(m.Tabs.View())
 }
 
@@ -157,6 +178,7 @@ func InitModel() Model {
 		AddGroup:      addgroup.InitialModel(),
 		Help:          helpview.InitialModel(),
 		UpdateProfile: updateprofile.InitialModel(),
+		PasteProfile:  pasteprofile.InitialModel(),
 		Tabs: tabs.Model{
 			Id:          zone.NewPrefix(),
 			TunStatus:   "disconnected",
