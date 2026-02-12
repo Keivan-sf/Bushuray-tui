@@ -63,3 +63,7 @@ func WarningNotif(data sharedtypes.Warning) {
 func ClearWarningsNotif(data sharedtypes.ClearWarnings) {
 	np.p.Send(data)
 }
+
+func EnterPasteProfileMode(data sharedtypes.PasteProfileViewEnter) {
+	np.p.Send(data)
+}
