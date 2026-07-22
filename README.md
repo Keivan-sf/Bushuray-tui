@@ -16,19 +16,25 @@ For other distrobutions download and extract the latest version from releases se
 Bushuray will create its configuration file in `~/.config/bushuray/config.json` with the following template:
 ```json
 {
-  "socks-port": 3090,
-  "http-port": 3091,
-  "test-port-range": {
-    "start": 3096,
+   "socks-port": 3090,
+   "http-port": 3091,
+   "core-tcp-port": 4897,
+   "test-port-range": {
+    "start": 3095,
     "end": 30120
-  },
-  "no-background": false 
+   },
+   "test-url": "https://cp.cloudflare.com",
+   "no-background": false,
+   "auto-connect-on-start": false 
 }
 ```
 - `socks-port`: Exposed local socks5 port
 - `http-port`: Exposed local http port
 - `test-port-range`: Port range used for profile testing
+- `test-url`: The end-point which the connectivity of profiles will be tested on
 - `no-background`: Whether or not tui should have a background. Use this if you want your own terminal background or you have a transparent terminal
+- `auto-connect-on-start`: If true, bushuray will automatically try to connect to the last profile user was connected to when the program (specifically core) starts 
+
 
 ### Tun mode
 To use tun mode, connect to a profile then press `v`. Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10).
