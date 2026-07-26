@@ -18,5 +18,12 @@ func applyStatusChanged(msg sharedtypes.ProxyStatus, m Model) (tea.Model, tea.Cm
 			m.Tabs.Children[i].Content.Primary = -1
 		}
 	}
+
+	if msg.IsTunEnabled {
+		m.Tabs.TunStatus = "connected"
+	} else {
+		m.Tabs.TunStatus = "disconnected"
+	}
+
 	return m, nil
 }

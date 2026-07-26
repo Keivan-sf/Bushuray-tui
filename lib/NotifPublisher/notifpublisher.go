@@ -52,10 +52,6 @@ func IsRootAnswerNotif(data sharedtypes.IsRootAnswer) {
 	np.p.Send(data)
 }
 
-func TunStatusChangedNotif(data sharedtypes.TunStatus) {
-	np.p.Send(data)
-}
-
 func WarningNotif(data sharedtypes.Warning) {
 	np.p.Send(data)
 }
