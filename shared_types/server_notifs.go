@@ -31,8 +31,9 @@ type GroupWithProfiles struct {
 }
 
 type ProxyStatus struct {
-	Connection string  `json:"connection"`
-	Profile    Profile `json:"profile"`
+	Connection   string  `json:"connection"`
+	IsTunEnabled bool    `json:"is_tun_enabled"`
+	Profile      Profile `json:"profile"`
 }
 
 func (p ProxyStatus) IsNotification() {}
@@ -68,12 +69,6 @@ type IsRootAnswer struct {
 }
 
 func (i IsRootAnswer) IsNotification() {}
-
-type TunStatus struct {
-	IsEnabled bool `json:"is_enabled"`
-}
-
-func (t TunStatus) IsNotification() {}
 
 type SubscriptionUpdated struct {
 	GroupId  int       `json:"group_id"`
