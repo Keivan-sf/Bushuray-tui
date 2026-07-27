@@ -25,16 +25,24 @@ Bushuray will create its configuration file in `~/.config/bushuray/config.json` 
    },
    "test-url": "https://cp.cloudflare.com",
    "no-background": false,
-   "auto-connect-on-start": false 
+   "auto-connect-on-start": false,
+   "dns": {
+    "servers": ["1.1.1.1"],
+    "query-strategy": "UseIP",
+    "mode": "proxy"
+   }
 }
 ```
-- `socks-port`: Exposed local socks5 port
-- `http-port`: Exposed local http port
-- `test-port-range`: Port range used for profile testing
-- `test-url`: The end-point which the connectivity of profiles will be tested on
-- `no-background`: Whether or not tui should have a background. Use this if you want your own terminal background or you have a transparent terminal
-- `auto-connect-on-start`: If true, bushuray will automatically try to connect to the last profile user was connected to when the program (specifically core) starts 
-
+- **socks-port**: Exposed local socks5 port
+- **http-port**: Exposed local http port
+- **test-port-range**: Port range used for profile testing
+- **test-url**: The end-point which the connectivity of profiles will be tested on
+- **no-background**: Whether or not tui should have a background. Use this if you want your own terminal background or you have a transparent terminal
+- **auto-connect-on-start**: If true, bushuray will automatically try to connect to the last profile user was connected to when the program (specifically core) starts 
+- **dns**:
+     - **servers**: list of dns servers to use. `localhost` will use the default system dns
+     - **query-strategy**: `UseIP` | `UseIPv4` | `UseIPv6` | `UseSystem`. This will directly be passed to [xray dns object](https://xtls.github.io/en/config/dns.html#dnsobject). You should mostly use `UseIP` if you're setting a dns server other than localhost
+     - **mode**: `proxy` | `system`. If set to `system`, will use default system dns. if set to `proxy`, will use the servers provided in **servers** and tunnel them through the profile
 
 ### Tun mode
 To use tun mode, connect to a profile then press `v`. Tun mode is experimental at this time but should work. If it doesn't, please create an issue. Running as root raises security concerns for the current version, see [this issue](https://github.com/Keivan-sf/Bushuray-core/issues/10).
