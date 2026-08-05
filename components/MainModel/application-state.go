@@ -66,6 +66,8 @@ func convertProtocolForDisplay(name string) string {
 		return "SHADOW"
 	case "trojan":
 		return "TROJAN"
+	case "hysteria":
+		return "HYSTRA"
 	}
 	return name
 }
