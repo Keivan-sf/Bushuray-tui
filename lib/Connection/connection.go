@@ -102,18 +102,26 @@ func (ch *ConnectionHandler) Send(msg []byte) error {
 		return fmt.Errorf("no active connection")
 	}
 
-	length := make([]byte, 4)
-	binary.BigEndian.PutUint32(length, uint32(len(msg)))
+	packet := make([]byte, 4+len(msg))
+	binary.BigEndian.PutUint32(packet[:4], uint32(len(msg)))
+	copy(packet[4:], msg)
 
-	_, err := ch.conn.Write(length)
-	if err != nil {
-		log.Fatalf("Error sending length %d %v\n", length, err)
-	}
-	_, err = ch.conn.Write(msg)
+	err := writeFull(ch.conn, packet)
 	if err != nil {
 		log.Fatalf("Error sending %s %v\n", msg, err)
 	}
 
+	return nil
+}
+
+func writeFull(conn net.Conn, data []byte) error {
+	for len(data) > 0 {
+		n, err := conn.Write(data)
+		if err != nil {
+			return err
+		}
+		data = data[n:]
+	}
 	return nil
 }
 
