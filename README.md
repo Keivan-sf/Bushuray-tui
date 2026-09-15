@@ -53,4 +53,3 @@ If something is not working as expected, you can examine `debug.log` and `core-d
 ```
 tail -f core-debug.log
 ```
-
