@@ -11,15 +11,13 @@ import (
 )
 
 type AppConfig struct {
-	SocksPort            int       `json:"socks-port"`
-	HttpPort             int       `json:"http-port"`
-	CoreTCPPort          int       `json:"core-tcp-port"`
-	TestPortRange        PortRange `json:"test-port-range"`
-	TestURL              string    `json:"test-url"`
-	NoBackground         bool      `json:"no-background,omitzero"`
-	AutoConnectOnStart   bool      `json:"auto-connect-on-start,omitzero"`
-	RemoveFailedProfiles bool      `json:"remove-failed-profiles,omitzero"`
-	StopTestingAfter     int       `json:"stop-testing-after,omitzero"`
+	SocksPort          int       `json:"socks-port"`
+	HttpPort           int       `json:"http-port"`
+	CoreTCPPort        int       `json:"core-tcp-port"`
+	TestPortRange      PortRange `json:"test-port-range"`
+	TestURL            string    `json:"test-url"`
+	NoBackground       bool      `json:"no-background,omitzero"`
+	AutoConnectOnStart bool      `json:"auto-connect-on-start,omitzero"`
 }
 
 type PortRange struct {

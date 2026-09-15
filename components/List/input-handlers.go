@@ -3,7 +3,6 @@ package list
 import (
 	"log"
 
-	appconfig "github.com/Keivan-sf/Bushuray-tui/lib/AppConfig"
 	notif_publisher "github.com/Keivan-sf/Bushuray-tui/lib/NotifPublisher"
 	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
 	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
@@ -48,61 +47,9 @@ func (l *Model) testProfile() {
 }
 
 func (l *Model) testGroup() {
-	l.testQueue = []int{}
 	for i, item := range l.Items {
-		l.Items[i].TestResult = 0
-		l.testQueue = append(l.testQueue, item.ProfileId)
-	}
-	l.groupTesting = true
-	l.ContinueGroupTest()
-}
-
-func (l *Model) ContinueGroupTest() {
-	if !l.groupTesting {
-		return
-	}
-	config := appconfig.GetConfig()
-	testing := 0
-	working := 0
-	for _, item := range l.Items {
-		if item.TestResult == -2 {
-			testing++
-		} else if item.TestResult > 0 {
-			working++
-		}
-	}
-	if config.StopTestingAfter > 0 && working >= config.StopTestingAfter {
-		l.testQueue = nil
-	}
-	for len(l.testQueue) > 0 && (config.StopTestingAfter <= 0 || testing < test_concurrency) {
-		id := l.testQueue[0]
-		l.testQueue = l.testQueue[1:]
-		for i, item := range l.Items {
-			if item.ProfileId == id {
-				l.Items[i].TestResult = -2
-				servercmds.Test(l.GroupId, id)
-				testing++
-				break
-			}
-		}
-	}
-	if testing == 0 && len(l.testQueue) == 0 {
-		l.groupTesting = false
-		if config.RemoveFailedProfiles {
-			l.RemoveFailedProfiles()
-		}
-	}
-}
-
-func (l *Model) RemoveFailedProfiles() {
-	failed := []sharedtypes.ProfileID{}
-	for i, item := range l.Items {
-		if item.TestResult == -1 && i != l.Primary {
-			failed = append(failed, sharedtypes.ProfileID{Id: item.ProfileId, GroupId: l.GroupId})
-		}
-	}
-	if len(failed) > 0 {
-		servercmds.DeleteProfiles(failed)
+		l.Items[i].TestResult = -2
+		servercmds.Test(l.GroupId, item.ProfileId)
 	}
 }
 

@@ -14,12 +14,8 @@ func applyProfilesDeleted(msg sharedtypes.ProfilesDeleted, m Model) (tea.Model, 
 		}
 		items := m.Tabs.Children[tid].Content.Items
 		m.Tabs.Children[tid].Content.Items = append(items[:idx], items[idx+1:]...)
-		if idx < m.Tabs.Children[tid].Content.Primary {
-			m.Tabs.Children[tid].Content.Primary--
-		}
 		// cursor might be on the last item when the profile gets deleted
 		m.Tabs.Children[tid].Content.ResolveInvalidCursor()
-		m.Tabs.Children[tid].Content.ContinueGroupTest()
 	}
 	return m, nil
 }

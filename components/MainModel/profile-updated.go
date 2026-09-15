@@ -17,7 +17,6 @@ func applyProfileUpdated(msg sharedtypes.ProfileUpdated, m Model) (tea.Model, te
 			TestResult: msg.Profile.TestResult,
 			Uri:        msg.Profile.Uri,
 		}
-		m.Tabs.Children[i].Content.ContinueGroupTest()
 	}
 	return m, nil
 }
