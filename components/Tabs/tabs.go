@@ -6,6 +6,7 @@ import (
 
 	cmds "github.com/Keivan-sf/Bushuray-tui/commands"
 	"github.com/Keivan-sf/Bushuray-tui/global"
+	appconfig "github.com/Keivan-sf/Bushuray-tui/lib/AppConfig"
 	notif_publisher "github.com/Keivan-sf/Bushuray-tui/lib/NotifPublisher"
 	servercmds "github.com/Keivan-sf/Bushuray-tui/lib/ServerCommands"
 	sharedtypes "github.com/Keivan-sf/Bushuray-tui/shared_types"
@@ -45,11 +46,11 @@ func (m Model) View() string {
 	for i := m.viewStart; i < len(m.Children); i++ {
 		child := m.Children[i]
 		if i == m.ActiveTap {
-			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.Title))
+			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderActiveTitle(child.displayTitle()))
 			titles_len += lipgloss.Width(title_box)
 			tab_titles = append(tab_titles, title_box)
 		} else {
-			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderTitle(child.Title))
+			title_box := zone.Mark(m.Id+strconv.Itoa(i), renderTitle(child.displayTitle()))
 			titles_len += lipgloss.Width(title_box)
 			tab_titles = append(tab_titles, title_box)
 		}
@@ -116,6 +117,9 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 			return m, nil
 		case "S":
 			m.sort_by_test_results()
+			if appconfig.GetConfig().RemoveFailedProfiles {
+				m.Children[m.ActiveTap].Content.RemoveFailedProfiles()
+			}
 			return m, nil
 		case "J":
 			m.JumpToConnectedProfile()

@@ -1,6 +1,7 @@
 package tabs
 
 import (
+	"fmt"
 	"strings"
 
 	list "github.com/Keivan-sf/Bushuray-tui/components/List"
@@ -32,6 +33,10 @@ func (t TabView) SetWH(width int, height int) TabView {
 	t.Content.Height = height
 	t.Content.Width = width
 	return t
+}
+
+func (t TabView) displayTitle() string {
+	return fmt.Sprintf("%s (%d)", t.Title, len(t.Content.Items))
 }
 
 func renderTitle(title string) string {

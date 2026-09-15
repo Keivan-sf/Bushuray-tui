@@ -38,7 +38,7 @@ func (m *Model) calculateStart(end int) int {
 	width := 0
 	for i := end; i >= 0 && width <= m.Width; i-- {
 		start = i
-		width += len(m.Children[i].Title) + 4
+		width += len(m.Children[i].displayTitle()) + 4
 	}
 	if width > m.Width && end != start {
 		return start + 1
@@ -52,7 +52,7 @@ func (m *Model) calculateEnd(start int) int {
 	width := 0
 	for i := start; i < len(m.Children) && width <= m.Width; i++ {
 		end = i
-		width += len(m.Children[i].Title) + 4
+		width += len(m.Children[i].displayTitle()) + 4
 	}
 	if width > m.Width && end != start {
 		return end - 1

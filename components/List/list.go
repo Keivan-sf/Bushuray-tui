@@ -21,18 +21,21 @@ type ListItem struct {
 }
 
 type Model struct {
-	Id      string
-	GroupId int
-	Items   []ListItem
-	cursor  int
-	Width   int
-	Height  int
-	offset  int
-	Primary int
+	Id           string
+	GroupId      int
+	Items        []ListItem
+	cursor       int
+	Width        int
+	Height       int
+	offset       int
+	Primary      int
+	testQueue    []int
+	groupTesting bool
 }
 
 var protocol_w = 8
 var test_result_w = 15
+var test_concurrency = 5
 
 var primary_style = lipgloss.NewStyle().Background(lipgloss.Color("#1e2030")).Foreground(lipgloss.Color("#FFF"))
 
