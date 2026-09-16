@@ -53,6 +53,14 @@ func (l *Model) testGroup() {
 	}
 }
 
+func (l *Model) ResetPendingTestResults() {
+	for i, item := range l.Items {
+		if item.TestResult == -2 {
+			l.Items[i].TestResult = 0
+		}
+	}
+}
+
 func (l *Model) connectToProfile() {
 	if len(l.Items) < 1 {
 		return

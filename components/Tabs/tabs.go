@@ -117,6 +117,10 @@ func (m Model) Update(msg tea.Msg) (Model, tea.Cmd) {
 		case "S":
 			m.sort_by_test_results()
 			return m, nil
+		case "ctrl+s":
+			servercmds.StopTests()
+			m.resetPendingTestResults()
+			return m, nil
 		case "J":
 			m.JumpToConnectedProfile()
 			return m, nil
@@ -207,4 +211,10 @@ func (m *Model) JumpToBeginning() {
 
 func (m *Model) JumpToEnd() {
 	m.Children[m.ActiveTap].Content.MoveCursorToLastItem()
+}
+
+func (m *Model) resetPendingTestResults() {
+	for i := range m.Children {
+		m.Children[i].Content.ResetPendingTestResults()
+	}
 }
