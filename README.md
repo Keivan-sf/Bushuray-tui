@@ -26,6 +26,7 @@ Bushuray will create its configuration file in `~/.config/bushuray/config.json` 
    "test-url": "https://cp.cloudflare.com",
    "no-background": false,
    "auto-connect-on-start": false,
+   "remove-failed-profiles": false,
    "dns": {
     "servers": ["1.1.1.1"],
     "query-strategy": "UseIP",
@@ -38,7 +39,8 @@ Bushuray will create its configuration file in `~/.config/bushuray/config.json` 
 - **test-port-range**: Port range used for profile testing
 - **test-url**: The end-point which the connectivity of profiles will be tested on
 - **no-background**: Whether or not tui should have a background. Use this if you want your own terminal background or you have a transparent terminal
-- **auto-connect-on-start**: If true, bushuray will automatically try to connect to the last profile user was connected to when the program (specifically core) starts 
+- **auto-connect-on-start**: If true, bushuray will automatically try to connect to the last profile user was connected to when the program (specifically core) starts
+- **remove-failed-profiles**: If true, bushuray will automatically delete profiles that produced a failed test result after a new test. (This will not be applied to old test results)
 - **dns**:
      - **servers**: list of dns servers to use. `localhost` will use the default system dns
      - **query-strategy**: `UseIP` | `UseIPv4` | `UseIPv6` | `UseSystem`. This will directly be passed to [xray dns object](https://xtls.github.io/en/config/dns.html#dnsobject). You should mostly use `UseIP` if you're setting a dns server other than localhost
