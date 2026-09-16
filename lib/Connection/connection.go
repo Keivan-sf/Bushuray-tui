@@ -39,7 +39,6 @@ func (ch *ConnectionHandler) GetConnection() error {
 	}
 
 	ch.conn = conn
-	fmt.Printf("Connected to %s\n", address)
 
 	return nil
 }
@@ -108,10 +107,19 @@ func (ch *ConnectionHandler) Send(msg []byte) error {
 
 	err := writeFull(ch.conn, packet)
 	if err != nil {
-		log.Fatalf("Error sending %s %v\n", msg, err)
+		return fmt.Errorf("error sending %s: %w", msg, err)
 	}
 
 	return nil
+}
+
+func (ch *ConnectionHandler) WaitForClose() error {
+	if ch.conn == nil {
+		return fmt.Errorf("no active connection")
+	}
+
+	_, err := io.Copy(io.Discard, ch.conn)
+	return err
 }
 
 func writeFull(conn net.Conn, data []byte) error {
