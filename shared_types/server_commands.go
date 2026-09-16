@@ -10,6 +10,8 @@ type TestProfileData struct {
 	Profile ProfileID `json:"profile"`
 }
 
+type StopTestsData struct{}
+
 type DisconnectData struct{}
 
 type AddProfilesData struct {

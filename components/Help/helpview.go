@@ -29,6 +29,7 @@ func InitialModel() Model {
 			{Key: "a", Help: "add a new group"},
 			{Key: "t", Help: "test profile"},
 			{Key: "T", Help: "test group profiles"},
+			{Key: "ctrl+s", Help: "stop tests"},
 			{Key: "U", Help: "update subscription"},
 			{Key: "S", Help: "sort by test result"},
 			{Key: "r", Help: "rename profile"},
