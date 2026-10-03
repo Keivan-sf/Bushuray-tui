@@ -11,13 +11,14 @@ import (
 )
 
 type AppConfig struct {
-	SocksPort          int       `json:"socks-port"`
-	HttpPort           int       `json:"http-port"`
-	CoreTCPPort        int       `json:"core-tcp-port"`
-	TestPortRange      PortRange `json:"test-port-range"`
-	TestURL            string    `json:"test-url"`
-	NoBackground       bool      `json:"no-background,omitzero"`
-	AutoConnectOnStart bool      `json:"auto-connect-on-start,omitzero"`
+	SocksPort             int       `json:"socks-port"`
+	HttpPort              int       `json:"http-port"`
+	CoreTCPPort           int       `json:"core-tcp-port"`
+	TestPortRange         PortRange `json:"test-port-range"`
+	TestURL               string    `json:"test-url"`
+	SubscriptionUserAgent string    `json:"subscription-user-agent"`
+	NoBackground          bool      `json:"no-background,omitzero"`
+	AutoConnectOnStart    bool      `json:"auto-connect-on-start,omitzero"`
 }
 
 type PortRange struct {
@@ -38,9 +39,10 @@ func defaultConfig() AppConfig {
 			Start: 3095,
 			End:   30120,
 		},
-		NoBackground:       false,
-		AutoConnectOnStart: false,
-		TestURL:            "https://cp.cloudflare.com",
+		NoBackground:          false,
+		AutoConnectOnStart:    false,
+		SubscriptionUserAgent: "",
+		TestURL:               "https://cp.cloudflare.com",
 	}
 }
 
